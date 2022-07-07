@@ -1,0 +1,263 @@
+{% extends "web/jinja2/base.html.j2" %}
+{% block content %}
+<!-- Begin Page Content -->
+{#<style>
+    @media print{
+        body * {visibility:hidden;}
+        .print_part * {visibility:visible;}
+    }
+<style>#}
+<section class="py-md-5">
+	<div class="container-fluid">
+		<div class="col-12">
+			<div class="card mb-4 border-1">
+				<div class="card-header py-3 px-0 align-items-center bg-white border-0">
+					<div class="row">
+						<div class="col-9">
+							<h3 class="m-0 px-3 font-weight-bold text-dark">Report</h3>
+						</div>
+					</div>
+				</div>
+                    <div class="row mx-0">
+                        <div class="col-12">
+                        <hr>
+                            <span>
+                                <form method="post">
+                                    {{csrf_input}}
+                                    <div class="row mx-0">
+                                        <input type="hidden" value="{{request.GET.company}}" name="company_id" id="company_id">
+                                        
+                                        <div class="col-lg-3 col-md-12 col-sm-12">
+                                            <label for="from_date">From</label>
+                                            <input type="date" name="from_date" id="from_date" class="form-control"> 
+                                        </div>
+                                        <div class="col-lg-3 col-md-12 col-sm-12">
+                                            <label for="to_date">To</label> 
+                                            <input type="date" name="to_date" id="to_date" class="form-control">
+                                        </div>
+
+                                        <div class="col-lg-3 col-md-12 col-sm-12">
+                                            <label for="product_name">Select Product</label>
+                                            <select class="custom-select form-control form-control-user rounded-1 select2_dropdown" multiple="multiple" name="product_name" id="product_name">
+                                                <option value="" selected>Select</option>
+                                                
+                                                {% for data in product_filter %}
+                                                <option value="{{data.id}}">{{data.item_name}}</option>
+                                                {% endfor %}
+
+                                            </select>
+                                        </div>
+
+                                        <div class="col-lg-2 col-md-12 col-sm-12" style="margin-top:2.3rem;">
+                                            <button type="submit" class="btn btn-primary"><i class="fa fa-filter"></i>Search</submit>
+                                        </div>
+                                        </div>
+
+                                        <div class="row mx-0">
+                                        <div class="col-lg-3 col-md-12 col-sm-12">
+                                            <label for="d_from_date">From Date</label>
+                                            <input type="date" name="d_from_date" id="d_from_date" class="form-control"> 
+                                        </div>
+                                        <div class="col-lg-3 col-md-12 col-sm-12">
+                                            <label for="d_to_date">To Date</label>
+                                            <input type="date" name="d_to_date" id="d_to_date" class="form-control"> 
+                                        </div>
+                                        <div class="col-lg-2 col-md-12 col-sm-12" style="margin-top:2.3rem;">
+                                            <button type="submit" class="btn btn-primary"><i class="fa fa-filter"></i>Daily Report</submit>
+                                        </div>
+                                    </div>
+                                </form>
+                            </span>
+                            <hr>
+						</div>   
+                    </div>
+                    
+                    <div class="row mx-0">
+                        <div class="col-sm-12 col-md-6 col-lg-12">
+                            <table id="mineInfo" class="table table-border">
+                                <thead class="text-center">
+                                    <tr>
+                                        {% if not day_wise_data %}<th>S.N</th>{%endif%}
+                                        <th>Date/Time</th>
+                                        {% if not day_wise_data %}<th>Vehicle No.</th>{%endif%}
+                                        {% if not day_wise_data %}<th>Product</th>{% endif %}
+                                        {% if not day_wise_data %}<th>E.Load</th>{% endif %}
+                                        {% if not day_wise_data %}<th>F.Load</th>{%endif%}
+                                        <th>{% if day_wise_data %}Total N.Load {%else%} N.Load {%endif%}</th>
+                                        {% if not day_wise_data %}<th>@</th>{%endif%}</th>
+                                        <th>{% if day_wise_data %}Total GST {%else%}GST{%endif%}</th>
+                                        <th>G.Total</th>
+                                        <th>{% if day_wise_data %}Total Pending{% else%}Pending{%endif%}</th>
+                                        {#<th>G.Total</th>#}
+                                        
+                                    </tr>
+                                </thead>
+                                <tbody class="text-center">
+                                    {% if date_wise_data %}
+
+                                    {% for data in date_wise_data %}
+                                    <tr>
+                                        <td>{{loop.index}}</td>
+                                        <td>{{data.in_date}}   {{data.in_time}}</td>
+                                        <td>{{data.vehicle_no}}</td>
+                                        <td>{{data.master_product}}{{data.master_product.id}}</td>
+                                        <td>{{data.in_weight}}</td>
+                                        <td>{{data.out_weight}}</td>
+                                        <td>{{data.net_weight}}</td>
+                                        <td>{{data.master_product.sale_rate}}</td>
+                                        <td>{{data.gst_amt}}</td>
+                                        <td>{{data.grand_total}}</td>
+                                        <td>{{data.pending_amt}}</td>
+                                        {#<td>
+                                        <a href="/mine/csv/report/download/{{data.id}}/" style="color:inherit;"><i class="fa fa-report"></i>Download Report</a></li>
+                                            <div class="tools">
+                                                <div class="text-right btn-group">
+                                                    <button type="button" class="btn btn-box-tool dropd own-toggle" 
+                                                            data-toggle="dropdown" aria-expanded="false">
+                                                    <i class="fa fa-ellipsis-v"></i>
+                                                    </button>
+                                                    <ul class="dropdown-menu" role="menu">
+                                                        <li><a href="/mine/csv/report/download/{{data.id}}/" style="color:inherit;"><i class="fa fa-report"></i>Download Report</a></li>
+                                                    </ul>
+                                                    
+                                                </div>
+                                            </div>
+                                        </td>
+                                        #}
+                                    </tr>
+                                    {% endfor %}
+                                    {% endif %}
+
+                                    {% if day_wise_data %} 
+                                    <tr>
+                                        <td>{{one_day_data}}</td>
+                                        <td>{{total_net_load}}</td>
+                                        <td>{{total_gst}}</td>
+                                        <td>{{total_grand_total}}</td>
+                                        <td>{{total_pending_amount}}</td>
+                                    </tr>
+                                    {% endif %}
+
+                                
+                                    {% if data_with_product %}
+                                    {% for data in data_with_product %}
+                                    <tr>
+                                        
+                                        <td>{{data.in_date}}</td>
+                                        <td>{{data.master_product}}</td>
+                                        <td>{{data.net_weight}}</td>
+                                        <td>{{data.gst_amt}}</td>
+                                        <td>{{data.grand_total}}</td>
+                                        <td>{{data.pending_amt}}</td>
+                                    </tr>
+                                    {% endfor %}
+                                    {% endif %}
+                                    
+                                </tbody>
+                            </table>            
+                        </div>
+					</div>
+				
+			</div>
+		</div>
+	</div>
+
+</section>
+
+
+<!-- End Here -->
+
+
+<script src="{{static ('vendor/jquery/jquery.min.js')}}"></script>
+
+<script>
+    $(document).ready(function(){
+        $('#mineInfo').DataTable({
+        "pagingType": "full_numbers"
+        });
+        $('dataTables_length').addClass('bs-select');
+    });
+    
+</script>
+
+<script>
+    $(document).ready(function() {
+        $('.select2_dropdown').select2();
+        });
+</script>
+
+
+<script>
+    //$(document).ready(function(e){
+    
+    $(document).on('click', '#filter_data', function(){
+
+    //function filter_data(){
+    
+        var start_date = $('#from_date').val();
+        var end_date = $('#to_date').val();
+        var company = $('#company_id').val();
+        //alert(company);
+        //alert(start_date);
+        //alert(end_date);
+        
+        $.ajax({
+            type: "GET",
+            url:"/transaction/mine/report/?company="+company+"&start_date="+start_date+"&end_date="+end_date+"",
+
+            //url:"/transaction/mine/info-list/?start_date="+start_date+"end_date="+end_date+"",
+            
+            success: function(data)
+            {alert("data");}
+
+            });
+        //}
+    }); 
+</script>
+<script>
+    $(document).ajaxStop(function(){
+        window.location.reaload();
+    });
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{#
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+<script>
+    $(function () {
+    
+        $('#from_date').datepicker({
+            autoclose: true, 
+            format: "yyyy-mm-dd",
+            todayHighlight: true            
+        });
+        
+        $('#to_date').datepicker({
+            autoclose: true, 
+            format: "yyyy-mm-dd",
+            todayHighlight: true
+        });
+
+        $('#filter_data').click(function(){
+
+                    document.location="?company=5&from_date="+$('#from_date').val()+"&to_date="
+                    +$('#to_date').val()+"";
+        });
+
+    })
+</script>
+#}
+
+{% endblock %}

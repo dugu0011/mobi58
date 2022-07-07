@@ -1,0 +1,299 @@
+{% extends "web/jinja2/base.html.j2" %}
+{% block content %}
+<!-- Begin Page Content -->
+<section class="py-md-5">
+	<div class="container-fluid">
+		<div class="col-12">
+			<div class="card mb-4 border-1">
+				<div class="card-header py-3 px-0 align-items-center bg-white border-0">
+					<div class="row">
+						<div class="col-9">
+							<h3 class="m-0 px-3 font-weight-bold text-dark">Crusher Purchase-Vehicle OUT</h3>
+						</div>
+					</div>
+				</div>
+				<form  method="post" enctype="multipart/form-data">
+				{{csrf_input}}
+				<div class="card-body px-0">
+                    <div class="row mx-0">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                    <table id="crusher-inbound-info" class="table table-border">
+                        <thead class="text-center">
+                            <tr>
+								<th>Vehicle No.</th>
+                                <th>Driver Name</th>
+								<th>Mobile</th>
+                                <th>Date</th>
+								<th>Status</th>
+								<th>Source</th>
+								<th>Action</th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody class="text-center">  
+							{% if not out_transaction %}<h4 class="text-center text-danger">You have no any Crusher access! </h4>{% else %}
+							{% for data in out_transaction %}
+							  
+                            <tr>
+								<td><a href="/transaction/crusher/out/{{data.id}}/?company={{company_id}}">{{data.vehicle_no}}</a></td>
+                                <td>{{data.driver_name}}</td>
+								<td>{{data.mobile}}</td>
+								<td>{{data.in_date}}</td>
+                                <td>{{data.status}}</td>
+								<td>{% if data.is_new == True %}External{%else%}Internal{% endif %}</td>
+								
+
+								<td>
+									<div class="dropdown show">
+										<a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+											<i class="fas fa-ellipsis-v"></i>
+										</a>													
+										<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+											<!--<a href="javascript:void(0);" data-toggle="modal" class="dropdown-item" data-target="" title="View detail"><i class="fa fa-truck" aria-hidden="true" style="color:green;"></i> Vehicle Out</a>-->
+											<a href="/crusher-token/?id={{data.id}}" class="dropdown-item" title="Token"><i class="fa fa-adjust" style="color:brown;"></i> Token</a>
+											<a href="/crusher-bill/?id={{data.id}}" class="dropdown-item" title="Bll"><i class="fa fa-credit-card" style="color:blue;"></i> Bill</a>
+											<a href="#" data-toggle="modal" data-target="#DetailViewList{{data.id}}" class="dropdown-item" title="View detail"><i class="fa fa-eye fa-1x" aria-hidden="true" style="color:magenta"></i> View</a>
+											{#<a href="javascript:void(0);" data-toggle="modal" class="dropdown-item" data-target="" title="Cancel This Transaction"><i class="fa fa-ban" aria-hidden="true" style="color:red"></i> Cancel</a>#}
+										</div>
+									</div>
+								</td>
+								
+                            </tr>
+							{% endfor %}
+							{% endif %}
+                        </tbody>
+                    </table>            
+                </div>
+                        <hr>
+					</div>
+				</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- End Here -->
+{% for data in out_transaction %}
+<section>
+  <!-- Crusher Entry Detail -->
+  
+    <div class="modal fade" id="DetailViewList{{data.id}}" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">{{data.vehicle_no}}</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+				<div class="card-body px-0">
+					<div class="row mx-0">	
+						<div class="col-lg-3 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="company_name">Company</label>
+								<input type="text" name="company_name" value="" placeholder="{{data.company_name}}" class="form-control" readonly>
+							</div>
+						</div>
+						<div class="col-lg-3 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="customer_name">Customer</label>
+								<input type="text" name="customer_name" value="{% if data.customer_name%}{{data.customer_name}} {%else%}--{%endif%}" class="form-control" readonly>
+							</div>
+						</div>
+						<div class="col-lg-3 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="in_date">In Date</label>
+								<input type="text" name="in_date" value="{{data.in_date}}" class="form-control" readonly>
+							</div>
+						</div>
+						<div class="col-lg-3 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="in_time">In Time</label>
+								<input type="text" name="in_time" value="{{data.in_time}}" class="form-control" readonly>
+							</div>
+						</div>
+						<div class="col-lg-3 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="mine_id">Mine Name</label>
+								<input type="text" name="mine_id" value="{{data.mine_id}}" class="form-control" readonly>
+							</div>
+						</div>
+						<div class="col-lg-3 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="crusher_id">Crusher Name</label>
+								<input type="text" name="crusher_id" value="{{data.crusher_id}}" class="form-control" readonly>
+							</div>
+						</div>
+						<div class="col-lg-3 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="vehicle_no">Vehicle No.</label>
+								<input type="text" name="vehicle_no" value="{{data.vehicle_no}}" class="form-control" readonly>
+							</div>
+						</div>
+						<div class="col-lg-3 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="driver_name">Driver</label>
+								<input type="text" name="driver_name" value="{{data.driver_name}}" class="form-control" readonly>
+							</div>
+						</div>
+						<div class="col-lg-3 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="mobile">Mobile</label>
+								<input type="number" name="mobile" value="{{data.mobile}}" class="form-control" readonly>
+							</div>
+						</div>
+						<div class="col-lg-3 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="product">Product</label>
+								<input type="text" name="product" value="{{data.master_product}}" class="form-control" readonly>
+							</div>
+						</div>
+						<div class="col-lg-3 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="price">Price</label>
+								<input type="number" name="price" value="{{data.price}}" class="form-control" readonly>
+							</div>
+						</div>
+						<div class="col-lg-3 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="ravana_no">Ravana No.</label>
+								<input type="text" name="ravana_no" value="{{data.ravana_no}}" class="form-control" readonly>
+							</div>
+						</div>
+						<div class="col-lg-3 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="amount">Amount</label>
+								<input type="text" name="amount" value="{{data.amount}}" class="form-control" readonly>
+							</div>
+						</div>
+						<div class="col-lg-3 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="kaata">Kaata No.</label>
+								<input type="text" name="kaata" value="{{data.in_kaata.kaata_no}}" class="form-control" readonly>
+							</div>
+						</div>	
+						<div class="col-lg-3 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="net_weight">Net Load</label>
+								<input type="text" name="net_weight" value="{{data.net_weight}}" class="form-control" readonly>
+							</div>
+						</div>
+						<div class="col-lg-3 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="in_weight">In Weight</label>
+								<input type="text" name="in_weight" value="{{data.in_weight}}" class="form-control" readonly>
+							</div>
+						</div>
+
+					</div>
+					<div class="row mx-0">
+                        <div class="col-lg-12 col-md-12 col-sm-12 bg-primary">
+                            <h5 style="color:white;"> Billing Detail </h5>
+                        </div>    
+                    </div>
+                    <div class="row mx-0">
+                        {% for data in  data.crusher_materialout.all() %}
+						{% if data.bill_type == 'purchase' %}
+                        <div class="col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="b_item_name">Item Name* </label>
+                                <input type="text" name="b_item_name" id="b_item_name" value="{{data.item_name}}" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="qty">Qty.*</label>
+                                <input type="text" name="qty" id="qty" value="{{data.quantity}}" placeholder="0.00" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="b_price">Billing Price*</label>
+                                <input type="text" name="b_price" id="b_price" value="{{data.billing_price}}" placeholder="0.00" class="form-control" readonly>
+                            </div>
+                        </div>
+						
+                        
+                        <div class="col-md-2 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="gst_per">% GST</label>
+                                <input type="number" name="gst_per" id="gst_per" value="{{data.gst_percentage}}" placeholder="0.00" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="gst_amt">GST Amount</label>
+                                <input type="number" name="gst_amt" id="gst_amt" value="{{data.gst_amount}}" placeholder="0.00" class="form-control" readonly>
+                            </div>
+                        </div>
+                        {%endif%}
+						{%endfor%}
+                    </div>
+                    <div class="row mx-0">
+                        <div class="col-lg-2 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="commission">Commission*</label>
+                                <input type="text" name="commission" id="commission" value="{{data.commission}}"  placeholder="0.00" class="form-control" readonly>
+                            </div>
+                        </div>
+						<div class="col-md-2 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="other_charges">Other Charges*</label>
+                                <input type="text" name="other_charges" id="other_charges" value="{{data.other_charges}}" placeholder="0.00" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="advance">Advance Payment</label>
+                                <input type="text" name="advance" id="advance" value="{{data.advance}}" placeholder="0.00" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="billing_amount">Billing Amount*</label>
+                                <input type="number" name="billing_amount" id="billing_amount" value="{{data.billing_amount}}" placeholder="0.00" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="pay_received">Payment Received*</label>
+                                <input type="number" name="pay_received" id="pay_received" value="{{data.payment_received}}" placeholder="0.00" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="p_amt">Pending Amount*</label>
+                                <input type="number" name="p_amt" id="p_amt" value="{{data.pending_amt}}" placeholder="0.00" class="form-control" readonly>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-2 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="grand_total">Grand Total*</label>
+                                <input type="text" name="grand_total" id="grand_total" value="{{data.grand_total}}" placeholder="0.00" class="form-control" readonly>
+                            </div>
+                        </div>
+                    </div> 
+				</div>			
+            </div>
+        </div>
+    </div>
+
+  
+</section>
+{% endfor %}
+
+<script src="{{static ('vendor/jquery/jquery.min.js')}}"></script>
+
+<script>
+    $(document).ready(function(){
+        $('#crusher-inbound-info').DataTable({
+        "pagingType": "full_numbers"
+        });
+        $('dataTables_length').addClass('bs-select');
+    });
+</script>
+
+
+{% endblock %}

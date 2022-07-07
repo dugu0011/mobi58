@@ -1,0 +1,66 @@
+ {% extends "web/jinja2/base.html.j2" %}
+{% block content %}
+
+
+<!-- Begin Page Content -->
+<section class="py-md-5">
+	<div class="container-fluid">
+		<div class="col-12">
+			<div class="card mb-4 border-1">
+				<div class="card-header py-3 px-0 align-items-center bg-white border-0">
+					<div class="row">
+						<div class="col-12">
+							<h3 class="m-0 px-3 font-weight-bold text-dark">User Edit</h3>
+						</div>
+					</div>
+				</div>
+				<form method="post" enctype="multipart/form-data">
+				{{csrf_input}}
+                
+				<div class="card-body px-0 text-dark font-weight-bold">
+                    {% for data in user_edit %}
+                    <div class="row mx-0">
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="name">Name*</label>
+                                <input type="text" value="{{data.name}}" name="name" id="name"  
+                                class="form-control">
+                                
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="email">Email *</label>
+                                <input type="email" value="{{data.email}}" name="email" id="name"  class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="gender">Gender*</label>
+                                <select class="custom-select form-control form-control-user rounded-1" required id="gender" name="gender">
+                                    <option value="" selected>Select</option>                                    
+                                    <option value='male'>Male</option>
+                                    <option value='female'>Female</option>
+                                    <option value='other'>Other</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div> 
+                    {% endfor %}
+					<div class="row mx-0 position-relative">
+        
+						<div class=" col-12 pt-4 text-center">
+							<button type="submit" class="btn bg-gradient-primary text-white rounded-1 f-s-18 px-4 py-2">Submit</button>
+						</div>
+					</div>
+				</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- End Here -->
+
+<script src="{{static ('vendor/jquery/jquery.min.js')}}"></script>
+
+{% endblock %}

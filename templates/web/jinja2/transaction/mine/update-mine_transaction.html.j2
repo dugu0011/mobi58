@@ -1,0 +1,397 @@
+ {% extends "web/jinja2/base.html.j2" %}
+{% block content %}
+
+
+<!-- Begin Page Content -->
+<section class="py-md-5">
+	<div class="container-fluid">
+		<div class="col-12">
+			<div class="card mb-4 border-1">
+				<div class="card-header py-3 px-0 align-items-center bg-white border-0">
+					<div class="row">
+						<div class="col-12">
+							<h3 class="m-0 px-3 font-weight-bold text-dark">Mine Exit</h3>
+                        </div>
+					</div>
+				</div>
+				<form method="post" enctype="multipart/form-data">
+				{{csrf_input}}
+                
+				<div class="card-body px-0 text-dark font-weight-bold">
+                    {% for u in user_data %}
+                    <div class="row mx-0">
+                        <input type="hidden" value="{{u.company_name.id}}" name="company_id">
+                        <div class="col-lg-12 col-md-12 col-sm-12 bg-primary">
+                            <h5 style="color:white;"> In Detail </h5>
+                        </div>    
+                    </div>
+                    <div class="row mx-0">
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="in_date">In Date*</label>
+                                <input type="text" value="{{u.in_date}}" name="in_date" id="in_date"  class="form-control"  readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="in_time">In Time*</label>
+                                <input type="text" value="{{u.in_time}}" name="in_time" id="in_time" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="truck_no">Vehicle No*</label>
+                                <input type="text" value="{{u.vehicle_no}}" name="vehicle_no" id="vehicle_no" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="driver_name">Driver Name*</label>
+                                <input type="text" value="{{u.driver_name}}"  name="driver_name" id="driver_name" class="form-control"  readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="mobile">Mobile*</label>
+                                <input type="text" name="mobile" id="mobile" value="{{u.mobile}}"  class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="kaata_no">WB58 Name*</label>
+                                <input type="text" name="kaata_no" id="Kaata_no" value="{{u.kaata_no}}" class="form-control"  readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="in_weight">Empty Load <small>(Ton)</small>*</label>
+                                <input type="text" name="in_weight" id="in_weight" value="{{u.in_weight}}" placeholder="0.00" class="form-control"  readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="advance_recieved">Advance Payment</label>
+                                <input type="number" name="advance_recieved" id="advance_recieved" {% if u.received_advance %} value="{{u.received_advance}}" {% else %} value="0" {%endif%} placeholder="0.00" class="form-control" readonly>
+                            </div>
+                        </div>
+                        
+                       
+                    </div>
+                    {% endfor %}
+                    <hr>
+                    <div class="row mx-0">
+                        <div class="col-lg-12 col-md-12 col-sm-12 bg-primary">
+                            <h5 style="color:white;"> Out Detail </h5>
+                        </div>    
+                    </div>
+                    <div class="row mx-0">
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="mine_name">Mine Name*</label>
+                                <select class="custom-select form-control form-control-user rounded-1 select2_dropdown" name="mine_name" id="mine_name" required>
+                                    <option value="" selected>Select</option>
+                                    {% for data in mines %}
+                                    <option value="{{data.id}}">({{data.lease_number}}) {% for i in owner %}{{i.owner_name}},{%endfor%}</option>
+                                    {%endfor%}
+                                </select>    
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="out_date">Out Date*</label>
+                                <input type="text" value="{{current_date}}" name="out_date" id="out_date" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="out_time">Out Time*</label>
+                                <input type="textsss" value="{{current_time}}" name="out_time" id="out_time" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="internal_external">Internal/External*</label>
+                                <select class="custom-select form-control form-control-user rounded-1 select2_dropdown" name="internal_external" id="internal_external">
+                                    <option value="internal" selected>Internal</option>
+                                    <option value="external">External</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12 vendor" id="internal">
+                            <div class="form-group mb-4">
+                                <label for="vendor_name">Customer Name*</label>
+                                <select class="custom-select form-control form-control-user rounded-1 select2_dropdown" name="crusher_id" id="crusher">
+                                    <option value="" selected>Select</option>
+                                    {% for data in crushers %}
+									<option value="{{data.id}}">{{data.crusher_name}}</option>
+									{%endfor%}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12 vendor" style="display:none;" id="external">
+                            <div class="form-group mb-4">
+                                <label for="vendor_name">Customer Name*</label>
+                                <select class="custom-select form-control form-control-user rounded-1" name="external_vendor" id="external_vendor">
+                                    <option value="" selected>Select</option>    
+                                    {% for data in customers %}
+									<option value="{{data.id}}">{{data.customer_name}}</option>
+									{%endfor%}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="product_type">Product Name*</label>
+                                <select class="custom-select form-control form-control-user rounded-1 select2_dropdown" name="product" id="product">
+                                    <option value="" selected>Select</option>
+                                    {% for data in products %}
+                                    <option value="{{data.id}}" class="{{data.sale_rate}},{{data.bill_rate}},{{data.gst_percent}},
+                                    {{data.sale_royalty_charges}},{{data.bill_royalty_charges}}">{{data.item_name}}</option>
+									{%endfor%}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="price">Price*</label>
+                                <input type="text" name="price" id="price" placeholder="0.00" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="out_kaata_no">WB58 Name*</label>
+                                <select class="custom-select form-control form-control-user rounded-1 select2_dropdown" name="out_kaata_no" id="out_kaata_no">
+                                    <option value="" selected>Select</option>
+                                    {% for data in kaata_number %}
+                                    <option value="{{data.id}}">{{data.kaata_no}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="out_weight">Full Load <small>(Ton)</small>*</label>
+                                <input type="number" name="out_weight" id="out_weight" step=".0001" placeholder="0.00" class="form-control sbwt">
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="net_weight">Net Load <small>(Ton)</small>*</label>
+                                <input type="text" name="net_weight" id="net_weight" placeholder="0.00" class="form-control" readonly>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-2 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="amount">Amount*</label>
+                                <input type="text" name="amount" id="amount" placeholder="0.00" class="form-control amount_percent" readonly>
+                            </div>
+                        </div>
+                        {% if companies.is_autoinvoice_no == False %}
+                        <div class="col-lg-2 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="invoice_no">Invoice No.</label>
+                                <input type="text" name="invoice_no" id="invoice_no" class="form-control">
+                            </div>
+                        </div>
+                        {%endif%}
+                        <div class="col-lg-2 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="ravana_no">Ravana No.*</label>
+                                <input type="text" name="ravana_no" id="ravana_no" class="form-control">
+                            </div>
+                        </div>
+                              
+                    </div>
+                    <hr>
+
+                    <div class="row mx-0">
+                        <div class="col-lg-12 col-md-12 col-sm-12 bg-primary">
+                            <h5 style="color:white;"> Billing Detail </h5>
+                        </div>    
+                    </div>
+                    <div class="row mx-0">
+                        <div class="col-md-2 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="b_item_name">Item Name*</label>
+                                <input type="text" name="b_item_name" id="b_item_name" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-1 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="qty">Qty.*</label>
+                                <input type="number" name="qty" id="qty" step=".0001" placeholder="0.00" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="b_price">Billing Price*</label>
+                                <input type="number" name="b_price" id="b_price" step=".0001" placeholder="0.00" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="billing_amount">Billing Amount*</label>
+                                <input type="number" name="billing_amount" id="billing_amount" placeholder="0.00" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-1 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="gst_per">%GST*</label>
+                                <input type="number" name="gst_per" id="gst_per" {% if price_gst %} value="{{price_gst.gst_percent}}"{% endif %} placeholder="0.00" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="gst_amt">GST Amount*</label>
+                                <input type="number" name="gst_amt" id="gst_amt" placeholder="0.00" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="grand_total">Total*</label>
+                                <input type="text" name="bill_grand_total" id="bill_grand_total" placeholder="0.00" class="form-control" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    
+                   {# <div class="row mx-0">
+                        
+                        <div class="col-lg-2 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="balance">Balance*</label>
+                                <input type="text" name="balance" id="balance" placeholder="0.00" class="form-control" readonly>
+                            </div>
+                        </div>
+                        
+                    </div>#}
+                    <div class="row mx-0">
+                        <div class="col-lg-12 col-md-12 col-sm-12 bg-primary">
+                            <h5 style="color:white;"> Sale Detail </h5>
+                        </div>    
+                    </div>
+                    <div class="row mx-0">
+                        <div class="col-md-2 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="sale_item_name">Item Name*</label>
+                                <input type="text" name="sale_item_name" id="sale_item_name" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="sale_qty">Qty.*</label>
+                                <input type="text" name="sale_qty" id="sale_qty" placeholder="0.00" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="sale_price">Sale Price*</label>
+                                <input type="text" name="sale_price" id="sale_price" placeholder="0.00" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="sale_amount">Sale Amount*</label>
+                                <input type="number" name="sale_amount" id="sale_amount" placeholder="0.00" class="form-control" readonly>
+                            </div>
+                        </div>
+                        {#<div class="col-md-2 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="sale_gst_per">% GST*</label>
+                                <input type="number" name="sale_gst_per" id="gst_per" {% if price_gst %} value="{{price_gst.gst_percent}}"{% endif %} placeholder="0.00" class="form-control" readonly>
+                            </div>
+                        </div>#}
+                        <div class="col-md-2 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="sale_gst_amt">GST Amount*</label>
+                                <input type="number" name="sale_gst_amt" id="sale_gst_amt" placeholder="0.00" class="form-control" readonly>
+                            </div>
+                        </div>
+                        
+
+                        <div class="col-lg-2 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="sale_grand_total">Total*</label>
+                                <input type="text" name="sale_grand_total" id="sale_grand_total" placeholder="0.00" class="form-control sale_grand_total" readonly>
+                            </div>
+                        </div>
+                        
+                    </div>
+
+                    <div class="row mx-0">
+                        <div class="col-lg-12 col-md-12 col-sm-12 bg-primary">
+                            <h5 style="color:white;"> Calculation </h5>
+                        </div>    
+                    </div>
+                    <div class="row mx-0">
+                        <div class="col-lg-2 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="commission">Commission*</label>
+                                <input type="number" name="commission" id="commission" step="0.0001" placeholder="0.00" class="form-control">
+                            </div>
+                        </div>
+                        {% for u in user_data %}
+                        <div class="col-lg-2 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="advance">Advance Payment</label>
+                                <input type="text" name="advance" id="advance" value="{{u.received_advance}}" placeholder="0.00" class="form-control" readonly>
+                            </div>
+                        </div>
+                        {% endfor%}
+                        <div class="col-md-2 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="other_charges">Other Charges*</label>
+                                <input type="number" name="other_charges" id="other_charges" step="0.0001" placeholder="0.00" onblur="OtherCharges()" class="form-control other_charges">
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="royalty_charges">Royalty Charges*</label>
+                                <input type="number" name="royalty_charges" id="royalty_charges" step="0.0001" placeholder="0.00" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="pay_received">Payment Received*</label>
+                                <input type="number" name="pay_received" id="pay_received" value="0" step=".0001" placeholder="0.00" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="p_amt">Pending Amount*</label>
+                                <input type="number" name="p_amt" id="p_amt" placeholder="0.00" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="grand_total">Grand Total*</label>
+                                <input type="text" name="grand_total" value="0" id="grand_total" placeholder="0.00" class="form-control grand_total block-tab" onblur="OtherCharges()" readonly>
+                            </div>
+                        </div>
+                    </div>
+                   
+                    <hr>	
+					<div class="row mx-0 position-relative">
+        
+						<div class=" col-12 pt-4 text-center">
+							<button type="reset" class="btn btn-white text-dark border rounded-1 bg-white f-s-18 px-4 py-2 mr-3">Reset</button>
+							<button type="submit"  class="btn bg-gradient-primary text-white rounded-1 f-s-18 px-4 py-2">Submit</button>
+						</div>
+					</div>
+				</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- End Here -->
+
+
+
+<script src="{{static ('vendor/jquery/jquery.min.js')}}"></script>
+<script src="{{static ('js/tech58/minesale_exit.js')}}"></script>
+
+
+
+
+{% endblock %}

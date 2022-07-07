@@ -1,0 +1,76 @@
+<html>
+    <head>
+        <title></title>
+        <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/font-awesome-line-awesome/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+  <link href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
+
+  <!-- Custom styles for this template-->
+  <link href="{{static ('css/sb-admin-2.css')}}" rel="stylesheet">
+  <link href="{{static ('css/custom.css')}}" rel="stylesheet">
+  <link href="{{static ('css/bootstrap-select.css')}}" rel="stylesheet">
+  <link href="{{static('toastr/toastr.min.css')}}" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/line-awesome/1.3.0/line-awesome/css/line-awesome.min.css" integrity="sha512-vebUliqxrVkBy3gucMhClmyQP9On/HAWQdKDXRaAlb/FKuTbxkjPKUyqVOxAcGwFDka79eTF+YXwfke1h3/wfg==" crossorigin="anonymous" />
+    
+    <style>
+            @media print{
+                body * {visibility:hidden;}
+                .print_part * {visibility:visible;}
+            }
+            .heading{
+                background-color:#f6c23e;
+            }
+            .heading strong{
+                color:red; 
+                padding-top:5px;
+                padding-bottom:0px;
+            }
+            .dynmic_data p{
+                margin-bottom:0px!important;
+                color:black;
+            }
+            
+    </style>
+    
+    </head>
+    
+    <body style="background-color:black;font-size:0.9rem;">
+        <input type="hidden" value="{{request.GET.company_id}}">
+        <div class="container-flood print_part">
+            <div class="col-2 bg-light ml-5 mt-2" style="border-radius:8px;">
+                <div class="text-center text-light heading">
+                    {% if obj_get.mine_transaction_id %}
+                    <strong>Mines Material Out </strong>
+                    {% else %}
+                    <strong>Crusher Material Out </strong>
+                    {% endif %}
+                </div>
+                <hr>
+                <div class="dynmic_data ml-2 mr-2">
+                    <p><b>Txn Id</b>: {% if obj_get.mine_transaction_id %}{{obj_get.mine_transaction_id}}{%else%}{{obj_get.crusher_transaction_id}}{%endif%}<p>
+                    <p><b>In Time</b>: {{obj_get.in_time}}<p>
+                    <p><b>Kaata No.</b>: {%if obj_get.kaata_no%}{{obj_get.kaata_no}}{%else%}--{%endif%}<p>
+                    <p><b>Mines</b>: {% if obj_get.mine_id == None %} --{%else%}{{obj_get.mine_id}}{%endif%}<p>
+                    <p><b>Vehicle No.</b>: {{obj_get.vehicle_no}}<p>
+                    <p><b>Empty Load</b>: {{obj_get.in_weight}}<p>
+                    <p><b>Advance</b>: {% if obj_get.received_advance == None %} --{%else%}{{obj_get.received_advance}}{%endif %}<p>
+                </div>
+                <hr>
+            </div>
+        </div>
+        
+        
+        <div style="margin-left:8%">
+            <button class="btn btn-primary btn-sm" onclick="window.print()">Print</button>
+            {% if obj_get.mine_transaction_id %}
+            <a href="/transaction/exit-list/" class="btn btn-primary btn-sm" style="background-color:skyblue!important;">Back</a>
+            {% elif obj_get.transaction_type=='inbound' %}
+            <a href="/transaction/crusher/exit-list/" class="btn btn-primary btn-sm" style="background-color:skyblue!important;">Back</a>
+            {%else%}
+            <a href="/crusher/outbondexit/?company={{company_id}}" class="btn btn-primary btn-sm" style="background-color:skyblue!important;">Back</a>
+            {% endif %}
+        </div>    
+    </body>
+</html>
+    

@@ -1,0 +1,836 @@
+{% extends "web/jinja2/base.html.j2" %}
+{% block content %}
+<!-- Begin Page Content -->
+{#<style>
+    @media print{
+        body * {visibility:hidden;}
+        .print_part * {visibility:visible;}
+    }
+<style>#}
+<section class="py-md-5">
+	<div class="container-fluid">
+		<div class="col-12">
+			<div class="card mb-4 border-1">
+				<div class="card-header py-3 px-0 align-items-center bg-white border-0">
+					<div class="row">
+						<div class="col-4">
+							<h3 class="m-0 px-3 font-weight-bold text-dark">Mine Out Detail</h3>
+						</div>
+                        <div class="col-5">
+							<span class="m-0 px-1">
+							<button type="button" class="btn btn-success" data-toggle="modal" data-target=".ItemSummaryModal">Item Summary</button>
+							</span>
+                            
+                            <span class="m-0 px-1">
+							<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".DailyReportModal">Daily Report</button>
+							</span>
+                            <span class="m-0 px-1">
+							<button type="button" class="btn btn-warning" data-toggle="modal" data-target=".MonthlyReportModal">Monthly Report</button>
+							</span>
+                            <span>
+						</div>   
+					</div>
+				</div>
+
+                    <div class="row mx-0">
+                        <div class="col-sm-12 col-md-6 col-lg-12">
+                            <table id="mineInfo" class="table table-border">
+                                <thead class="text-center">
+                                    <tr>
+                                        <th>Vehicle No.</th>
+                                        <th>Driver Name</th>
+                                        <th>Net Weight</th>
+                                        <th>Mobile </th>
+                                        <th>Date</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-center">    
+                                    {% for data in info_mine_transaction %}  
+                                    <tr> 
+                                        <td>{{data.vehicle_no}}</td>
+                                        <td>{{data.driver_name}}</td>
+                                        <td>{{data.net_weight}}</td>
+                                        <td>{{data.mobile}}</td>
+                                        {#<td>{{data.mine_id}}</td>#}
+                                        <td>{{data.out_date}}</td>
+                                        <td>{{data.status}}</td>
+                                        <td>
+                                        
+                                        <div class="dropdown show">
+                                            <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class="fas fa-ellipsis-v"></i>
+                                            </a>													
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                <a href="#" data-toggle="modal" data-target="#DetailViewList{{data.id}}" class="dropdown-item" title="View">View</a>
+                                                    <a href="/mine/sale/edit/{{data.id}}/{{company_id}}" class="dropdown-item" title="Update"><i class="fa fa-adjust" style="color:blue"></i> Edit</a>
+                                                <a href="/mine-token/?id={{data.id}}&company={{company_id}}" class="dropdown-item" title="Token">Token</a>
+                                                {#<a href="/transaction/mine/info-delete/{{data.id}}/{{company_id}}/" class="dropdown-item" title="Delete" style="color:magenta;"> Cancel</a>#}
+                                               {# <a href="/reports/generate/invoice/crusher/{{data.id}}/{{company_id}}" class="dropdown-item" title="Invoice">Invoice</a>#}
+                                            </div>
+                                        </div>
+                                    </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>            
+                        </div>
+					</div>
+				
+			</div>
+		</div>
+	</div>
+
+</section>
+
+
+<!-- End Here -->
+{% for data in info_mine_transaction %}
+<section>
+  <!-- Mine Sale List Detail -->
+  
+    <div class="modal fade" id="DetailViewList{{data.id}}" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">{{data.vehicle_no}}{{data.id}}</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+				<div class="card-body px-0">
+					<div class="row mx-0">
+						<div class="col-lg-12 col-md-12 col-sm-12 bg-primary">
+                            <h5 style="color:white;"> In Detail View </h5>
+                        </div> 
+						<div class="col-lg-3 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="company_name">Company</label>
+								<input type="text" name="company_name" value="" placeholder="{{data.company_name}}" class="form-control" readonly>
+							</div>
+						</div>
+						<div class="col-lg-3 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="customer_name">Customer</label>
+								<input type="text" name="customer_name" value="{% if data.customer_name%}{{data.customer_name}} {%else%}--{%endif%}" class="form-control" readonly>
+							</div>
+						</div>
+						<div class="col-lg-3 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="in_date">In Date</label>
+								<input type="text" name="in_date" value="{{data.in_date}}" class="form-control" readonly>
+							</div>
+						</div>
+						<div class="col-lg-3 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="in_time">In Time</label>
+								<input type="text" name="in_time" value="{{data.in_time}}" class="form-control" readonly>
+							</div>
+						</div>
+						<div class="col-lg-3 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="vehicle_no">Vehicle No.</label>
+								<input type="text" name="vehicle_no" value="{{data.vehicle_no}}" class="form-control" readonly>
+							</div>
+						</div>
+						<div class="col-lg-2 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="driver_name">Driver</label>
+								<input type="text" name="driver_name" value="{{data.driver_name}}" class="form-control" readonly>
+							</div>
+						</div>
+						<div class="col-lg-3 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="mobile">Mobile</label>
+								<input type="text" name="mobile" value="{{data.mobile}}" class="form-control" readonly>
+							</div>
+						</div>
+						<div class="col-lg-2 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="kaata">Kaata No.</label>
+								<input type="text" name="kaata" value="{{data.kaata_no}}" class="form-control" readonly>
+							</div>
+						</div>
+
+						<div class="col-lg-2 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="in_weight">In Weight</label>
+								<input type="text" name="in_weight" value="{{data.in_weight}}" class="form-control" readonly>
+							</div>
+						</div>
+						<div class="col-lg-2 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="advance">Advance</label>
+								<input type="text" name="advance" value="{{data.received_advance}}" class="form-control" readonly>
+							</div>
+						</div>
+					</div>
+                    <div class="row mx-0">
+                        <div class="col-lg-12 col-md-12 col-sm-12 bg-primary">
+                            <h5 style="color:white;"> Out Detail View </h5>
+                        </div>    
+                    </div>
+                    <div class="row mx-0">
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="mine_name">Mine Name</label>
+                                <input type="text" value="{{data.mine_id}}" name="mine_name" id="mine_name" class="form-control" readonly>    
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="out_date">Out Date</label>
+                                <input type="text" value="{{data.out_date}}" name="out_date" id="out_date" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="out_time">Out Time</label>
+                                <input type="text" value="{{data.out_time}}" name="out_time" id="out_time" class="form-control" readonly>
+                            </div>
+                        </div>
+						<div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="out_time">Internal/External</label>
+                                <input type="text" value="{{data.internal_external}}" name="internal_external" id="internal_external" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="vendor_name">Customer Name*</label>
+                                <input type="text" name="vendor_name" id="vendor_name" placeholder="{{data.crusher_id}}" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="master_product">Product Name</label>
+                                <input type="text" name="master_product" id="master_product" placeholder="{{data.master_product.item_name}}" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="price">Price</label>
+                                <input type="text" name="price" id="price" placeholder="{{data.price}}" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="out_kaata_no">Out Kaata No</label>
+                                <input type="text" name="out_kaata_no" id="out_kaata_no" placeholder="{{data.out_kaata_no}}" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="out_weight">Full Load</label>
+                                <input type="text" name="out_weight" id="out_weight" placeholder="{{data.out_weight}}" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="net_weight">Net Load</label>
+                                <input type="text" name="net_weight" id="net_weight" placeholder="{{data.net_weight}}" class="form-control" readonly>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-22 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="amount">Amount*</label>
+                                <input type="text" name="amount" id="amount" placeholder="{{data.amount}}" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="item_name">Invoice</label>
+								<input type="text" value="{{data.invoice_number}}" class="form-control" readonly>    
+							</div>
+						</div>
+                        <div class="col-lg-2 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="ravana_no">Ravana No.*</label>
+                                <input type="text" name="ravana_no" id="ravana_no" placeholder="{{data.ravana_no}}" class="form-control" readonly>
+                            </div>
+                        </div>
+                              
+                    </div>
+					<div class="row mx-0">
+                        <div class="col-lg-12 col-md-12 col-sm-12 bg-primary">
+                            <h5 style="color:white;"> Bill Detail View </h5>
+                        </div>    
+                    </div>
+					<div class="row mx-0">
+                        {% for i in data.mine_materialminesale.all() %}
+                        {% if i.bill_type == 'minebill' %}
+						<div class="col-lg-3 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="item_name">Item Name</label>
+								<input type="text" value="{{i.item_name}}" class="form-control" readonly>    
+							</div>
+						</div>
+                        <div class="col-lg-2 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="quanity">Quantity</label>
+								<input type="text" value="{{i.quantity}}" class="form-control" readonly>    
+							</div>
+						</div>
+						<div class="col-lg-2 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="item_name">Price</label>
+								<input type="text" value="{{i.billing_price}}" class="form-control" readonly>    
+							</div>
+						</div>
+						
+						<div class="col-lg-1 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="item_name">%GST</label>
+								<input type="text" value="{{i.gst_percentage}}" class="form-control" readonly>    
+							</div>
+						</div>
+						<div class="col-lg-2 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="item_name">Gst Amount</label>
+								<input type="text" value="{{i.gst_amount}}" class="form-control" readonly>    
+							</div>
+						</div>
+						
+						<div class="col-lg-2 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="item_name">Billing Amount</label>
+								<input type="text" value="{{i.billing_amount}}" class="form-control" readonly>    
+							</div>
+						</div>
+                        <div class="col-lg-2 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="item_name">Total</label>
+								<input type="text" value="{{i.total_amount}}" class="form-control" readonly>    
+							</div>
+						</div>
+					    {%endif%}
+                        {%endfor%}							
+					</div>
+                    <div class="row mx-0">
+                        <div class="col-lg-12 col-md-12 col-sm-12 bg-primary">
+                            <h5 style="color:white;"> Sale Detail View </h5>
+                        </div>    
+                    </div>
+					<div class="row mx-0">
+                        {% for i in data.mine_materialminesale.all() %}
+                        {% if i.bill_type == 'minesale' %}
+						<div class="col-lg-3 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="item_name">Item Name</label>
+								<input type="text" value="{{i.item_name}}" class="form-control" readonly>    
+							</div>
+						</div>
+                        <div class="col-lg-2 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="quanity">Quantity</label>
+								<input type="text" value="{{i.quantity}}" class="form-control" readonly>    
+							</div>
+						</div>
+						<div class="col-lg-2 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="item_name">Price</label>
+								<input type="text" value="{{i.billing_price}}" class="form-control" readonly>    
+							</div>
+						</div>
+						
+						<div class="col-lg-2 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="item_name">Gst Amount</label>
+								<input type="text" value="{{i.gst_amount}}" class="form-control" readonly>    
+							</div>
+						</div>
+						
+						<div class="col-lg-2 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="item_name">Billing Amount</label>
+								<input type="text" value="{{i.billing_amount}}" class="form-control" readonly>    
+							</div>
+						</div>
+                        <div class="col-lg-2 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="item_name">Total</label>
+								<input type="text" value="{{i.total_amount}}" class="form-control" readonly>    
+							</div>
+						</div>
+					    {%endif%}
+                        {%endfor%}							
+					</div>
+
+                    <div class="row mx-0">
+                        <div class="col-lg-12 col-md-12 col-sm-12 bg-primary">
+                            <h5 style="color:white;"> Calculation View </h5>
+                        </div>    
+                    </div>
+                    <div class="row mx-0">        
+                        <div class="col-lg-2 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="item_name">Commission</label>
+								<input type="text" value="{{data.commission}}" class="form-control" readonly>    
+							</div>
+						</div>
+						<div class="col-lg-2 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="item_name">Advance</label>
+								<input type="text" value="{{data.advance}}" class="form-control" readonly>    
+							</div>
+						</div>
+                        <div class="col-lg-2 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="item_name">Other Charges</label>
+								<input type="text" value="{{data.other_charges}}" class="form-control" readonly>    
+							</div>
+						</div>
+						<div class="col-lg-2 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="royalty">Royalty Charges</label>
+								<input type="text" value="{{data.royalty_charges}}" class="form-control" readonly>    
+							</div>
+						</div>
+						<div class="col-lg-2 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="item_name">&#8377; Received</label>
+								<input type="text" value="{{data.payment_received}}" class="form-control" readonly>    
+							</div>
+						</div>
+						<div class="col-lg-2 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="item_name">&#8377; Pending</label>
+								<input type="text" value="{{data.pending_amt}}" class="form-control" readonly>    
+							</div>
+						</div>
+                        <div class="col-lg-2 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="item_name">Grand Total</label>
+								<input type="text" value="{{data.grand_total}}" class="form-control" readonly>    
+							</div>
+						</div>
+                    </div>    
+                    <hr>
+				</div>			
+            </div>
+        </div>
+    </div>
+
+</section>
+{% endfor %}
+
+<section>
+  <!-- Item Summary Modal-->
+    <div class="modal fade ItemSummaryModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-warning">
+                <button class="btn btn-danger btn-sm" onclick="window.print()"><i class="fas fa-print"></i></button>
+                <h5 class="modal-title ml-5 text-danger" id="exampleModalLabel">Item Summary</h5>
+                <button class="close text-danger" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+        
+            <div class="card-body px-0">
+                <div class="row mx-0">
+                    <div class="col-lg-12 col-md-12 col-sm-12" style="font-size:10px;">
+                        <table class="table table-border table-sm" style="overflow-x:auto;">
+                            <thead class="text-center">
+                                <tr>
+                                    <th scope="col">Month</th>
+                                    <th scope="col">April</th>
+                                    <th scope="col">May</th>
+                                    <th scope="col">June</th>
+                                    <th scope="col">July</th>
+                                    <th scope="col">Aug</th>
+                                    <th scope="col">Sept</th>
+                                    <th scope="col">Oct</th>
+                                    <th scope="col">Nov</th>
+                                    <th scope="col">Dec</th>
+                                    <th scope="col">Jan</th>
+                                    <th scope="col">Feb</th>
+                                    <th scope="col">March</th>
+                                    <th scope="col">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-center">  
+                                
+                                    {% for product in products %}
+                                    <tr>
+                                    <td>{{product.item_name}}</td>
+                                    {% for data in monthly_data_all %}
+                                    <td>{{data.grand_total}}</td>
+                                    {% endfor %}
+                                    </tr>
+                                    {% endfor %}
+                                
+                                <tr>
+                                    <td>Boulder</td>
+                                    <td>1545.00</td>
+                                    <td>9544.00</td>
+                                    <td>1255.00</td>
+                                    <td>6954.78</td>
+                                    <td>3684.45</td>
+                                    <td>8456.59</td>
+                                    <td>1545.00</td>
+                                    <td>9544.00</td>
+                                    <td>1255.00</td>
+                                    <td>6954.78</td>
+                                    <td>3684.45</td>
+                                    <td>8456.59</td>
+                                    <td>15444487.86</td>
+                                </tr>
+                                                                
+                            </tbody>
+                        </table>            
+                    </div>
+                <div>  
+            </div>	
+            <div class="modal-footer">
+            </div>
+                
+                  
+        </div>
+        </div>
+  </div>
+</section>
+
+<section>
+    <!-- Daily Report Modal-->
+    <div class="modal fade DailyReportModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-warning">
+                <button class="btn btn-danger btn-sm" onclick="window.print()"><i class="fas fa-print"></i></button>
+                <h5 class="modal-title ml-5 text-danger" id="exampleModalLabel">Daily Report</h5>
+                <button class="close text-danger" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+        
+            <div class="card-body px-0">
+                <div class="row mx-0">
+                <div class="col-lg-12 col-md-12 col-sm-12 mb-4 text-right" style="font-size:10px;">
+                    <strong class=" text-dark font-weight-bold">Filter by date:</strong> 
+                    From <input type="date" name="from_date" id="get_from_date"> 
+                    To <input type="date" name="to_date" id="get_to_date" >
+                    <button class="filter_data" id="filter_data"><i class="fa fa-filter"></i>Search</button>
+                    </div>
+                </div>
+                <div class="row mx-0">
+                    <div class="col-lg-12 col-md-12 col-sm-12" style="font-size:10px;">
+                        <table class="table table-bordered table-sm" style="overflow-x:auto;">
+                            <thead class="text-center">
+                                <tr style="color:black; font-weight:bold;">
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Net Load</th>
+                                    <th scope="col">GST Amount</th>
+                                    <th scope="col">Total Amount</th>
+                                    <th scope="col">Pending Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-center">  
+                                
+                                {% for m in monthly_data %}
+                                <tr>
+                                <td>{{m.in_date}}</td>
+                                <td>{{m.net_weight}}</td>
+                                <td>{{m.gst_amt}}</td>
+                                <td>{{m.grand_total}}</td>
+                                <td>{{m.pending_amt}}</td>
+                                </tr>
+                                {% endfor %}
+                                
+                            </tbody>
+                        </table>            
+                    </div>
+                <div>  
+            </div>	
+            <div class="modal-footer">
+            </div>
+                
+                  
+        </div>
+        </div>
+  </div>
+</section>
+
+
+<section>
+    <!-- Monthly Report Modal-->
+    <div class="modal fade MonthlyReportModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-warning">
+                <button class="btn btn-danger btn-sm" onclick="window.print()"><i class="fas fa-print"></i></button>
+                <h5 class="modal-title ml-5 text-danger" id="exampleModalLabel">Monthly Report</h5>
+                <button class="close text-danger" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+        
+            <div class="card-body px-0">
+                <div class="row mx-0">
+                    <div class="col-lg-12 col-md-12 col-sm-12" style="font-size:10px;">
+                        <table class="table table-bordered table-sm" style="overflow-x:auto;">
+                            <thead class="text-center">
+                                <tr style="color:black; font-weight:bold;">
+                                    <th scope="col">Month</th>
+                                    <th scope="col">Net Load</th>
+                                    <th scope="col">GST Amount</th>
+                                    <th scope="col">Total Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-center">  
+                                
+                                {% for m in monthly_data %}
+                                <tr>
+                                <td>{{m.in_date}}</td>
+                                <td>{{m.net_weight}}</td>
+                                <td>{{m.gst_amt}}</td>
+                                <td>{{m.grand_total}}</td>
+                                </tr>
+                                {% endfor %}
+                                
+                            </tbody>
+                        </table>            
+                    </div>
+                <div>  
+            </div>	
+            <div class="modal-footer">
+            </div>
+                
+                  
+        </div>
+        </div>
+  </div>
+</section>
+
+{% for data in info_mine_transaction %}
+<section>
+  <!-- Mine Info Detail -->
+  
+    <div class="modal fade" id="DetailViewList{{data.id}}" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">{{data.vehicle_no}}</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+				<div class="card-body px-0">
+					<div class="row mx-0">
+						
+						<div class="col-lg-3 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="company_name">Company</label>
+								<input type="text" name="company_name" value="" placeholder="{{data.company_name}}" class="form-control" readonly>
+							</div>
+						</div>
+						<div class="col-lg-3 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="customer_name">Customer</label>
+								<input type="text" name="customer_name" value="{% if data.customer_name%}{{data.customer_name}} {%else%}--{%endif%}" class="form-control" readonly>
+							</div>
+						</div>
+						<div class="col-lg-3 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="in_date">In Date</label>
+								<input type="text" name="in_date" value="{{data.in_date}}" class="form-control" readonly>
+							</div>
+						</div>
+						<div class="col-lg-3 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="in_time">In Time</label>
+								<input type="text" name="in_time" value="{{data.in_time}}" class="form-control" readonly>
+							</div>
+						</div>
+						<div class="col-lg-3 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="vehicle_no">Vehicle No.</label>
+								<input type="text" name="vehicle_no" value="{{data.vehicle_no}}" class="form-control" readonly>
+							</div>
+						</div>
+						<div class="col-lg-3 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="driver_name">Driver</label>
+								<input type="text" name="driver_name" value="{{data.driver_name}}" class="form-control" readonly>
+							</div>
+						</div>
+						<div class="col-lg-3 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="mobile">Mobile</label>
+								<input type="text" name="mobile" value="{{data.mobile}}" class="form-control" readonly>
+							</div>
+						</div>
+						<div class="col-lg-3 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="kaata">Kaata No.</label>
+								<input type="text" name="kaata" value="{{data.kaata_no}}" class="form-control" readonly>
+							</div>
+						</div>
+
+						<div class="col-lg-3 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="in_weight">In Weight</label>
+								<input type="text" name="in_weight" value="{{data.in_weight}}" class="form-control" readonly>
+							</div>
+						</div>
+						<div class="col-lg-3 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="advance">Advance</label>
+								<input type="text" name="advance" value="{{data.received_advance}}" class="form-control" readonly>
+							</div>
+						</div>
+					</div>
+                    <div class="row mx-0">
+                        <div class="col-lg-12 col-md-12 col-sm-12 bg-primary">
+                            <h5 style="color:white;"> Out Detail </h5>
+                        </div>    
+                    </div>
+                    <div class="row mx-0">
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="mine_name">Mine Name*</label>
+                                <input type="text" value="{{data.mine_name}}" name="mine_name" id="mine_name" class="form-control" readonly>    
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="out_date">Out Date*</label>
+                                <input type="text" value="{{data.out_date}}" name="out_date" id="out_date" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="out_time">Out Time*</label>
+                                <input type="textsss" value="{{data.out_time}}" name="out_time" id="out_time" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="vendor_name">Customer Name*</label>
+                                <input type="text" name="vendor_name" id="vendor_name" placeholder="{{data.customer_name}}" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="master_product">Product Name*</label>
+                                <input type="text" name="master_product" id="master_product" placeholder="{{data.master_product.item_name}}" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="price">Price*</label>
+                                <input type="text" name="price" id="price" placeholder="{{data.price}}" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="out_kaata_no">Out Kaata No*</label>
+                                <input type="text" name="out_kaata_no" id="out_kaata_no" placeholder="{{data.out_kaata_no}}" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="out_weight">Full Load <small>(Ton)</small>*</label>
+                                <input type="text" name="out_weight" id="out_weight" placeholder="{{data.out_weight}}" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="net_weight">Net Load <small>(Ton)</small>*</label>
+                                <input type="text" name="net_weight" id="net_weight" placeholder="{{data.net_weight}}" class="form-control" readonly>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="amount">Amount*</label>
+                                <input type="text" name="amount" id="amount" placeholder="{{data.amount}}" class="form-control" readonly>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="ravana_no">Ravana No.*</label>
+                                <input type="text" name="ravana_no" id="ravana_no" placeholder="{{data.ravana_no}}" class="form-control" readonly>
+                            </div>
+                        </div>
+                              
+                    </div>
+                    <hr>
+				</div>			
+            </div>
+        </div>
+    </div>
+
+  
+</section>
+{% endfor %}
+
+<script src="{{static ('vendor/jquery/jquery.min.js')}}"></script>
+
+<script>
+    $(document).ready(function(){
+        $('#mineInfo').DataTable({
+        "pagingType": "full_numbers"
+        });
+        $('dataTables_length').addClass('bs-select');
+    });
+    
+</script>
+
+<script>
+    $('.ItemSummaryModal').modal(
+        {
+        keyboard:false;
+        }
+        )
+</script>
+<script>
+    $('.MonthlyReportModal').modal(
+        {
+        keyboard:false;
+        }
+        )
+</script>
+
+
+
+
+
+<script>
+    //$(document).ready(function(e){
+    
+    $(document).on('click', '#filter_data', function(){
+
+    //function filter_data(){
+    
+        var start_date = $('#get_from_date').val();
+        var end_date = $('#get_to_date').val();
+        //alert(start_date);
+        //alert(end_date);
+        
+        $.ajax({
+            type: "GET",
+            url:"/transaction/mine/report/?start_date="+start_date+"&end_date="+end_date+"",
+            success: function(data)
+            {alert("Hello");}
+
+            });
+        //}
+    }); 
+</script>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+

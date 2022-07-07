@@ -1,0 +1,93 @@
+{% extends "web/jinja2/base.html.j2" %}
+{% block title %} All Ticket {% endblock %}
+{% block title_header %}Raise Ticket{% endblock %}
+{% block content %}
+
+<style>
+    input[type=text],
+    input[type=email],
+    input[type=file],
+    select,
+    textarea {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ccc;
+        margin-top: 6px;
+        margin-bottom: 16px;
+        resize: vertical;
+    }
+
+    input[type=submit] {
+        background-color: #4e73df;
+        color: white;
+        padding: 12px 20px;
+        border: none;
+        cursor: pointer;
+    }
+
+    input[type=submit]:hover {
+        background-color: #4e73df;
+    }
+
+    /* Create two columns that float next to eachother */
+
+    .column {
+        float: left;
+        width: 50%;
+        margin-top: 6px;
+        padding: 20px;
+    }
+
+    /* Clear floats after the columns */
+
+    .row:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+
+    /* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+
+    @media screen and (max-width: 600px) {
+
+        .column,
+        input[type=submit] {
+            width: 100%;
+            margin-top: 0;
+        }
+    }
+
+    td {
+        text-align: left;
+    }
+</style>
+
+
+<div class="container">
+    <div style="text-align:center">
+            <h2>ALL YOU RAISED TICKET</h2>
+            <table class="table table-striped" border=1>
+                <thead>
+                    <tr>
+                        <th>Ticket ID</th>
+                        <th>Created At</th>
+                        <th>Subject</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for ticket in myTicket %}
+                    <tr>
+                        <td>{{ticket.ticket_id}}</td>
+                        <td>{{ticket.created}}</td>
+                        <td>{{ticket.subject}}</td>
+                        <td><a href="/Ticket/viewraiseticket/{{ticket.id}}/">View</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        
+    </div>
+</div>
+
+{% endblock %}

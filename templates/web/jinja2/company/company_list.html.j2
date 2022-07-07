@@ -1,0 +1,184 @@
+{% extends "web/jinja2/base.html.j2" %}
+{% block content %}
+<!-- Begin Page Content -->
+<section class="py-md-5">
+	<div class="container-fluid">
+		<div class="col-12">
+			<div class="card mb-4 border-1">
+				<div class="card-header py-3 px-0 align-items-center bg-white border-0">
+					<div class="row">
+						<div class="col-9">
+							<h3 class="m-0 px-3 font-weight-bold text-dark">Company</h3>
+						</div>
+                        <div class="col-3">
+							<a href="{{url('create-company')}}" class="btn btn-primary font-18"><i class="fa fa-plus"></i>Add Company</a>
+						</div>
+					</div>
+				</div>
+				<div class="card-body px-0">
+                    <div class="card-body px-0">
+                    <div class="row mx-0">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                    <table id="company" class="table table-border">
+                        <thead class="text-center">
+                            <tr>
+                                <th>Company Name</th>
+								<th>Company Type</th>
+                                <th>Email</th>
+                                <th>Mobile</th>
+								<th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-center">  
+							{% for data in companies %}  
+                            <tr>
+								<td>{{data.name}}</td>
+                                <td>{{data.company_type}}</td>
+                                <td>{{data.email}}</td>
+                                <td>{{data.mobile}}</td>
+                                <td>
+                                    <div class="dropdown show">
+                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-ellipsis-v"></i>
+                                        </a>													
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                            <a href="#" data-toggle="modal" data-target="#DetailViewList{{data.id}}" class="dropdown-item" title="View">View</a>    
+                                            <a href="#" data-toggle="modal" data-target="#EditCompany{{data.id}}" class="dropdown-item" title="Update">Edit</a>    
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+							{% endfor %}
+                        </tbody>
+                    </table>            
+                </div>
+                    <hr>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- End Here -->
+
+{% for data in companies %}
+<section>
+  <!-- Mine Sale List Detail -->
+  
+    <div class="modal fade" id="DetailViewList{{data.id}}" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">{{data.name}}</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="card-body px-0">
+					<div class="row mx-0">
+						<div class="col-lg-3 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="company_name">Company</label>
+								<input type="text" name="company_name" value="" placeholder="{{data.name}}" class="form-control" readonly>
+							</div>
+						</div>
+                    </div>
+                </div>        
+            </div>
+        </div>
+    </div>
+
+</section>
+{% endfor %}
+
+
+
+{% for data in companies %}
+<section>
+  <!-- Edit Company -->
+  
+    <div class="modal fade" id="EditCompany{{data.id}}" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">{{data.name}}</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="card-body px-0">
+					<div class="row mx-0">
+						<div class="col-lg-3 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="company_name">Company Name</label>
+								<input type="text" name="company_name" value="{{data.name}}" class="form-control">
+							</div>
+						</div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="company_sort_name">Sort Name</label>
+								<input type="text" name="company_sort_name" value="{{data.sort_name}}" class="form-control">
+							</div>
+						</div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="company_mobile">Mobile</label>
+								<input type="text" name="company_mobile" value="{{data.mobile}}" class="form-control">
+							</div>
+						</div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="company_email">Email</label>
+								<input type="text" name="company_email" value="{{data.email}}" class="form-control">
+							</div>
+						</div> 
+                    </div>
+                    <div class="row mx-0">
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="sale_prefix">Sale Prefix</label>
+								<input type="text" name="sale_prefix" value="{{data.sale_prefix}}" class="form-control">
+							</div>
+						</div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="purchase_prefix">Purchase Prefix</label>
+								<input type="text" name="purchase_prefix" value="{{data.purchase_prefix}}" class="form-control">
+							</div>
+						</div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="sale_transaction">Sale Transaction No.</label>
+								<input type="text" name="sale_transaction" value="{{data.sale_transaction_no}}" class="form-control">
+							</div>
+						</div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="purchase_transaction">Purchase Transaction</label>
+								<input type="text" name="purchase_transaction" value="{{data.purchases_transaction_no}}" class="form-control">
+							</div>
+						</div> 
+                    </div>
+                </div>        
+            </div>
+        </div>
+    </div>
+
+</section>
+{% endfor %}
+
+
+<script src="{{static ('vendor/jquery/jquery.min.js')}}"></script>
+
+
+<script>
+    $(document).ready(function(){
+        $('#company').DataTable({
+        "pagingType": "full_numbers"
+        });
+        $('dataTables_length').addClass('bs-select');
+    });
+</script>
+
+
+{% endblock %}

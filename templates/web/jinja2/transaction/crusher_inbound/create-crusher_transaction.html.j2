@@ -1,0 +1,322 @@
+ {% extends "web/jinja2/base.html.j2" %}
+{% block content %}
+<!-- Begin Page Content -->
+<section class="py-md-5">
+	<div class="container-fluid">
+		<div class="col-12">
+			<div class="card mb-4 border-1">
+				<div class="card-header py-3 px-0 align-items-center bg-white border-0">
+					<div class="row">
+						<div class="col-12">
+							<h3 class="m-0 px-3 font-weight-bold text-dark">Add Crusher Transaction Detail</h3>
+						</div>
+					</div>
+				</div>
+                <form method="post" enctype="multipart/form-data">
+				{{csrf_input}}
+				<div class="card-body px-0 text-dark font-weight-bold">
+                    
+                    <hr>
+                    <div class="row mx-0">
+                        <div class="col-lg-12 col-md-12 col-sm-12 bg-primary">
+                            <h5 style="color:white;"> In Detail </h5>
+                        </div>    
+                    </div>
+                    <div class="row mx-0">
+                        {% for u in user_data %}
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="mine_id">Mine Name*</label>
+                                <input type="hidden" value="{{u.mine_id.id}}" name="mine_id" id="mine_id">
+                                <input type="text" placeholder="{{u.mine_id}}"  class="form-control" readonly>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="crusher_id">Crusher Name*</label>
+                                <input type="hidden" value="{{u.crusher_id.id}}" name="crusher_id" id="crusher_id">
+                                <input type="text" placeholder="{{u.crusher_id}}"  class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="in_date">In Date*</label>
+                                <input type="text" name="in_date" value="{{current_date}}" id="in_date" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="in_time">In Time*</label>
+                                <input type="text" step="1" name="in_time" value="{{current_time}}" id="in_time" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="vehicle_no">Vehicle No*</label>
+                                <input type="hidden" value="{{u.vehicle_no.id}}" name="vehicle_no" id="vehicle_no">
+                                <input type="text" placeholder="{{u.vehicle_no}}"  class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="driver_name">Driver Name*</label>
+                                <input type="text" name="driver_name" value="{{u.driver_name}}" id="driver_name" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="mobile">Mobile*</label>
+                                <input type="text" name="mobile" id="mobile" value="{{u.mobile}}"  class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="product">Product*</label>
+                                <input type="hidden" value="{{u.master_product.id}}" name="product" id="product">
+                                <input type="text"  placeholder="{{u.master_product}}" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="mine_weight">Mine Weight <small>(Ton)</small>*</label>
+                                <input type="text" name="mine_weight" id="mine_weight" value="{{u.out_weight}}" placeholder="0.00" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="mine_kaata_no">Mine WB58 Name*</label>
+                                <input type="text" name="mine_kaata_no" id="mine_kaata_no" value="{{u.kaata_no}}" placeholder="0.00" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="net_load">Net Load <small>(Ton)</small>*</label>
+                                <input type="text" name="net_load" id="net_load" value="{{u.net_weight}}" placeholder="0.00" class="form-control" readonly>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="price">Price*</label>
+                                <input type="text" name="price" id="price" value="{{u.price}}" placeholder="0.00" class="form-control" readonly>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="ravana_no">Ravana No.*</label>
+                                <input type="text" name="ravana_no" id="ravana_no" value="{{u.ravana_no}}" placeholder="0.00" class="form-control" readonly>
+                            </div>
+                        </div>
+                          
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="amount">Amount*</label>
+                                <input type="text" name="amount" id="amount" value="{{u.amount}}" placeholder="0.00" class="form-control" readonly>
+                            </div>
+                        </div>
+                        {#
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="billing_amt">Billing Amount*</label>
+                                <input type="number" name="billing_amt" id="billing_amt" value="{{u.billing_amount}}" placeholder="0.00" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="pending_amt">Balance*</label>
+                                <input type="number" name="pending_amt" id="pending_amt" value="{{u.balance}}" placeholder="0.00" class="form-control">
+                            </div>
+                        </div>
+                        #}
+                        
+                        
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="kaata_no">WB58 Name*</label>
+                                {#<input type="number" name="kaata_no" id="kaata_no" class="form-control">#}
+                                <select class="custom-select form-control form-control-user rounded-1" name="kaata_no" id="kaata_no" required>
+                                    <option value="" selected>Select</option>
+                                    {% for data in in_kaata %}
+									<option value="{{data.id}}">{{data.kaata_no}}</option>
+									{%endfor%}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="weight">In Weight <small>(Ton)</small>*</label>
+                                <input type="number" name="weight" step=".0001" id="weight" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="slip_no">WB58 Slip No.*</label>
+                                <input type="number" name="slip_no" id="slip_no" class="form-control" required>
+                            </div>
+                        </div>
+                        {#
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="received_advance">Received Advance*</label>
+                                <input type="number" name="received_advance" id="received_advance" class="form-control">
+                            </div>
+                        </div>#}
+                    
+                    </div>
+                    <hr>
+
+                    <div class="row mx-0">
+                        <div class="col-lg-12 col-md-12 col-sm-12 bg-primary">
+                            <h5 style="color:white;"> Billing Detail </h5>
+                        </div>    
+                    </div>
+                    <div class="row mx-0">
+                        
+                        <div class="col-md-2 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="b_item_name">Item Name*</label>
+                                <input type="text" name="b_item_name" id="b_item_name" value="{{mid_obj.item_name}}" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="qty">Qty.*</label>
+                                <input type="text" name="qty" id="qty" value="{{mid_obj.quantity}}" placeholder="0.00" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="b_price">Billing Price*</label>
+                                <input type="text" name="b_price" id="b_price" value="{{mid_obj.billing_price}}" placeholder="0.00" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="other_charges">Other Charges*</label>
+                                <input type="text" name="other_charges" id="other_charges" value="{{u.other_charges}}" placeholder="0.00" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="gst_per">% GST</label>
+                                <input type="number" name="gst_per" id="gst_per" value="{{mid_obj.gst_percentage}}" placeholder="0.00" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="gst_amt">GST Amount</label>
+                                <input type="number" name="gst_amt" id="gst_amt" value="{{mid_obj.gst_amount}}" placeholder="0.00" class="form-control" readonly>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    
+                    <div class="row mx-0">
+                        <div class="col-lg-2 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="commission">Commission*</label>
+                                <input type="text" name="commission" id="commission" value="{{u.commission}}"  placeholder="0.00" class="form-control" readonly>
+                            </div>
+                        </div>
+                        {% for u in user_data %}
+                        <div class="col-lg-2 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="advance">Advance Payment</label>
+                                <input type="text" name="advance" id="advance" value="{{u.received_advance}}" placeholder="0.00" class="form-control" readonly>
+                            </div>
+                        </div>
+                        {% endfor%}
+                        {#<div class="col-lg-2 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="balance">Balance*</label>
+                                <input type="text" name="balance" id="balance" value="{{u.balance}}" placeholder="0.00" class="form-control" readonly>
+                            </div>
+                        </div>#}
+                        <div class="col-md-2 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="billing_amount">Billing Amount*</label>
+                                <input type="number" name="billing_amount" id="billing_amount" value="{{mid_obj.billing_amount}}" placeholder="0.00" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="pay_received">Payment Received*</label>
+                                <input type="number" name="pay_received" id="pay_received" value="{{u.payment_received}}" placeholder="0.00" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="p_amt">Pending Amount*</label>
+                                <input type="number" name="p_amt" id="p_amt" value="{{u.pending_amt}}" placeholder="0.00" class="form-control" readonly>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-2 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="grand_total">Grand Total*</label>
+                                <input type="text" name="grand_total" id="grand_total" value="{{u.grand_total}}" placeholder="0.00" class="form-control" readonly>
+                            </div>
+                        </div>
+                    </div>    
+                    {% endfor %}
+                    <hr>    
+
+
+                    
+                    {#
+                    <div class="row mx-0">
+                        {% for u in user_data %}
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <label for="crusher_transaction_comment">Comment*</label>    
+                            <textarea class="form-control rounded-1" value="{{u.comment}}" name="crusher_transaction_comment" id="crusher_transaction_comment" rows="5" placeholder="Write here..."></textarea>                            
+                        </div>
+                        {% endfor %}
+                    </div>
+                    #}
+                    <hr>	
+					<div class="row mx-0 position-relative">
+        
+						<div class=" col-12 pt-4 text-center">
+							<button type="reset" class="btn btn-white text-dark border rounded-1 bg-white f-s-18 px-4 py-2 mr-3">Reset</button>
+							<button type="submit"  class="btn bg-gradient-primary text-white rounded-1 f-s-18 px-4 py-2">Submit</button>
+						</div>
+					</div>
+				</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- End Here -->
+
+
+
+<script src="{{static ('vendor/jquery/jquery.min.js')}}"></script>
+
+<script>
+    $(document).ready(function(){
+        var optarr = $('#layoutselect').children('option').map(function(){
+        return{
+            'value': this.value,
+            "option" <"option value='" + this.value + "'> + this.text + <"/option">
+            }
+        $("#external_vendor").change(function){
+            $('#layoutselect').children('option').remove();
+            var addoptarr = [];
+            for (i=0; i<optarr.length; i++) {
+                if optarr([i].value.indexOf($this.val()) > -1){
+                addoptarr.push(optarr[i].option); 
+                }
+            }
+        $('#layoutselect').html(addoptarr.join(''))
+        }).change();
+    })
+</script>
+
+
+
+
+{% endblock %}

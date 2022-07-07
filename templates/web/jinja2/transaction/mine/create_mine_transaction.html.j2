@@ -1,0 +1,402 @@
+{% extends "web/jinja2/base.html.j2" %}
+{% block content %}
+<!-- Begin Page Content -->
+<section class="py-md-5">
+	<div class="container-fluid">
+		<div class="col-12">
+			<div class="card mb-4 border-1">
+				<div class="card-header py-3 px-0 align-items-center bg-white border-0">
+					<div class="row">
+						<div class="col-12">
+							<h3 class="m-0 px-3 font-weight-bold text-dark">Mine Sales-Vehicle IN</h3>
+						</div>
+					</div>
+				</div>
+				<form method="post" enctype="multipart/form-data" id="mine_entry_id">
+				{{csrf_input}}
+				<div class="card-body px-0 text-dark font-weight-bold">
+                    <div class="row mx-0">
+                        <input type="hidden" value="{{request.GET.company}}" name="company_id" id="company_id">
+                        <div class="col-lg-3 col-md-3 col-sm-12 bg-primary">
+                            <h5 style="color:white;"> In Detail </h5>
+                        </div>
+                        <div class="col-lg-9 col-md-9 col-sm-12  bg-primary text-light text-right">
+							<span class="m-0 px-3">
+							<span class="text-right">In Date: 
+                            {% if 24 in userroles %} <input type="text" value="{{current_date}}" id="title_in_date"> 
+                                {%else%}
+                                    {{current_date}}
+                            {%endif%}
+                                  
+                            </span>
+							</span>
+							<span class="m-0 px-1">
+							<span class="text-right">In Time:
+                            {% if 24 in userroles %}<input type="text" value="{{current_time}}" id="title_in_time"> 
+                                {%else%}
+                                    {{current_time}}
+                            {%endif%} 
+                            </span>
+						</div>    
+                    </div>
+                    <div class="row mx-0">
+                        <input type="hidden" value="{{current_date}}" name="in_date" id="in_date">
+                        <input type="hidden" value="{{current_time}}" name="in_time" id="in_time">
+                        {#<div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="in_date">In Date*</label>
+                                <input type="text" value="{{current_date}}" name="in_date" id="in_date"  class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="in_time">In Time*</label>
+                                <input type="text" value="{{current_time}}" name="in_time" id="in_time" class="form-control">
+                            </div>
+                        </div>
+                        #}
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="vehicle_no">Vehicle No*</label>
+                                <select class="custom-select fvalidation form-control form-control-user rounded-1 select2_dropdown vehicle_no" name="vehicle_no" id="vehicle_no" required>
+                                    {% for data in vehicles %}
+									<option value="{{data.id}}" class="{{data.vehicle_no}}">{{data.vehicle_no}}</option>
+									{% endfor %}
+                                </select>
+						        <span class="text-danger error-msg"></span>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="driver_name">Driver Name*<i class="fas fa-plus-circle text-success"  data-toggle="modal" data-target=".AddDriverModal" id="plusButton" title="New Driver"></i></label>
+                                <select class="custom-select form-control form-control-user rounded-1 select2_dropdown driver_name" name="driver_name" id="driver_name" required>
+                                    {% for data in drivers %}
+                                    <option value="{{data.id}}" class="{{data.mobile}}">{{data.driver_name}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <input type='hidden' id="alldrivers">
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="mobile">Mobile*</label>
+                                <input type="number" name="mobile" id="mobile"  class="form-control" readonly required>
+                            </div>
+                            <input type='hidden' id="allmobiles">
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="kaata_no">WB58 Name*</label>
+                                
+                                <select class="custom-select form-control form-control-user rounded-1 select2_dropdown kaata_no" name="kaata_no" id="Kaata_no" required>
+                                    <option value="" selected>Select</option>
+                                    {% for data in kaata_number %}
+                                    <option value="{{data.id}}">{{data.kaata_no}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="in_weight">In Weight <small>(Ton)</small>*</label>
+                                <input type="number" name="in_weight" id="in_weight" step=".0001" placeholder="0.00" class="form-control fvalidation">
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="advance_recieved">Advance Payment <small>(optional)</small></label>
+                                <input type="number" name="advance_recieved" step=".0001" id="advance_recieved" placeholder="0.00" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="wb_slip_no">WB58 Slip No. <small>(optional)</small></label>
+                                <input type="number" name="wb_slip_no" id="wb_slip_no" placeholder="0.00" class="form-control fvalidation">
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    
+                    <div class="row mx-0">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <label for="mine_comment">Comment <small>(optional)</small></label>    
+                            <textarea class="form-control rounded-1 " id="mine_comment" name="mine_comment" rows="5" placeholder="Write here..."></textarea>                            
+                        </div>
+                    </div>
+                    <hr>	
+					<div class="row mx-0 position-relative">
+        
+						<div class=" col-12 pt-4 text-center">
+							<button type="reset" class="btn btn-white text-dark border rounded-1 bg-white f-s-18 px-4 py-2 mr-3">Reset</button>
+							<button type="submit"  class="btn bg-gradient-primary text-white rounded-1 f-s-18 px-4 py-2">Submit</button>
+						</div>
+					</div>
+				</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</section>
+
+
+
+<section>
+  <!-- Add Driver Modal-->
+    <div class="modal fade AddDriverModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-warning">
+                    <h5 class="modal-title ml-5 text-danger" id="exampleModalLabel">Add Driver</h5>
+                    <button class="close text-danger" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>        
+                {#<form method="post" enctype="multipart/form-data" name="add_new_driver">
+                {{csrf_input}}#}
+                    <div class="card-body px-0 text-dark font-weight-bold">
+                        <div class="row mx-0">
+                            <div class="col-lg-4 col-md-3 col-sm-12">
+                                <div class="form-group mb-4">
+                                    <label for="add_vehicle">Vehicle No.*</label>
+                                    <input type="text" name="add_vehicle" id="add_vehicle"  class="form-control" readonly>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-3 col-sm-12">
+                                <div class="form-group mb-4">
+                                    <label for="add_driver_name">Driver Name*</label>
+                                    <input type="text" name="add_driver_name" id="add_driver_name" class="form-control" required>
+                                    {#<select class="custom-select form-control form-control-user rounded-1 select2_dropdown" name="add_driver_name" id="add_driver_name">
+                                        <option value="" selected>Select</option>
+                                        {% for data in drivers %}
+                                        <option value="{{data.id}}">{{data.driver_name}}</option>
+                                        {% endfor %}
+                                    </select>#}
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-4 col-md-3 col-sm-12">
+                                <div class="form-group mb-4">
+                                    <label for="add_mobile">Mobile*</label>
+                                    <input type="number" name="add_mobile" id="add_mobile"  class="form-control" required>
+                                </div>
+                            </div>
+                        </div>                 	
+                        <div class="row mx-0">
+                            <div class=" col-12 pt-4 text-center">
+                                {#<button type="reset" class="btn bg-gradient-danger text-white border rounded-1 bg-white f-s-18 px-4 py-2 mr-3">Reset</button>#}
+                                <button type="submit" class="btn bg-gradient-primary text-white rounded-1 f-s-18 px-4 py-2" data-dismiss="modal" id="adddriverbutton">Add</button>
+                            </div>
+                        </div>
+                    </div>
+                {#</form>#}
+            </div>
+        </div>
+  </div>
+</section>
+
+<!-- End Here -->
+
+
+
+<script src="{{static ('vendor/jquery/jquery.min.js')}}"></script>
+<script src="{{static ('js/tech58/validation.js')}}"></script>
+
+<script>
+    $(document).ready(function() {
+        $('.select2_dropdown').select2();
+        });
+</script>
+
+<script>
+    $('#title_in_date, #title_in_time').blur(function(e){
+        $('#in_date').val($('#title_in_date').val());
+        $('#in_time').val($('#title_in_time').val());
+    });
+</script>
+
+<script>
+    $('#plusButton').click(function(e){
+        var vehicle_no_pick = $('.vehicle_no').find(':selected').attr('class');
+        $('#add_vehicle').val(vehicle_no_pick);
+    });
+</script>
+<script>
+    $('#adddriverbutton').click(function(e){
+        var companyid = $('#company_id').val();
+        var vehicle_id = $('.vehicle_no').val();
+        var newdriver = $('#add_driver_name').val();
+        var redirect_url = "/transaction-mine/";
+        if (newdriver == '')
+            {
+            alert("Driver name can't be blank!")
+            return false;
+            }
+        var newmobile = $('#add_mobile').val();
+        if (newmobile == '')
+            {
+            alert("Mobile can't be blank!")
+            return false;
+            }
+        $.ajax({
+            type:"GET",
+            url:"/add/driver/?vehicle_id="+vehicle_id+"&driver="+newdriver+"&mobile="+newmobile+"&company="+companyid+"&get_url="+redirect_url+"",
+            success: function(data){
+                        alert("Driver detail successfully submitted.");
+                        setInterval('pageRefresh()',3000);
+                        }
+            //{console.log("working...");}
+        });
+    });
+    // Page will be reload after Ajax Call success.
+    function pageRefresh() {
+        location.reload(true);
+        }     
+</script>
+
+<script>
+    $(document).ready(function(){
+        $('.vehicle_no').change(function(e){
+                var vehicle = $('.vehicle_no').val();
+                var driver_add = $('#alldrivers').val(); 
+                selected_driver = $('#driver_name');   
+                $.ajax({
+                    url:"/vehicle/driver/select/?vehicle="+vehicle+"",
+                    success: function(data)
+                        {
+                            selected_driver.empty();
+                            selected_driver.append("<option value='0' selected='selected'> Choose a value</option>");
+                                for (i = 0; i<Object.keys(data).length;i++)
+                            {
+                                {
+                                selected_driver.append("<option value="+Object.keys(data)[i]+">" +Object.values(data)[i] + "</option>");
+                                }
+                            }            
+                        }
+                    })
+            }); 
+        });
+
+    $(document).ready(function(e){
+        var vehicle = $('.vehicle_no').val();
+        //alert(vehicle);
+        var driver_add = $('#alldrivers').val();
+        selected_driver = $('#driver_name'); 
+        $.ajax({
+            url:"/vehicle/driver/select/?vehicle="+vehicle+"",
+            success: function(data)
+                {
+                    selected_driver.empty();
+                    selected_driver.append("<option value='0' selected='selected'> Choose a value</option>");
+                   for (i = 0; i<Object.keys(data).length;i++) 
+                    {
+                    
+                    if ((Object.keys(data)[i]*1) == (driver_add*1))
+                    
+                    {
+                        selected_driver.append("<option value="+Object.keys(data)[i]+" selected='selected'>" +Object.values(data)[i] + "</option>");
+                    }
+                    else
+                    {
+                        selected_driver.append("<option value="+Object.keys(data)[i]+">" +Object.values(data)[i] + "</option>");   
+                    }
+                    }
+
+                }
+
+            })
+    });
+</script>
+
+<script>
+
+    $(document).ready(function(){
+    $('.driver_name').change(function(e){
+            var driver = $('.driver_name').val();
+            selected_mobile = $('#mobile');
+            $.ajax({
+                url:"/vehicle/driver/mobile/?driver="+driver+"",
+                success: function(data)
+                    {
+
+                        for (i = 0; i<Object.keys(data).length;i++)
+                        {
+                            {
+                            selected_mobile.val(Object.values(data)[i]);
+                            
+                            }
+                        }            
+                    }
+                })
+        }); 
+    });
+
+    $(document).ready(function(e){
+        var driver = $('.driver_name').val();
+        var mobile_add = $('#allmobiles').val();
+        selected_mobile = $('#mobile'); 
+        $.ajax({
+            url:"/vehicle/driver/mobile/?driver="+driver+"",
+            success: function(data)
+                {
+                    selected_mobile.empty();
+                    selected_mobile.append("<option value='0' selected='selected'> Choose a value</option>");
+                   for (i = 0; i<Object.keys(data).length;i++) 
+                    {
+                    
+                    if ((Object.keys(data)[i]*1) == (mobile_add*1))
+                    
+                    {
+                        selected_driver.append("<option value="+Object.keys(data)[i]+" selected='selected'>" +Object.values(data)[i] + "</option>");
+                    }
+                    else
+                    {
+                        selected_driver.append("<option value="+Object.keys(data)[i]+">" +Object.values(data)[i] + "</option>");   
+                    }
+                    }
+
+                }
+
+            })
+    });
+</script>
+
+<script>
+    $(document).ready(function(){
+    $('.kaata_no').change(function(e){
+        var driver = $('#driver_name').val();    
+            if (driver == '' || driver == 0)
+               alert("Please Select Driver.");
+                  $('#kaata_no').val('');
+                  return false;
+
+                });
+                });        
+</script>
+<script>
+    function submitFormValid(el){
+        if (!validation.validate_submit_action(el)) {
+                toastr.error('Please fill all the required information correctly.','Alert')
+                return false
+            } else {
+                //showLoader();
+                return true
+            }
+        }
+
+
+function submit_form1(){
+    var valid = submitFormValid($("#submit-btn"));
+    if (valid){
+		function show_popup(){
+		$('#mine_entry_id').removeClass('fade')
+		$('#mine_entry_id').submit()
+		};
+		setTimeout( show_popup, 1000 );
+		toastr.success('Mine Sale request has been created successfully.','Success')
+		$('#mine_entry_id').addClass('fade')
+	}
+
+}
+</script>
+
+{% endblock %}

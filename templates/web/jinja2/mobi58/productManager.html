@@ -1,0 +1,206 @@
+{% extends "web/jinja2/base.html.j2" %}
+{% block title %} Raise Ticket {% endblock %}
+{% block title_header %}Raise Ticket{% endblock %}
+{% block content %}
+
+
+<section class="py-2">
+	<div class="container-fluid">
+		<h1 class="h3 mb-2 text-gray-800">Products List</h1>
+    	<p class="mb-4">you can add and view list of Prodcts.</p>
+		<div class="row">
+			<div class="col-12">
+				<div class="card mb-4 border-0">
+					<div class="card-body position-relative pl-0 pr-0">
+						<div class="card shadow mb-4">
+                            <div class="card-header bg-warning py-3">
+                                <div class="row w-100 align-items-center">
+                                    <div class="col-12 col-md-6">
+                                        <h6 class="m-0 font-weight-bold text-black">Products List</h6>
+                                    </div>
+                                    <div class="col-12 col-md-6 text-md-right mt-4 mt-sm-0">
+                                        <!-- <a href="" class="btn bg-transparent text-black">Add Transporter</a> -->
+
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                                            Add Products
+                                          </button>
+                                          
+                                          <!-- Modal -->
+                                          <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                              <div class="modal-content">
+                                                <div class="modal-header" style="    background-image: linear-gradient(315deg, #ff4e00 0%, #ec9f05 74%);
+                                                ">
+                                                  <h5  class="modal-title" id="exampleModalLabel" style="    margin-left: 135px; color:black">ADD Product</h5>
+                                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                  </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form method="post" enctype="multipart/form-data" action="{{url('product-manager')}}">
+                                                        {{csrf_input}}
+                                                        <div class="form-row">
+                                                          <div class="form-group col-md-6">
+                                                            <p class="text-left">Company Location</p>
+                                                            <select class="form-control" id="exampleFormControlSelect1" name="company_location">
+                                                                <option selected="">Please choose</option>
+                                                                {% for u in SOURCE %}
+                                                                <option value="{{u.0}}" >{{u.1}}</option>
+                                                                {%endfor%}
+                                                                </select>
+                                                          </div>
+                                                          <div class="form-group col-md-6">
+                                                            <p class="text-left">User Type</p>
+                                                            <select class="form-control" id="exampleFormControlSelect1" name="user_type">
+                                                                <option selected="">Please choose</option>
+                                                                {% for u in USER_TYPE %}
+                                                                <option value="{{u.0}}" >{{u.1}}</option>
+                                                                {%endfor%}
+                                                                </select>
+                                                          </div>
+                                                          <div class="form-group col-md-6">
+                                                            <p class="text-left">Assign To</p>
+                                                            <select class="form-control" id="exampleFormControlSelect1" name='assign_to'>
+                                                                <option selected="">Please choose</option>
+                                                                {% for u in allusers %}
+                                                                <option value="{{u.id}}">{{u.name}}</option>
+                                                                {%endfor%}
+                                            
+                                                              </select>
+                                                          </div>
+                                                          <div class="form-group col-md-6">
+                                                            <p class="text-left">Module</p>
+                                                            <select class="form-control" id="exampleFormControlSelect1" name="module">
+                                                                <option selected="">Please choose</option>
+                                                                {% for u in MODULE %}
+                                                                <option value="{{u.0}}" >{{u.1}}</option>
+                                                                {%endfor%}
+                                                                </select>
+                                                          </div>
+                                                          <div class="form-group col-md-6">
+                                                            <p class="text-left">Reg. No. (Vehicle)</p>
+                                                            <select class="form-control" id="exampleFormControlSelect1" name='reg_no'>
+                                                                <option selected="">Please choose</option>
+                                                                {% for u in veh %}
+                                                                <option value="{{u.id}}">{{u.registeration_no}}</option>
+                                                                {%endfor%}
+                                            
+                                                              </select>
+                                                          </div>
+                                                          
+                                                          <div class="form-group col-md-6">
+                                                            <p class="text-left">Fuel</p>
+                                                            <select class="form-control" id="exampleFormControlSelect1" name="fuel">
+                                                                <option selected="">Please choose</option>
+                                                                {% for u in FUEL_TYPE %}
+                                                                <option value="{{u.0}}" >{{u.1}}</option>
+                                                                {%endfor%}
+                                                                </select>
+                                                          </div>
+                                                        
+                                                          <div class="form-group col-md-6">
+                                                            <p class="text-left">Quantity</p>
+                                                            <input name="quantity" type="text" class="form-control" id="inputEmail4" required placeholder="Quantity">
+                                                          </div>
+                                                          <div class="form-group col-md-6">
+                                                            <p class="text-left">Rate</p>
+                                                            <input name="rate" type="text" class="form-control" id="inputEmail4" placeholder="Rate" required>
+                                                          </div>
+                                                          <div class="form-group col-md-6">
+                                                            <p class="text-left">Amount</p>
+                                                            <input name="amount" type="text" class="form-control" id="inputEmail4" required placeholder="Amount">
+                                                          </div>
+                                                          <div class="form-group col-md-6">
+                                                            <p class="text-left">Date</p>
+                                                            <input name="Date" type="date" class="form-control" id="inputEmail4" required placeholder="Description">
+                                                          </div>
+                                                          <div class="form-group col-md-12">
+                                                            <p class="text-left">Comment</p>
+                                                            <textarea name="comment" id="" msg cols="30" rows="5" class="form-control" placeholder="Comment"></textarea>
+                                                          </div>
+                                                        </div>
+
+                                                          </div>
+                                                          <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                                          </div>
+                                                        </form>
+                                                </div>
+                                                
+                                            
+                                              </div>
+                                            </div>
+                                          </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                    <table id="company" class="table table-border">
+                        <thead class="text-center">
+                            <tr>
+                              <th>S.No.</th>
+                                <th>Module</th>
+                                <th>Co. Location</th>
+                                <th>User Type</th>
+                                <th>Assign to</th>
+                                <th>Reg. No.</th>
+                                <th>Fuel</th>
+                                <th>Quantity</th>
+                                <th>Rate</th>
+                                <th>Amount</th>
+								
+                            </tr>
+                        </thead>
+                        <tbody class="text-center">  
+							{% for data in abab %}  
+                            <tr>
+                              <td>{{data.id}}</td>
+								<td><a href="">{{data.module}}</a></td>
+                <td>{{data.company_location}}</td>
+                <td>{{data.user_type}}</td>
+                <td>{{data.assign_to.name}}</td>
+                <td>{{data.reg_no}}</td>
+                <td>{{data.fuel}}</td>
+                <td>{{data.quantity}}</td>
+                <td>{{data.rate}}</td>
+                <td>{{data.amount}}</td>
+                                
+                            </tr>
+							{% endfor %}
+                        </tbody>
+                    </table>            
+                </div>
+                    <hr>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+
+
+
+
+
+<script src="{{static ('vendor/jquery/jquery.min.js')}}"></script>
+
+
+<script>
+    $(document).ready(function(){
+        $('#company').DataTable({
+        "pagingType": "full_numbers"
+        });
+        $('dataTables_length').addClass('bs-select');
+    });
+</script>
+
+
+
+
+
+
+
+
+{% endblock %}

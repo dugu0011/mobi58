@@ -1,0 +1,79 @@
+{% extends "web/jinja2/base.html.j2" %}
+{% block content %}
+<section class="py-2">
+	<div class="container-fluid">
+		<h1 class="h3 mb-2 text-gray-800">Royalty Collection</h1>
+    	<p class="mb-4">you can view list of Royalty Collection.</p>
+		<div class="row">
+			<div class="col-12">
+				<div class="card mb-4 border-0">
+					<div class="card-body position-relative pl-0 pr-0">
+						<div class="card shadow mb-4">
+                            <div class="card-header py-3 bg-warning">
+                                <div class="row w-100 align-items-center">
+                                    <div class="col-12 col-md-6">
+                                        <h6 class="m-0 font-weight-bold text-black">Royalty Collection</h6>
+                                    </div>
+                                    <div class="col-12 col-md-6 text-md-right mt-4 mt-sm-0">
+                                        <!--<a class="btn btn-warning text-black" href="javascript:void(0);" data-toggle="modal" data-target="#" >Add </a> -->
+                                    </div>
+                                </div>
+                            </div>
+                        <div class="card-body">
+                            <div class="table">
+                                <table class="table" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>Sr.No</th>
+                                            <th>Date</th>
+                                            <th>Company Name</th>
+                                            <th>Customer Name</th>
+                                            <th>Vehicle No.</th>
+                                            <th>Driver Name</th>
+                                            <th>Product</th>
+                                            <th>Net Weight</th>
+                                            <th>Amount </th>
+                                            <th>Royalty</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for data in info_mine_transaction %}  
+                                        <tr> 
+                                            <td>{{loop.index}}</td>
+                                            <td>{{data.created_at.strftime("%d/%m/%Y %I:%M %p")}}</td>
+                                            <td>{{data.company_name}}</td>
+                                            <td>{{data.customer_name}}</td>
+                                            <td>{{data.vehicle_no}}</td>
+                                            <td>{{data.driver_name}}</td>
+                                            <td>{{data.master_product}}</td>
+                                            <td>{{data.net_weight}}</td>
+                                            <td>{{data.grand_total}}</td>
+                                            {#<td>{{data.mine_id}}</td>#}
+                                            <td>{%if data.royalty_charges %}{{data.royalty_charges[:8]}}{%else%}0.00{%endif%}</td>
+                                            <td>                                      
+                                                <div class="dropdown show">
+                                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <i class="fas fa-ellipsis-v"></i>
+                                                    </a>													
+                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                        <a href="#" data-toggle="modal" data-target="#DetailViewList{{data.id}}" class="dropdown-item" title="View">View</a>
+                                                        <a href="#" class="dropdown-item" title="Token">Token</a>
+                                                        {#<a href="/transaction/mine/info-delete/{{data.id}}/{{company_id}}/" class="dropdown-item" title="Delete" style="color:magenta;"> Cancel</a>#}
+                                                    {# <a href="/reports/generate/invoice/crusher/{{data.id}}/{{company_id}}" class="dropdown-item" title="Invoice">Invoice</a>#}
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        {%endfor%}
+									</tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

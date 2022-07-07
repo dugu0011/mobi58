@@ -1,0 +1,96 @@
+{% extends "web/jinja2/base.html.j2" %}
+{% block content %}
+<!-- Begin Page Content -->
+<section class="py-md-5">
+	<div class="container-fluid">
+		<div class="col-12">
+			<div class="card mb-4 border-1">
+				<div class="card-header py-3 px-0 align-items-center bg-white border-0">
+					<div class="row">
+						<div class="col-12">
+							<h3 class="m-0 px-3 font-weight-bold text-dark">Available Permissions</h3>
+						</div>
+					</div>
+				</div>
+				<form  action="{{url('create-access')}}" method="post" enctype="multipart/form-data">
+				{{csrf_input}}
+				<div class="card-body px-0">
+                    <div class="row mx-0">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="permission-user"> Select User*</label>
+                                <select class="custom-select form-control form-control-user rounded-1" required id="permission-user" name="permission-user">
+                                    <option value="" selected>Select</option>
+									{% for data in all_users %}
+									<option value="{{data.id}}">{{data.name}}</option>
+									{%endfor%}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="tab1">Tab1*</label>
+                                <input type="checkbox" name="tab1">
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="tab1">Tab1*</label>
+                                <input type="checkbox" name="tab1">
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="tab1">Tab1*</label>
+                                <input type="checkbox" name="tab1">
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="tab1">Tab1*</label>
+                                <input type="checkbox" name="tab1">
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="tab1">Tab1*</label>
+                                <input type="checkbox" name="tab1">
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="tab1">Tab1*</label>
+                                <input type="checkbox" name="tab1">
+                            </div>
+                        </div>                  
+                    </div>
+                    <hr>
+					
+					<div class="row mx-0 position-relative">
+						
+						<div class="col-md-12">
+							<div class="form-group">
+								<label for="product-remarks">Comment*</label>
+								<textarea class="form-control rounded-1" id="customer-contact-remarks" name="product-comment" rows="2" required></textarea>
+							</div>
+						</div>
+						<div class=" col-12 pt-4 text-center">
+							<button type="reset" class="btn btn-white text-dark border rounded-1 bg-white f-s-18 px-4 py-2 mr-3">Reset</button>
+							<button type="submit"  class="btn bg-gradient-primary text-white rounded-1 f-s-18 px-4 py-2">Submit</button>
+						</div>
+					</div>
+				</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- End Here -->
+{#
+<script src="{{static ('vendor/jquery/jquery.min.js')}}"></script>
+#}
+
+
+
+
+{% endblock %}

@@ -1,0 +1,90 @@
+{% extends "web/jinja2/base.html.j2" %}
+{% block content %}
+<!-- Begin Page Content -->
+<section class="py-md-5">
+	<div class="container-fluid">
+		<div class="col-12">
+			<div class="card mb-4 border-1">
+				<div class="card-header py-3 px-0 align-items-center bg-warning border-0">
+					<div class="row">
+						<div class="col-12">
+							<h3 class="m-0 px-3 font-weight-bold text-dark">Register Driver</h3>
+						</div>
+					</div>
+				</div>
+				<form method="post" enctype="multipart/form-data">
+				{{csrf_input}}
+				<div class="card-body px-0">
+                    <div class="row mx-0">
+                    <input type="hidden" value="{{request.GET.company}}" name="company_id">
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="driver_name">Driver Name*</label>
+                                <input type="text" name="name"  class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="mobile">Mobile*</label>
+                                <input type="number" name="mobile" id="customer-mobile" onchange="validate_mobile(this , 'mobile')" class="form-control rounded-1 mobile-num" required>
+                            </div>
+                        </div> 
+						<div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="">License No.
+									<div class="fileUpload bg-white text-red" style="float:right" title="Upload Registraion File">
+                                        <span><i class="fa fa-camera" aria-hidden="true"></i></span>
+                                        <input type="hidden" id="uploadFile" class="form-control bg-white rounded-1" placeholder="Choose File" disabled="disabled" />
+                                        <input type="file" class="upload" id="dl_file" name="license_file">
+                                    </div>
+								</label>
+                                <input type="text" step="any" name="license_no" class="form-control">
+                            </div>
+                        </div>                  
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="mobile">Aadhar No.
+									<div class="fileUpload bg-white text-red" style="float:right" title="Upload Registraion File">
+                                        <span><i class="fa fa-camera" aria-hidden="true"></i></span>
+                                        <input type="hidden" id="uploadFile" class="form-control bg-white rounded-1" placeholder="Choose File" disabled="disabled" />
+                                        <input type="file" class="upload" id="aadhar_file" name="aadhar_file">
+                                    </div>
+								</label>
+                                <input type="number" step="any" maxlength="12" name="aadhar_no" class="form-control">
+                            </div>
+                        </div> 
+					</div>                 
+                    </div>
+                    <hr>
+						
+                   
+					
+					<div class="row mx-0 position-relative">
+						<div class=" col-12 pt-4 text-center">
+							<button type="submit"  class="btn btn-primary">Submit</button>
+							<button type="reset" class="btn btn-danger">Reset</button>
+						</div>
+					</div>
+				</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- End Here -->
+<script src="{{static ('vendor/jquery/jquery.min.js')}}"></script>
+
+<script>
+$(".mobile-num").keyup(function(ev){
+    var x = $(this).val();
+        
+    if (x.match(/^0+/)) {
+	toastr.error('The first digit should not be 0','Alert')
+
+      $(this).val(x.substr(0,-1));
+    }
+
+});
+</script>
+
+{% endblock %}

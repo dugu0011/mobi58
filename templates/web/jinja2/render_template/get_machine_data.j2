@@ -1,0 +1,92 @@
+<div class="modal-dialog h-100 h-mob-auto my-0 mr-0 ml-auto mx-w-900" role="document">
+    <div class="modal-content h-100">
+      <div class="modal-header px-5">
+        <h5 class="modal-title" id="exampleModalLabel">View Team</h5>
+        <button type="button" class="close page-reload" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+         <form id="form" action="" method="post" novalidate>
+      		<div class="row">
+				<div class="col-lg-4 col-sm-12">
+					<div class="form-group mb-4">
+						<label for="customer-category">Make/Brand*</label>
+						<input type="text" {% if edit_or_delete %}disabled{% endif %} required class="form-control rounded-0 fvalidation" value="{{ machine_model_name }}" id="" name="machine-brand" placeholder="Enter Brand" for="">
+						<span class="text-danger error-msg"></span>
+					</div>
+				</div>
+				<div class="col-lg-4 col-sm-12">
+					<div class="form-group mb-4">
+						<label for="Model">Model*</label>
+						<input type="text" {% if edit_or_delete %}disabled{% endif %} required class="form-control rounded-0 fvalidation" value="{{ machine_manufacturer_brand }}" id="Model" name="machine-model" placeholder="Enter Model">
+						<span class="text-danger error-msg"></span>
+					</div>
+				</div>
+				<div class="col-lg-4 col-sm-12">
+					<div class="form-group mb-4">
+						<label for="machine-id">Machine Id*</label>
+						<input type="text" disabled required class="form-control rounded-0 fvalidation" id="machine-id" name="machine-id" value="{{ machine_id }}" placeholder="Enter Machine id" >
+						<span class="text-danger error-msg"></span>
+					</div>
+				</div>
+				<div class="col-lg-4 col-sm-12">
+					<div class="form-group mb-4">
+						<label for="machine-manufacture-date">Manufacturing Date*</label>
+						<input type="Date" {% if edit_or_delete %}disabled{% endif %} required class="form-control rounded-0 datepicker fvalidation" value="{{ machine_date }}" id="machine-manufacture-date" name="machine-manufacture-date" placeholder="Enter Date">
+						<span class="text-danger error-msg"></span>
+					</div>
+				</div>
+				<div class="col-lg-12 col-sm-12">
+					<div class="form-check mb-4">
+					    <input {% if edit_or_delete %}disabled{% endif %} type="checkbox" {% if machine_company_owned %}checked{% endif %} class="form-check-input" id="exampleCheck1" for="" name="machine-company-owned">
+					    <label class="form-check-label" for="form-check-input">Company Owned</label>
+						<span class="text-danger error-msg"></span>
+					</div>
+				</div>
+				<div class="col-lg-4 col-sm-12">
+					<div class="form-group mb-4">
+						<label for="machine-chassi_no">Chassi Number*</label>
+						<input type="text" {% if edit_or_delete %}disabled{% endif %} required class="form-control rounded-0 associate-customer fvalidation" value="{% if machine_chassi_number %}{{ machine_chassi_number }}{% endif %}" id="machine-chassi_no" name="machine-chassi_no" placeholder="Enter Chassi Number" for="">
+						<span class="text-danger error-msg"></span>
+					</div>
+				</div>
+				<div class="col-lg-4 col-sm-12">
+					<div class="form-group mb-4">
+						<label for="machine-fuel">Fuel Type*</label>
+						<select class="custom-select form-control form-control-user rounded-0 fvalidation" {% if edit_or_delete %}disabled{% endif %} onchange="" id="machine-fuel" name="machine-fuel" placeholder="">
+							<option value="">Select</option>
+                            {% for foo in all_fuel_obj %}
+                                <option value="{{ foo.id }}" {% if foo.id == machine_fuel_id %}selected{% endif %}>{{ foo.name }}</option>
+                            {% endfor %}
+
+						</select>
+						<span class="text-danger error-msg"></span>
+					</div>
+				</div>
+                <input type="hidden" name="input_field_for_model" value="{{ input_field_for_model }}">
+                <input type="hidden" name="input_field_for_machine" value="{{ input_field_for_machine }}">
+				<div class="col-lg-4 col-sm-12">
+					<div class="form-group mb-4">
+						<label for="machine-engine_no">Engine Number*</label>
+						<input type="text" {% if edit_or_delete %}disabled{% endif %}  required class="form-control rounded-0 fvalidation" value="{% if machine_engine_number %}{{ machine_engine_number }}{% endif %}" id="machine-engine_no" name="machine-engine_no" placeholder="Enter Number" for="">
+						<span class="text-danger error-msg"></span>
+					</div>
+				</div>
+				<div class="col-lg-4 col-sm-12">
+					<div class="form-group mb-4">
+						<label for="nick-name">Nick Name</label>
+						<input type="text" {% if edit_or_delete %}disabled{% endif %}  required class="form-control rounded-0 associate-customer fvalidation" value="{% if machine_name %}{{ machine_name }}{% endif %}" id="nick-name" name="machine-name" placeholder="Enter NickName" for="">
+						<span class="text-danger error-msg"></span>
+					</div>
+				</div>
+                {% if not edit_or_delete %}
+                    <div class=" col-12 mt-4">
+                        <button type="submit" id="submit-btn" class="btn bg-gradient-primary text-white rounded-0 f-s-18 px-4 py-2">Submit</button>
+                    </div>
+                {% endif %}
+			</div>
+      	</form>
+      </div>
+    </div>
+  </div>

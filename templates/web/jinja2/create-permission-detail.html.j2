@@ -1,0 +1,124 @@
+{% extends "web/jinja2/base.html.j2" %}
+{% block content %}
+<!-- Begin Page Content -->
+<section class="py-md-5">
+	<div class="container-fluid">
+		<div class="col-12">
+			<div class="card mb-4 border-1">
+				<div class="card-header py-3 px-0 align-items-center bg-white border-0">
+					<div class="row">
+						<div class="col-12">
+							<h3 class="m-0 px-3 font-weight-bold text-dark">Add Permission Detail</h3>
+						</div>
+					</div>
+				</div>
+				<form  action="{{url('permission-detail')}}" method="post" enctype="multipart/form-data">
+				{{csrf_input}}
+				<div class="card-body px-0">
+                    <div class="row mx-0">
+                        <div class="col-lg-2 col-md-2 col-sm-12">
+                            <p class="m-0 font-weight-bold text-dark">Permission</p>
+                            <hr>
+                        </div>
+                    </div>    
+                    <div class="row mx-0">
+                        <div class="col-lg-2 col-md-2 col-sm-12">
+                            <div class="form-group mt-5">
+                                <p class="m-0 font-weight-bold text-dark">Lease Date</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="_from">From*</label>
+                                <input type="date" name="_from" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="to">To*</label>
+                                <input type="date" name="_to" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-12">
+                            <div class="form-group mt-5">
+                                <button class="btn bg-gradient-success text-white rounded-1 f-s-18 px-4 py-2">Update</button>
+                            </div>
+                        </div>
+                                         
+                    </div>
+                    <hr>
+                    <div class="row mx-0">
+                        <div class="col-lg-2 col-md-2 col-sm-12">
+                            <div class="form-group mt-5">
+                                <p class="m-0 font-weight-bold text-dark">Pollution Date</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="_from">From*</label>
+                                <input type="date" name="_from" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="to">To*</label>
+                                <input type="date" name="_to" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-12">
+                            <div class="form-group mt-5">
+                                <button class="btn bg-gradient-success text-white rounded-1 f-s-18 px-4 py-2">Update</button>
+                            </div>
+                        </div>
+                                         
+                    </div>
+                    <hr>
+                    <div class="row mx-0">
+                        <div class="col-lg-2 col-md-2 col-sm-12">
+                            <div class="form-group mt-5">
+                                <p class="m-0 font-weight-bold text-dark">EC Date</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="_from">From*</label>
+                                <input type="date" name="_from" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="to">To*</label>
+                                <input type="date" name="_to" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-12">
+                            <div class="form-group mt-5">
+                                <button class="btn bg-gradient-success text-white rounded-1 f-s-18 px-4 py-2">Update</button>
+                            </div>
+                        </div>
+                                         
+                    </div>
+                    <hr>
+					
+					<div class="row mx-0 position-relative">
+        
+						<div class=" col-12 pt-4 text-center">
+							<button type="reset" class="btn btn-white text-dark border rounded-1 bg-white f-s-18 px-4 py-2 mr-3">Reset</button>
+							<button type="submit"  class="btn bg-gradient-primary text-white rounded-1 f-s-18 px-4 py-2">Submit</button>
+						</div>
+					</div>
+				</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- End Here -->
+{#
+<script src="{{static ('vendor/jquery/jquery.min.js')}}"></script>
+#}
+
+
+
+
+{% endblock %}

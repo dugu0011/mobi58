@@ -1,0 +1,82 @@
+{% extends "web/jinja2/base.html.j2" %}
+{% block content %}
+<!-- Begin Page Content -->
+<section class="py-md-5">
+	<div class="container-fluid">
+		<div class="col-12">
+			<div class="card mb-4 border-1">
+				<div class="card-header py-3 px-0 align-items-center bg-white border-0">
+					<div class="row">
+						<div class="col-10">
+							<h3 class="m-0 px-3 font-weight-bold text-dark">Crusher</h3>
+						</div>
+                        <div class="col-2">
+							<a href="/crusher-detail/?company={{company_id}}" class="btn btn-primary font-18"><i class="fa fa-plus"></i>Add Crusher</a>
+						</div>
+					</div>
+				</div>
+				<div class="card-body px-0">
+                    <div class="card-body px-0">
+                    <div class="row mx-0">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                    <table id="master_crusher" class="table table-border">
+                        <thead class="text-center">
+                            <tr>
+                                <th>Crusher Name</th>
+								<th>Crusher ID</th>
+                                {#<th>Mineral Type</th>
+                                <th>Lease Number</th>#}
+								<th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-center">  
+							{% for data in crusher %}  
+                            <tr>
+								<td>{{data.crusher_name}}</td>
+                                <td>{{data.crusher_id}}</td>
+                                {#<td>{{data.mineral_type}}</td>
+                                <td>{{data.lease_number}}</td>#}
+                                <td>
+                                    <div class="tools">
+                                        <div class="text-right btn-group">
+                                            <button type="button" class="btn btn-box-tool dropdown-toggle" 
+                                                    data-toggle="dropdown" aria-expanded="false">
+                                            <i class="fa fa-ellipsis-v"></i>
+                                            </button>
+                                            <ul class="dropdown-menu" role="menu">
+                                                <li><a href="#" style="color:inherit;"><i class="fa fa-edit"></i>Edit</a>
+                                                </li>
+                                                <li><a href="#" onclick="return confirm('Are you sure?')"; style="color:inherit;"><i class="fa fa-delete"></i>Delete</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+							{% endfor %}
+                        </tbody>
+                    </table>            
+                </div>
+                    <hr>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- End Here -->
+
+<script src="{{static ('vendor/jquery/jquery.min.js')}}"></script>
+
+
+<script>
+    $(document).ready(function(){
+        $('#master_crusher').DataTable({
+        "pagingType": "full_numbers"
+        });
+        $('dataTables_length').addClass('bs-select');
+    });
+</script>
+
+
+{% endblock %}

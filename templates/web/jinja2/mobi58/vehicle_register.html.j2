@@ -1,0 +1,529 @@
+{% extends "web/jinja2/base.html.j2" %}
+{% block title %} Raise Ticket {% endblock %}
+{% block title_header %}Raise Ticket{% endblock %}
+{% block content %}
+
+
+<section class="py-2">
+  <div class="container-fluid">
+    <h1 class="h3 mb-2 text-gray-800">Vehicle List</h1>
+    <p class="mb-4">you can add and view list of Vehicle.</p>
+    <div class="row">
+      <div class="col-12">
+        <div class="card mb-4 border-0">
+          <div class="card-body position-relative pl-0 pr-0">
+            <div class="card shadow mb-4">
+              <div class="card-header bg-warning py-3">
+                <div class="row w-100 align-items-center">
+                  <div class="col-12 col-md-6">
+                    <h6 class="m-0 font-weight-bold text-black">Vehicle List</h6>
+                  </div>
+                  <div class="col-12 col-md-6 text-md-right mt-4 mt-sm-0">
+                    <!-- <a href="" class="btn bg-transparent text-black">Add Transporter</a> -->
+
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                      Add Vehicle
+                    </button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                      aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header" style="    background-image: linear-gradient(315deg, #ff4e00 0%, #ec9f05 74%);
+                                                ">
+                            <h5 class="modal-title" id="exampleModalLabel" style="    margin-left: 135px; color:black">
+                              ADD Vehicle</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                            <form method="post" enctype="multipart/form-data" action="{{url('add-vehicle')}}">
+                              {{csrf_input}}
+                              <div class="form-row">
+                                <div class="form-group col-md-6">
+                                  <p class="text-left">Transporter Name</p>
+                                  <select class="form-control" id="exampleFormControlSelect1" name="trransporter">
+                                    <option selected="">Please choose</option>
+                                    {% for u in alltransporter1 %}
+                                    <option value="{{u.id}}">{{u.transporter_name}}</option>
+                                    {%endfor%}
+                                  </select>
+                                </div>
+                                <div class="form-group col-md-6">
+                                  <p class="text-left">Registeration No.</p>
+                                  <input name="registeration_no" type="tel" class="form-control" id="inputEmail4"
+                                    placeholder="registeration_no" required>
+                                </div>
+                                <div class="form-group col-md-6">
+                                  <p class="text-left">RC_file</p>
+                                  <input name="rc_file" type="file" class="form-control" id="inputEmail4"
+                                    placeholder="rc_file" required>
+                                </div>
+                                <div class="form-group col-md-6">
+                                  <p class="text-left">Registeration Date</p>
+                                  <input name="registeration_date" type="date" class="form-control" id="inputEmail4"
+                                    placeholder="rc_file" required>
+                                </div>
+                                <div class="form-group col-md-6">
+                                  <p class="text-left">Registered Upto</p>
+                                  <input name="registered_upto" type="date" class="form-control" id="inputEmail4"
+                                    placeholder="registered_upto" required>
+                                </div>
+                                <div class="form-group col-md-6">
+                                  <p class="text-left">Owner Name </p>
+                                  <input name="owner_name" type="text" class="form-control" id="inputEmail4"
+                                    placeholder="owner name" required>
+                                </div>
+                                <div class="form-group col-md-6">
+                                  <p class="text-left">Vehicle Type</p>
+                                  <select class="form-control" id="exampleFormControlSelect1" name="vehicle_type">
+                                    <option selected="">Please choose</option>
+                                    {% for u in VEHICLE_TYPE %}
+                                    <option value="{{u.0}}">{{u.1}}</option>
+                                    {%endfor%}
+                                  </select>
+                                </div>
+                                <div class="form-group col-md-6">
+                                  <p class="text-left">Vehicle Model</p>
+                                  <input name="vehicle_model" type="text" class="form-control" id="inputEmail4"
+                                    required>
+                                </div>
+                                <div class="form-group col-md-6">
+                                  <p class="text-left">Vehicle class</p>
+                                  <input name="vehicle_class" type="text" class="form-control" id="inputEmail4"
+                                    placeholder="CIN No" required>
+                                </div>
+                                <div class="form-group col-md-6">
+                                  <p class="text-left">Vehicle Color</p>
+                                  <input name="vehicle_color" type="text" class="form-control" id="inputEmail4"
+                                    required>
+                                </div>
+                                <div class="form-group col-md-6">
+                                  <p class="text-left">Engine No.</p>
+                                  <input name="engine_no" type="text" class="form-control" id="inputEmail4" required>
+                                </div>
+                                <div class="form-group col-md-6">
+                                  <p class="text-left">Chasis No.</p>
+                                  <input name="chasis_no" type="text" class="form-control" id="inputEmail4" required>
+                                </div>
+                                <div class="form-group col-md-6">
+                                  <p class="text-left">RTO Details</p>
+                                  <input name="rto_details" type="text" class="form-control" id="inputEmail4" required>
+                                </div>
+                                <div class="form-group col-md-6">
+                                  <p class="text-left">Fuel Type</p>
+                                  <select class="form-control" id="exampleFormControlSelect1" name="fuel_type">
+                                    <option selected="">Please choose</option>
+                                    {% for u in FUEL_TYPE %}
+                                    <option value="{{u.0}}">{{u.1}}</option>
+                                    {%endfor%}
+                                  </select>
+                                </div>
+                                <div class="form-group col-md-6">
+                                  <p class="text-left">Insurance Validity</p>
+                                  <input name="insurance_validity" type="date" class="form-control" id="inputEmail4"
+                                    required>
+                                </div>
+                                <div class="form-group col-md-6">
+                                  <p class="text-left">Insurance File</p>
+                                  <input name="insurance_file" type="file" class="form-control" id="inputEmail4"
+                                    required>
+                                </div>
+                                <div class="form-group col-md-6">
+                                  <p class="text-left">Pollution Validity</p>
+                                  <input name="pollution_validity" type="date" class="form-control" id="inputEmail4"
+                                    required>
+                                </div>
+                                <div class="form-group col-md-6">
+                                  <p class="text-left">Pollution File</p>
+                                  <input name="pollution_file" type="file" class="form-control" id="inputEmail4"
+                                    required>
+                                </div>
+
+
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                              </div>
+                            </form>
+                          </div>
+
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <table id="company" class="table table-border">
+                  <thead class="text-center">
+                    <tr>
+                      <!-- <th>S.No.</th> -->
+                      <th>Transporter Name</th>
+                      <th>Registeration No.</th>
+                      <th>Vehicle model</th>
+                      <th>RTO</th>
+
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody class="text-center">
+                    {% for data in trans %}
+                    <tr>
+                      <!-- <td>{{data.id}}</td> -->
+                      <td><a href="">{{data.trransporter}}</a></td>
+                      <td>{{data.registeration_no}}</td>
+                      <td>{{data.vehicle_model}}</td>
+                      <td>{{data.rto_details}}</td>
+                      <td>
+                        <div class="dropdown show">
+                          <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-ellipsis-v"></i>
+                          </a>
+                          <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <a href="#" data-toggle="modal" data-target="#DetailViewList{{data.id}}"
+                              class="dropdown-item" title="View">View</a>
+                            <a href="#" data-toggle="modal" data-target="#EditCompany{{data.id}}" class="dropdown-item"
+                              title="Update">Edit</a>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+              <hr>
+
+            </div>
+          </div>
+        </div>
+      </div>
+</section>
+
+
+{% for data in trans %}
+<section>
+  <!-- Mine Sale List Detail -->
+
+  <div class="modal fade" id="DetailViewList{{data.id}}" tabindex="-1" role="dialog" data-backdrop="static"
+    data-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Vehicle Details</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="card-body px-0">
+          <div class="row mx-0">
+            <div class="col-lg-6 col-md-6 col-sm-12">
+              <div class="form-group mb-4">
+                <label for="company_name">Registeration No.</label>
+                <input type="text" name="company_name" value="" placeholder="{{data.registeration_no}}"
+                  class="form-control" readonly>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12">
+              <div class="form-group mb-4">
+                <label for="company_name">Transporter Name</label>
+                <input type="text" name="company_name" value="" placeholder="{{data.trransporter}}" class="form-control"
+                  readonly>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12">
+              <div class="form-group mb-4">
+                <label for="company_name">Registeration Date</label>
+                <input type="text" name="company_name" value="" placeholder="{{data.registeration_date}}"
+                  class="form-control" readonly>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12">
+              <div class="form-group mb-4">
+                <label for="company_name">Registeration Upto</label>
+                <input type="text" name="company_name" value="" placeholder="{{data.registered_upto}}"
+                  class="form-control" readonly>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12">
+              <div class="form-group mb-4">
+                <label for="company_name">Owner Name</label>
+                <input type="text" name="company_name" value="" placeholder="{{data.owner_name}}" class="form-control"
+                  readonly>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12">
+              <div class="form-group mb-4">
+                <label for="company_name">Vehicle Type</label>
+                <input type="text" name="company_name" value="" placeholder="{{data.vehicle_type}}" class="form-control"
+                  readonly>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12">
+              <div class="form-group mb-4">
+                <label for="company_name">Vehicle Model</label>
+                <input type="text" name="company_name" value="" placeholder="{{data.vehicle_type}}" class="form-control"
+                  readonly>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12">
+              <div class="form-group mb-4">
+                <label for="company_name">Vehicle Class</label>
+                <input type="text" name="company_name" value="" placeholder="{{data.vehicle_class}}"
+                  class="form-control" readonly>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12">
+              <div class="form-group mb-4">
+                <label for="company_name">Vehicle Color</label>
+                <input type="text" name="company_name" value="" placeholder="{{data.vehicle_color}}"
+                  class="form-control" readonly>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12">
+              <div class="form-group mb-4">
+                <label for="company_name">Engine No.</label>
+                <input type="text" name="company_name" value="" placeholder="{{data.engine_no}}" class="form-control"
+                  readonly>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12">
+              <div class="form-group mb-4">
+                <label for="company_name">Chasis No.</label>
+                <input type="text" name="company_name" value="" placeholder="{{data.chasis_no}}" class="form-control"
+                  readonly>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12">
+              <div class="form-group mb-4">
+                <label for="company_name">RTO Details</label>
+                <input type="text" name="company_name" value="" placeholder="{{data.rto_details}}" class="form-control"
+                  readonly>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12">
+              <div class="form-group mb-4">
+                <label for="company_name">Fuel Type</label>
+                <input type="text" name="company_name" value="" placeholder="{{data.fuel_type}}" class="form-control"
+                  readonly>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12">
+              <div class="form-group mb-4">
+                <label for="company_name">Insurance Validity</label>
+                <input type="text" name="company_name" value="" placeholder="{{data.insurance_validity}}"
+                  class="form-control" readonly>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12">
+              <div class="form-group mb-4">
+                <label for="company_name">Insurance File</label>
+                <input type="text" name="company_name" value="" placeholder="{{data.insurance_file}}"
+                  class="form-control" readonly>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12">
+              <div class="form-group mb-4">
+                <label for="company_name">Pollution Validity</label>
+                <input type="text" name="company_name" value="" placeholder="{{data.pollution_validity}}"
+                  class="form-control" readonly>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12">
+              <div class="form-group mb-4">
+                <label for="company_name">Pollution File</label>
+                <input type="text" name="company_name" value="" placeholder="{{data.pollution_file}}"
+                  class="form-control" readonly>
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+{% endfor %}
+
+
+{% for data in trans %}
+<section>
+  <!-- Edit Company -->
+
+  <div class="modal fade" id="EditCompany{{data.id}}" tabindex="-1" role="dialog" data-backdrop="static"
+    data-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header" style="background-image: linear-gradient(315deg, #ff4e00 0%, #ec9f05 74%);">
+          <h5 class="modal-title" id="exampleModalLabel" style="color: black;">{{data.trransporter}}</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="card-body px-0">
+          <div class="row mx-0">
+            <div class="col-lg-4 col-md-4 col-sm-12">
+              <div class="form-group mb-4">
+                <label for="company_name">Registeration No.</label>
+                <input type="text" name="company_name" value="" placeholder="{{data.registeration_no}}"
+                  class="form-control" readonly>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12">
+              <div class="form-group mb-4">
+                <label for="company_name">Transporter Name</label>
+                <input type="text" name="company_name" value="" placeholder="{{data.trransporter}}" class="form-control"
+                  readonly>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12">
+              <div class="form-group mb-4">
+                <label for="company_name">Registeration Date</label>
+                <input type="text" name="company_name" value="" placeholder="{{data.registeration_date}}"
+                  class="form-control" readonly>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12">
+              <div class="form-group mb-4">
+                <label for="company_name">Registeration Upto</label>
+                <input type="text" name="company_name" value="" placeholder="{{data.registered_upto}}"
+                  class="form-control" readonly>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12">
+              <div class="form-group mb-4">
+                <label for="company_name">Owner Name</label>
+                <input type="text" name="company_name" value="" placeholder="{{data.owner_name}}" class="form-control"
+                  readonly>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12">
+              <div class="form-group mb-4">
+                <label for="company_name">Vehicle Type</label>
+                <input type="text" name="company_name" value="" placeholder="{{data.vehicle_type}}" class="form-control"
+                  readonly>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12">
+              <div class="form-group mb-4">
+                <label for="company_name">Vehicle Model</label>
+                <input type="text" name="company_name" value="" placeholder="{{data.vehicle_type}}" class="form-control"
+                  readonly>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12">
+              <div class="form-group mb-4">
+                <label for="company_name">Vehicle Class</label>
+                <input type="text" name="company_name" value="" placeholder="{{data.vehicle_class}}"
+                  class="form-control" readonly>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12">
+              <div class="form-group mb-4">
+                <label for="company_name">Vehicle Color</label>
+                <input type="text" name="company_name" value="" placeholder="{{data.vehicle_color}}"
+                  class="form-control" readonly>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12">
+              <div class="form-group mb-4">
+                <label for="company_name">Engine No.</label>
+                <input type="text" name="company_name" value="" placeholder="{{data.engine_no}}" class="form-control"
+                  readonly>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12">
+              <div class="form-group mb-4">
+                <label for="company_name">Chasis No.</label>
+                <input type="text" name="company_name" value="" placeholder="{{data.chasis_no}}" class="form-control"
+                  readonly>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12">
+              <div class="form-group mb-4">
+                <label for="company_name">RTO Details</label>
+                <input type="text" name="company_name" value="" placeholder="{{data.rto_details}}" class="form-control"
+                  readonly>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12">
+              <div class="form-group mb-4">
+                <label for="company_name">Fuel Type</label>
+                <input type="text" name="company_name" value="" placeholder="{{data.fuel_type}}" class="form-control"
+                  readonly>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12">
+              <div class="form-group mb-4">
+                <label for="company_name">Insurance Validity</label>
+                <input type="text" name="company_name" value="" placeholder="{{data.insurance_validity}}"
+                  class="form-control" readonly>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12">
+              <div class="form-group mb-4">
+                <label for="company_name">Insurance File</label>
+                <input type="text" name="company_name" value="" placeholder="{{data.insurance_file}}"
+                  class="form-control" readonly>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12">
+              <div class="form-group mb-4">
+                <label for="company_name">Pollution Validity</label>
+                <input type="text" name="company_name" value="" placeholder="{{data.pollution_validity}}"
+                  class="form-control" readonly>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12">
+              <div class="form-group mb-4">
+                <label for="company_name">Pollution File</label>
+                <input type="text" name="company_name" value="" placeholder="{{data.pollution_file}}"
+                  class="form-control" readonly>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+{% endfor %}
+
+
+
+
+<script src="{{static ('vendor/jquery/jquery.min.js')}}"></script>
+
+
+<script>
+  $(document).ready(function () {
+    $('#company').DataTable({
+      "pagingType": "full_numbers"
+    });
+    $('dataTables_length').addClass('bs-select');
+  });
+</script>
+
+
+
+
+
+
+
+
+{% endblock %}

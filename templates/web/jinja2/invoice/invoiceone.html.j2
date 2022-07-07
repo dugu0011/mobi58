@@ -1,0 +1,188 @@
+{% extends "web/jinja2/base.html.j2" %}
+{% block content %}
+<body class="A5">
+	<!-- Content Wrapper -->
+	<div id="content-wrapper" class="d-flex flex-column bg-white">
+
+		<!-- Main Content -->
+		<div id="content">
+			<!-- Topbar -->
+			<nav class="navbar navbar-expand navbar-light bg-white topbar mb-0 static-top border-bottom">
+				<!-- Sidebar - Brand -->
+				{%if request.user.is_authenticated%}
+				<a class="sidebar-brand d-flex align-items-center justify-content-center px-2 bg-white text-dark" href="/crusher/outbound/info-list/?company={{company}}">
+					<button class="btn btn-primary" onclick="printDiv('printableArea')"><i class="fas fa-print"></i></button>
+				</a>
+				{%endif%}				
+				<!-- Sidebar Toggle (Topbar) -->
+				<button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3"><i class="fa fa-bars"></i>	</button>
+				<!-- Topbar Navbar -->
+			</nav>
+			<!-- End of Topbar -->
+		</div>
+		<!-- End of Main Content -->
+	</div>
+	<div id="printableArea">
+		<div class="invoice p-3 mb-3" style="font-size:11px"> 
+			<div class="row w-100 align-items-center border-bottom">
+				<div class="ccol-12 col-md-3"></div>
+				<div class="col-12 col-md-6">
+					<h4 class="text-center">Sale Invoice<br><small style="font-size: 70%;">Under Rule 7 Of section 31 of GST ACT</small></h4>
+				</div>
+				<div class="col-12 col-md-3">
+					<div class="form-check">
+						<input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+						<label class="form-check-label mt-1" for="defaultCheck1">
+							Orignal For Buyer
+						</label>
+					  </div>
+					<div class="form-check">
+						<input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+						<label class="form-check-label mt-1" for="defaultCheck1">
+							Duplicate for Transporter
+						</label>
+					  </div>
+					<div class="form-check">
+						<input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+						<label class="form-check-label mt-1" for="defaultCheck1">
+							Triplicate for Supplier
+						</label>
+					  </div>
+				</div>
+			</div>
+			<h6>Sale Invoice Detail</h6>
+			<div class="row invoice-info border-bottom">
+				<div class="col-sm-4 invoice-col">
+					Bill No.: <strong>{{data.invoice_number}}</strong><br>
+					Bill Date: <strong>{{data.out_date}}</strong><br>
+					Time:  <strong>{{data.out_time}}</strong>
+				</div>
+				<div class="col-sm-4 invoice-col mb-1">
+					E-Way Bill No.: <strong>N/A</strong><br>
+					E-Way Bill Date: <strong>N/A</strong><br>
+					TP No.: &emsp;<strong>{{data.ravana_no}}</strong> 
+				</div>
+				<div class="col-sm-4 invoice-col mb-1">
+					<p>Transporter: <strong>T&C Transporter</strong><br>
+						Vehicle No.: <strong>{{data.vehicle_no}}</strong><br>
+						Driver: <strong>{{data.driver_name}}</strong> 
+						<i class="fas fa-phone-volume"></i>: <strong> {{data.mobile}}</strong>
+					</p>
+				</div>
+			</div>
+			<br>
+			<h6>Address Detail</h6>
+			<div class="row">
+				<div class="col-md-4">
+					<h6 style="font-size:12px; font-weight:bold;">From</h6>
+						<p>	<strong>{{data.company_name}}</strong><br>
+							Address: <br>
+							GST No.:<strong>{%if data.gst_no%}{{data.gst_no}}{%else%}N/A{%endif%} </strong><br>
+							{% for address in data.company_name.address.all() %}
+							{% if address.is_shipping_address == True %}
+							State: <strong>{{address.state}}</strong>    Code:<strong>{{address.pincode}} </strong><br>
+							{%endif%}
+							{% endfor %}
+							<i class="fas fa-user"></i>: <strong>{{data.company_name}}</strong> <br>
+							<i class="fas fa-phone-volume"></i>: <strong>{{data.mobile}}</strong> <br>
+							<i class="fas fa-envelope"></i>: <strong>{{data.company_name.email}}</strong>
+							<br>
+						</p>
+				</div>
+				<div class="col-md-4">
+					<h6 style="font-size:12px; font-weight:bold;">Billing Address</h6>
+					<p>	<b>{{data.customer_name}}</b><br>
+						Address: <br>
+						GST No.:<strong>{%if data.customer_name.gst_no%}{{data.customer_name.gst_no}}{%else%}N/A{%endif%}</strong> <br>
+						{% for address in data.customer_name.customer_address.all() %}
+						{% if address.is_billing_address == True %}
+						State: <strong>{{address.state}}</strong>    Code:<strong>{{address.pincode}}</strong> <br>
+						{%endif%}
+						{% endfor %}
+						<i class="fas fa-user"></i>: <strong>{{data.customer_name}}</strong> <br>
+						<i class="fas fa-phone-volume"></i>: <strong>{{data.customer_name.mobile}}</strong> <br>
+						<i class="fas fa-envelope"></i>: <strong>{{data.customer_name.email}}</strong>
+						<br>
+					</p>
+				</div>
+				<div class="col-md-4">
+					<h6 style="font-size:12px; font-weight:bold;">Shipping Address</h6>
+					<p>	<b>{{data.customer_name}}</b><br>
+						Address: <br>
+						GST No.:<strong>{%if data.customer_name.gst_no%}{{data.customer_name.gst_no}}{%else%}N/A{%endif%}</strong> <br>
+							{% for address in data.customer_name.customer_address.all() %}
+								{% if address.is_shipping_address == True %}
+								State:<strong> {{address.state}}</strong>   Code:<strong>{{address.pincode}} </strong><br>
+								{%endif%}
+							{% endfor %}
+						<i class="fas fa-user"></i>:<strong>{{data.customer_name}}</strong> <br>
+						<i class="fas fa-phone-volume"></i>: <strong>{{data.customer_name.mobile}}</strong> <br>
+						<i class="fas fa-envelope"></i>:<strong> {{data.customer_name.email}}</strong>
+						<br>
+					</p>
+				</div>	
+			</div>
+			<h6>Goods Detail</h6>
+			<div class="row">
+				<div class="col-12">
+					<table class="table" style="font-size:0.6rem;" >
+						<thead>
+							<tr>
+								<th scope="col">S.N.</th>
+								<th scope="col">Product</th>
+								<th scope="col">HSN Code</th>
+								<th scope="col">QTY</th>
+								<th scope="col">UoM</th>
+								<th scope="col">Rate</th>
+								<th scope="col">GST</th>
+								<th scope="col">Total</th>
+							</tr>	
+						</thead>
+						<tbody>
+							{%for data in goods_detail %}
+							<tr>
+								<td>{{loop.index}}</td>
+								<td>{{data.item_name}}</td>
+								<td>HSNCODE1</td>
+								<td>{{data.quantity}}</td>
+								<td>{{data.uom}}</td>
+								<td>{{data.billing_price}}</td>
+								<td>{{data.gst_amount}}</td>
+								<td>{{data.total_amount}}</td>
+							</tr>
+							{%endfor%}
+							<tr>
+								{#<td colspan="6">Amount in words: <strong>Two Hundred Thrty five only</strong></td>#}
+								<td colspan="6"></td>
+								<td><strong>{{total_gst}}</strong></td>
+								<td><strong>{{totalamunt}}</strong></td>
+							</tr>
+						</tbody>    
+					</table>
+				</div>				
+			</div>
+			<div class="row invoice-info mb-1">
+				<div class="col-sm-9 invoice-col">
+					<strong>Bank Detail</strong>:<span style="font-size:9px"> <b>Yes Bank Ltd.</b>, Branch: <b>Sec-2 IMT Manesar</b>,  A/C No: <b>002663400000033</b>, IFSC Code: <b>YESB0000026</b></span> <br>
+					<strong>Note:</strong> <span style="font-size:9px">All Legal matter are subject to Sikar Jurisdiction only. Certified that the particular given above are true & correct.           </span>  
+				</div>
+				<div class="col-sm-3 invoice-col text-right" style="font-size:11px">
+					for {{data.company_name}}<br>
+					<br>
+					Authorised Signatory
+				</div>				
+			</div>			
+		</div>		
+	</div>
+</div>
+<script>
+	function printDiv(divName) {
+		var printContents = document.getElementById(divName).innerHTML;
+		var originalContents = document.body.innerHTML;
+		document.body.innerHTML = printContents;
+		window.print();
+		document.body.innerHTML = originalContents;
+	}
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+{% endblock %}

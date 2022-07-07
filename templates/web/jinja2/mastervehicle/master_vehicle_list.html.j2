@@ -1,0 +1,87 @@
+{% extends "web/jinja2/base.html.j2" %}
+{% block content %}
+<!-- Begin Page Content -->
+<section class="py-2">
+	<div class="container-fluid">
+		<h1 class="h3 mb-2 text-gray-800">Vehicle List</h1>
+    	<p class="mb-4">you can add and view list of Vehicle.</p>
+		<div class="row">
+			<div class="col-12">
+				<div class="card mb-4 border-0">
+					<div class="card-body position-relative pl-0 pr-0">
+						<div class="card shadow mb-4">
+                            <div class="card-header bg-warning py-3">
+                                <div class="row w-100 align-items-center">
+                                    <div class="col-12 col-md-6">
+                                        <h6 class="m-0 font-weight-bold text-black">Vehicle List</h6>
+                                    </div>
+                                    <div class="col-12 col-md-6 text-md-right mt-4 mt-sm-0">
+                                        <a href="/master-vehicle/?company={{company_id}}" class="btn bg-transparent text-black">Add Vehicle</a>
+                                    </div>
+                                </div>
+                            </div>
+                        <div class="card-body">
+                            <table class="table" id="dataTable" width="100%" cellspacing="0">
+                                <thead class="text-center">
+                                    <tr>
+                                        <th>Vehicle No.</th>
+                                        <th>Chassis No.</th>
+                                        <th>Engine No.</th>
+                                        <th>Registraion No.</th>
+                                        <th>Vehicle Type</th>
+                                        <th>Location</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-center">  
+                                    {% for data in vehicles %}  
+                                    <tr>
+                                        <td>{% if data.vehicle_no %}{{data.vehicle_no}}{% else %}--{% endif%}</td>
+                                        <td>{% if data.chassis_no %}{{data.chassis_no}}{% else %}--{% endif%}</td>
+                                        <td>{% if data.engine_no %}{{data.engine_no}}{% else %}--{% endif%}</td>
+                                        <td>{% if data.rc_no %}{{data.rc_no}}{% else %}--{% endif%}</td>
+                                        <td>{% if data.vehicle_type %}{{data.vehicle_type}}{% else %}--{% endif%}</td>
+                                        <td>{% if data.location %}{{data.location}}{% else %}--{% endif%}</td>
+                                        <td>
+                                            <div class="tools">
+                                                <div class="text-right btn-group">
+                                                    <button type="button" class="btn btn-box-tool dropdown-toggle" 
+                                                            data-toggle="dropdown" aria-expanded="false">
+                                                    <i class="fa fa-ellipsis-v"></i>
+                                                    </button>
+                                                    <ul class="dropdown-menu" role="menu">
+                                                        <li><a href="/master-vehicle-edit/{{data.id}}/?company={{company_id}}" style="color:inherit;"><i class="fa fa-edit"></i>Edit</a>
+                                                        </li>
+                                                        <li><a href="/master-vehicle-delete/{{data.id}}/?company={{company_id}}" onclick="return confirm('Are you sure?')"; style="color:inherit;"><i class="fa fa-delete"></i>Delete</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>            
+                        </div>
+                    </div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- End Here -->
+
+<script src="{{static ('vendor/jquery/jquery.min.js')}}"></script>
+
+
+<script>
+    $(document).ready(function(){
+        $('#master_vehicle').DataTable({
+        "pagingType": "full_numbers"
+        });
+        $('dataTables_length').addClass('bs-select');
+    });
+</script>
+
+
+{% endblock %}

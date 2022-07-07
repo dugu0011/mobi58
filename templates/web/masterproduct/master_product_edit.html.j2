@@ -1,0 +1,85 @@
+ {% extends "web/jinja2/base.html.j2" %}
+{% block content %}
+
+
+<!-- Begin Page Content -->
+<section class="py-md-5">
+	<div class="container-fluid">
+		<div class="col-12">
+			<div class="card mb-4 border-1">
+				<div class="card-header py-3 px-0 align-items-center bg-white border-0">
+					<div class="row">
+						<div class="col-12">
+							<h3 class="m-0 px-3 font-weight-bold text-dark">Product Edit</h3>
+						</div>
+					</div>
+				</div>
+				<form method="post" enctype="multipart/form-data">
+				{{csrf_input}}
+                
+				<div class="card-body px-0 text-dark font-weight-bold">
+                    {% for data in product_edit %}
+                    <div class="row mx-0">
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="category">Category*</label>
+                                {#<input type="text" value="{{data.category}}" name="category" id="category"  
+                                class="form-control">#}
+                                
+                                <select class="custom-select form-control form-control-user rounded-1" required id="category" name="category">
+                                    <option value="" selected>Select</option>                                    
+                                    {% for data in category %}
+                                         <option value="{{data.0}}" selected=selected>{{data.1}}</option>   
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="item_name">Product Name*</label>
+                                <input type="text" value="{{data.item_name}}" name="item_name" id="item_name"  class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="bill_rate">Bill Rate*</label>
+                                <input type="number" value="{{data.bill_rate}}" name="bill_rate" id="bill_rate"  class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="sale_rate">Sale Rate*</label>
+                                <input type="number" value="{{data.sale_rate}}" name="sale_rate" id="sale_rate"  class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="gst_percent">GST Percentage*</label>
+                                <input type="number" value="{{data.gst_percent}}" name="gst_percent" id="gst_percent"  class="form-control">
+                            </div>
+                        </div>
+                        {#<div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="comment">Comment*</label>
+                                <textarea rows="5" class="form-control" value="{{data.comment}}" name="comment" id="comment"></textarea>
+                            </div>
+                        </div>#}
+                    </div> 
+                    {% endfor %}
+					<div class="row mx-0 position-relative">
+        
+						<div class=" col-12 pt-4 text-center">
+							<button type="submit" class="btn bg-gradient-primary text-white rounded-1 f-s-18 px-4 py-2">Submit</button>
+						</div>
+					</div>
+				</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- End Here -->
+
+<script src="{{static ('vendor/jquery/jquery.min.js')}}"></script>
+
+{% endblock %}

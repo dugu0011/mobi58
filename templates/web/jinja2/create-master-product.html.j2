@@ -1,0 +1,152 @@
+{% extends "web/jinja2/base.html.j2" %}
+{% block content %}
+<!-- Begin Page Content -->
+<section class="py-md-5">
+	<div class="container-fluid">
+		<div class="col-12">
+			<div class="card mb-4 border-1">
+				<div class="card-header py-3 px-0 align-items-center bg-white border-0">
+					<div class="row">
+						<div class="col-12">
+							<h3 class="m-0 px-3 font-weight-bold text-dark">Add Product</h3>
+						</div>
+					</div>
+				</div>
+                {# id="create-master-product-form" #}
+				<form method="post" enctype="multipart/form-data">
+				{{csrf_input}}
+				<div class="card-body px-0">
+                <div class="row mx-0">
+                    <input type="hidden" value="{{request.GET.company}}" name="company_id">
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="crusher_mine">C&M*</label>
+                                <select class="custom-select form-control form-control-user rounded-1" required id="crusher_mine" 
+                                name="crusher_mine">
+                                    <option value="" selected>Select</option>
+                                    
+                                    {% for data in crusher_mine %}
+                                         <option value="{{data.0}}">{{data.1}}</option>   
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="product-category">Category*</label>
+                                <select class="custom-select form-control form-control-user rounded-1" required id="category" name="category">
+                                    <option value="" selected>Select</option>
+                                    
+                                    {% for data in base_product %}
+                                         <option value="{{data.id}}">{{data.product_name}}</option>   
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-2 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="Item name">Item Name*</label>
+                                <input type="text" name="item_name"  class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="gst_percent">GST Percentage*</label>
+                                <input type="number" step=".0001" name="gst_percent" id="gst_percent" placeholder="0.00" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="hsn">HSN Code*</label>
+                                <select class="custom-select form-control form-control-user rounded-1" required id="hsn" name="hsn">
+                                    <option value="" selected>Select</option>
+                                    {% for data in hsncode %}
+                                         <option value="{{data.id}}">{{data.name}}</option>   
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="base_sale">Base Sale Rate*</label>
+                                <input type="number" step=".0001" name="base_sale" id="base_sale" value="0" placeholder="0.00" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="sale_royalty_charges">Sale Royalty*</label>
+                                <input type="number" step=".0001" name="sale_royalty_charges" id="sale_royalty_charges" value="0" placeholder="0.00" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="sale rate">Sale Rate*</label>
+                                <input type="number" step=".0001" name="sale_rate"  id="sale_rate" placeholder="0.00" class="form-control" required>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-2 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="base_bill">Base Bill Rate*</label>
+                                <input type="number" step=".0001" name="base_bill" id="base_bill" placeholder="0.00" value="0" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="bill_royalty_charges">Bill Royalty*</label>
+                                <input type="number" step=".0001" name="bill_royalty_charges" id="bill_royalty_charges" value="0" placeholder="0.00" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="bill rate">Bill Rate*</label>
+                                <input type="number" step=".0001" name="bill_rate" id="bill_rate" placeholder="0.00" class="form-control" required>
+                            </div>
+                        </div>
+                                          
+                    </div>
+                    <hr>
+					
+					<div class="row mx-0 position-relative">
+						{#
+						<div class="col-md-12">
+							<div class="form-group">
+								<label for="product-remarks">Comment*</label>
+								<textarea class="form-control rounded-1" id="customer-contact-remarks" name="product-comment" rows="2" required></textarea>
+							</div>
+						</div>
+                        #}
+                        {#validateMasterProductForm()#}
+						<div class=" col-12 pt-4 text-center">
+							<button type="reset" class="btn btn-white text-dark border rounded-1 bg-white f-s-18 px-4 py-2 mr-3">Reset</button>
+							<button type="submit"  class="btn bg-gradient-primary text-white rounded-1 f-s-18 px-4 py-2">Submit</button>
+						</div>
+					</div>
+				</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- End Here -->
+
+<script src="{{static ('vendor/jquery/jquery.min.js')}}"></script>
+
+<script>
+    $('#base_sale, #sale_royalty_charges, #bill_royalty_charges, #base_bill').keyup(function(){
+        var s_sale = parseFloat($('#base_sale').val());
+        var s_royalty = parseFloat($('#sale_royalty_charges').val());
+        
+        var b_bill = parseFloat($('#base_bill').val());
+        var b_royalty = parseFloat($('#bill_royalty_charges').val());
+
+        $('#sale_rate').val(s_sale + s_royalty);
+        $('#bill_rate').val(b_bill + b_royalty);
+        });
+</script>
+
+
+
+
+{% endblock %}

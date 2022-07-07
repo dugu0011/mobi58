@@ -1,0 +1,363 @@
+{% extends "web/jinja2/base.html.j2" %}
+
+
+{% block content %}
+<!-- Begin Page Content -->
+<section class="py-md-5">
+	<div class="container-fluid">
+		<div class="col-12">
+			<div class="card mb-4 border-1">
+				<div class="card-header py-3 px-0 align-items-center bg-white border-0">
+					<div class="row">
+						<div class="col-12">
+							<h3 class="m-0 px-3 font-weight-bold text-dark">Mine Sale Report</h3>
+						</div
+                        
+					</div>
+				</div>
+                    <div class="row mx-0">
+                        <div class="col-12">
+                        <hr>
+                            <span>
+                                <form method="post">
+                                {{csrf_input}}
+
+                                <div class="row mx-0">
+                                    <input type="hidden" value="{{request.GET.company}}" name="company_id" id="company_id">
+                                    
+                                    <div class="col-lg-3 col-md-12 col-sm-12">
+                                        <label for="from_date">From</label>
+                                        <input type="date" name="from_date" id="from_date" class="form-control from_date"> 
+                                    </div>
+                                    <div class="col-lg-3 col-md-12 col-sm-12">
+                                        <label for="to_date">To</label> 
+                                        <input type="date" name="to_date" id="to_date" class="form-control to_date">
+                                    </div>
+
+                                    <div class="col-lg-3 col-md-12 col-sm-12">
+                                        <label for="product_name">Select Product</label>
+                                        <select class="custom-select form-control form-control-user rounded-1 select2_dropdown" multiple="multiple" name="product_name" id="product_name">
+                                            <option value="" selected>Select</option>
+                                            
+                                            {% for data in product_filter %}
+                                            <option value="{{data.id}}">{{data.item_name}}</option>
+                                            {% endfor %}
+
+                                        </select>
+                                    </div>
+
+                                    <div class="col-lg-2 col-md-12 col-sm-12" style="margin-top:2.3rem;">
+                                        <button type="submit" class="btn btn-primary" id="searchTwoDate"><i class="fa fa-filter">
+                                        </i>Search</submit>
+                                    </div>
+                                    </div>
+                                    
+                                    <div class="row mx-0">
+                                        <div class="col-lg-3 col-md-12 col-sm-12">
+                                            <label for="daily_report">Select Date</label>
+                                            <input type="date" name="daily_report" id="daily_report" class="form-control"> 
+                                        </div>
+                                        <div class="col-lg-2 col-md-12 col-sm-12" style="margin-top:2.3rem;">
+                                            <button type="submit" class="btn btn-primary"><i class="fa fa-filter"></i>Daily Report</submit>
+                                        </div>
+                                        {%if date_wise_data %}
+                                        <div class="col-3 mt-4 pt-3">
+                                            <button  class="btn btn-primary" onclick="printContent('crusherreport')"><i class="fa fa-print"></i>Print</button>
+                                        </div>
+                                        {%endif%}
+                                    </div>
+                                </form>
+                            </span>
+                            <hr>
+						</div>   
+                    </div>
+                    
+                    <div class="row mx-0" style="font-size:0.7rem;font-weight:700;">
+                        <div class="col-sm-12 col-md-6 col-lg-12 table-responsive" id="crusherreport">
+                            <div class="row w-100 align-items-center">
+                                <div class="col-12 col-md-3 text-md-left">
+                                
+                                    <strong>{{companyname}}</strong>
+                                    
+                                </div>
+                                <div class="col-12 col-md-5 text-md-center mt-4 mt-sm-0">                                        
+                                    <h4>Mines Sales Report</h4>
+                                </div>
+                                <div class="col-12 col-md-4 text-md-right mt-4 mt-sm-0">                                        
+                                    {% if from_date and to_date %}
+                                    <strong>From {{from_date}}&nbsp;&nbsp; To {{to_date}}</strong>
+                                    {%endif%}
+                                    {% if single_date %}
+                                    <strong>Date {{single_date}}</strong>
+                                    {%endif%}
+                                    
+                                </div>
+                            </div>
+                            <p style="float: right;">
+                                <button type="button" id="printBut">Print selected</button>
+                            </p>
+                            <table id="mineInfo" class="table table-bordered" style="font-size:0.7rem; color:#000000!important;">
+                                <thead class="font-weight-bold text-dark" id="main_thead_of_body">
+                                    <tr>
+                                        <th>S.N.&nbsp;&nbsp;<input type="checkbox" /></th>
+                                        <th style="width:10rem;">Date/Time-In/Out&nbsp;&nbsp;<input type="checkbox" /></th>
+                                        <th>Txn/WBID&nbsp;&nbsp;<input type="checkbox" /></th>
+                                        <th>Invoice&nbsp;&nbsp;<input type="checkbox" /></th>
+                                        <th>Customer/&nbsp;&nbsp;<input type="checkbox" /><br>Vehicle No.</th>
+                                        <th>Item&nbsp;&nbsp;<input type="checkbox" /></th>
+                                        <th>Load&nbsp;&nbsp;<input type="checkbox" /><br><small><strong>(Empty/Full)</strong></small></th>
+                                        <th>QTY (Mt)&nbsp;&nbsp;<input type="checkbox" /></th>
+                                        <th>Price&nbsp;&nbsp;<input type="checkbox" /></th>
+                                        <th>Amount&nbsp;&nbsp;<input type="checkbox" /></th>
+                                        <th>%GST&nbsp;&nbsp;<input type="checkbox" /></th>
+                                        <th><b>&#8377;</b> GST&nbsp;&nbsp;<input type="checkbox" /></th>
+                                        <th>Royalty&nbsp;&nbsp;<input type="checkbox" /></th>
+                                        <th style="color:red;"><b>&#8377;</b>Pending&nbsp;&nbsp;<input type="checkbox" /></th>
+                                        <th>Grand Total&nbsp;&nbsp;<input type="checkbox" /></th>
+                                        
+                                    </tr>
+                                </thead>
+                                <tbody style="color:#00000;">
+                                    {% if date_wise_data %}
+                                    {% for data in date_wise_data %}
+                                    <tr>
+                                        <td>{{loop.index}}</td>
+                                        <td>{{data.in_date}}<br>{{data.in_time}}<br>{{data.out_date}}<br>{{data.out_time}}</td>
+                                        <td>{{data.mine_transaction_id}}<br>{{data.slip_no}}</td>
+                                        <td>{{data.invoice_number}}</td>
+                                        <td><a href="#" style="color:black;" data-toggle="modal" data-target="#CustomerName{{data.id}}">{%if data.crusher_id%}{{data.crusher_id}}{%else%}{{data.customer_name}}{%endif%}</a>
+                                        <br><a href="#" style="color:black;" data-toggle="modal" data-target="#VehicleNumber{{data.id}}">{{data.vehicle_no}}</a>
+                                        </td>
+                                        {% for data in data.mine_materialminesale.all() %}
+                                        {% if data.bill_type == 'minesale' %}
+                                        <td>{{data.item_name}}</td>
+                                        {%endif%}
+                                        {%endfor%}
+                                        <td>{{data.in_weight}}<br>/{{data.out_weight}}</td>
+                                        {% for data in data.mine_materialminesale.all() %}
+                                        {% if data.bill_type == 'minesale' %}
+                                        <td>{{data.quantity}}</td>
+                                        <td>{{data.billing_price}}</td>
+                                        <td>{{data.billing_amount}}</td>
+                                        <td>{{data.gst_percentage}}</td>
+                                        <td>{{data.gst_amount}}</td>
+                                        {%endif%}
+                                        {%endfor %}
+
+                                        <td>{%if data.royalty_charges %}{{data.royalty_charges[:6]}}{%else%}0.00{%endif%}</td>
+                                        <td style="color:red;">{%if data.pending_amt%}{{data.pending_amt}}{%else%}0.00{%endif%}</td>
+                                        {% for data in data.mine_materialminesale.all() %}
+                                        {% if data.bill_type == 'minesale' %}
+                                        <td>{{data.total_amount}}</td>
+                                        {%endif%}
+                                        {%endfor %}
+                                       
+                                    </tr>
+                                    
+                                    {% endfor %}                                    
+                                    {% endif %}
+
+                                    <tr class="" style="font-size:0.8rem; color:#000000; border:2px; solid black;">
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td><strong>Total</strong></td>
+                                        
+                                        <td><strong>{%if total_net_load %}{{total_net_load[:7]}}{%else%}0.00{%endif%}</strong></td>
+                                        <td></td>
+                                        <td><strong>{% if billing_amount %}{{billing_amount[:8]}}{%else%}0.00{%endif%}</strong></td>
+                                        <td></td>
+                                        
+                                        <td><strong>{% if total_gst_amt %}{{total_gst_amt[:8]}}{%else%}0.00{%endif%}</strong></td>
+                                        {#<td><strong>{%if total_sale_amt %}{{total_sale_amt}}{%else%}0.00{%endif%}</strong></td>#}
+                                        <td><strong>{% if total_royalty %}{{total_royalty[:8]}}{%else%}0.00{%endif%}</strong></td>
+                                        <td style="color:red;"><strong>{%if out_standing %}{{out_standing[:8]}}{%else%}0.00{%endif%}</strong></td>
+                                        <td><strong>{%if total_grand_total %}{{total_grand_total[:8]}}{%else%}0.00{%endif%}</strong></td>
+                                    </tr>    
+
+                                </tbody>
+                            </table>
+                            <div class="text-right">
+                            <p>Printed by: <strong>{{request.user.username|title}}</strong>&nbsp;{{time}}
+                            </div>        
+                        </div>
+                        
+					</div>
+                    
+    
+			</div>
+		</div>
+	</div>
+
+</section>
+<!-- End Here -->
+
+{% if date_wise_data %}
+{% for data in date_wise_data %}
+<section>
+  <!-- Cuatomer Detail-->
+  
+  <div class="modal fade" id="CustomerName{{data.id}}" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">{%if data.crusher_id.crusher_name %}{{data.crusher_id.crusher_name}}{%else%}{{data.customer_name}}{%endif%}</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+           
+            <div class="row mx-0">
+				<div class="col-lg-12 col-md-12 col-sm-12 table-responsive">
+                    <table class="table table-border">
+                        <thead class="text-center">
+                            <tr>
+                                <th>Customer Name</th>
+                                <th>GST No.</th>
+                                <th>Mobile</th>
+                                <th>Email</th>
+                            </tr>
+                        </thead>
+                        
+                        <tbody class="text-center">
+                            <tr>
+                                <td>{%if data.crusher_id.crusher_name %}{{data.crusher_id.crusher_name}}{%else%}{{data.customer_name}}{%endif%}</td>
+                                <td>{%if data.crusher_id.gst_no %}{{data.crusher_id.gst_no}}{%else%}--{%endif%}</td>
+                                <td>{%if data.crusher_id.mobile %}{{data.crusher_id.mobile}}{%else%}--{%endif%}</td>
+                                <td>{%if data.crusher_id.email %}{{data.crusher_id.email}}{%else%}--{%endif%}</td>
+                        </tbody>
+                        
+                    </table>            
+                </div>
+            <div>
+            
+      </div>
+  </div>
+  
+</section>
+{% endfor %}
+{%endif%}
+
+{% if date_wise_data or daily_report_data %}
+{% for data in date_wise_data or daily_report_data %}
+<section>
+  <!-- Vehicle Detail-->
+  
+  <div class="modal fade" id="VehicleNumber{{data.id}}" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">{{data.vehicle_no}}</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+           
+            <div class="row mx-0">
+				<div class="col-lg-12 col-md-12 col-sm-12 table-responsive">
+                    <table class="table table-border">
+                        <thead class="text-center">
+                            <tr>
+                                <th>Driver's Name</th>
+                                <th>Mobile</th>
+                                <th>Vehicle Type</th>
+                                <th>Engine No.</th>
+                                <th>Fuel type</th>
+                            </tr>
+                        </thead>
+                        
+                        <tbody class="text-center">
+                            <tr>
+                                <td>
+                                {% for d in data.vehicle_no.driver_name.all() %}
+                                    {{d.driver_name}},
+                                {%endfor%}
+                                </td>
+                                <td>{{data.vehicle_no.mobile}}</td>
+                                <td>{{data.vehicle_no.vehicle_type}}</td>
+                                <td>{{data.vehicle_no.engine_no}}</td>
+                                <td>{{data.vehicle_no.fuel_type}}</td>
+                                
+                        </tbody>
+                        
+                    </table>            
+                </div>
+            <div>
+            
+      </div>
+  </div>
+  
+</section>
+{% endfor %}
+{%endif%}
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <!-- Popper.JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+
+    <script>
+        $("#printBut").on("click",function() {
+            var $column = $("#mineInfo [type=checkbox]:checked");
+            if ($column.length) {
+              var $newTable = $("<table></table>");
+              var $newHead = $("<thead/>").appendTo($newTable);
+              var $newBody = $("<tbody/>").appendTo($newTable);
+              var ths = $column.map(function() { return '<th>'+$(this).parent().text()+'</th>' }).get();
+              $newHead.append('<tr>'+ths+'</tr>');
+              var rows = $("#mineInfo tbody").find("tr").length;
+              for (var i=0;i<rows;i++) {
+                var $row = $("<tr/>");
+                
+                for (var j=0;j<$column.length;j++) {
+                  $row.append("<td/>");
+                  
+                }
+                $newBody.append($row);
+              }
+              $column.each(function(i) {
+                var colIdx = $(this).parent().index()+1;
+                var $row = $("<tr/>")
+                $('table tr td:nth-child('+colIdx+')').each(function(){
+                  $("tr td:nth-child("+(i+1)+")",$newBody).html($(this).html())
+                })
+              });
+              var $div = $("<div/>").append($newTable);
+              console.log($div.html());
+               var w = window.open();
+              w.document.write($div.html());
+              w.print();
+              w.close();
+            }
+        });
+    </script>
+
+
+
+<script src="{{static ('vendor/jquery/jquery.min.js')}}"></script>
+
+<script>
+    $(document).ready(function() {
+        $('.select2_dropdown').select2();
+        });
+</script>
+
+<script>
+    function printContent(el) {
+        var restorepage = document.body.innerHTML;
+        var printcontent = document.getElementById(el).innerHTML;
+        document.body.innerHTML = printcontent;
+        window.print();
+        setInterval('pageRefresh()',5000);
+        }
+        function pageRefresh() {
+        location.reload(true);
+        }
+</script>
+
+{% endblock %}

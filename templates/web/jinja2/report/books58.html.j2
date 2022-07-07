@@ -1,0 +1,603 @@
+{% extends "web/jinja2/base.html.j2" %}
+{% block content %}
+<section class="py-2">
+        <div class="container-fluid">
+          <h1 class="h3 mb-2 text-gray-800">Dashboard</h1>
+    	    <p class="mb-4">Company over all dashboard.</p>
+          <div class="row">
+            <!-- Pie Chart -->
+            <div class="col-xl-4 col-lg-4">
+              <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row bg-primary align-items-center justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-light">Crusher</h6>
+                  <div class="dropdown no-arrow">
+                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                      <div class="dropdown-header">Dropdown Header:</div>
+                      <a class="dropdown-item" href="#">Action</a>
+                      <a class="dropdown-item" href="#">Another action</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                  </div>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-lg-6 mb-4">
+                      <div class="card border-left-primary shadow h-100">
+                        <div class="card-body">
+                          <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                              <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Sale</div>
+                              <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                            </div>
+                            <div class="col-auto">
+                              <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-6 mb-4">
+                      <div class="card border-left-primary shadow h-100">
+                        <div class="card-body">
+                          <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                              <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Purchase</div>
+                              <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                            </div>
+                            <div class="col-auto">
+                              <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-6 mb-4">
+                      <div class="card border-left-primary shadow h-100">
+                        <div class="card-body">
+                          <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                              <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Expenses</div>
+                              <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                            </div>
+                            <div class="col-auto">
+                              <i class="fas fa-money-check fa-2x text-gray-300"></i>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-6 mb-4">
+                      <div class="card border-left-primary shadow h-100">
+                        <div class="card-body">
+                          <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                              <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Inventory</div>
+                              <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                            </div>
+                            <div class="col-auto">
+                              <i class="fas fa-pallet fa-2x text-gray-300"></i>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-6 mb-4">
+                      <div class="card border-left-primary shadow h-100">
+                        <div class="card-body">
+                          <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                              <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Electricity</div>
+                              <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                            </div>
+                            <div class="col-auto">
+                              <i class="fas fa-lightbulb fa-2x text-gray-300"></i>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-6 mb-4">
+                      <div class="card border-left-primary shadow h-100">
+                        <div class="card-body">
+                          <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                              <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Machine58</div>
+                              <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                            </div>
+                            <div class="col-auto">
+                              <i class="fas fa-tram fa-2x text-gray-300"></i>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-6 mb-4">
+                      <div class="card border-left-primary shadow h-100">
+                        <div class="card-body">
+                          <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                              <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Legal58</div>
+                              <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                            </div>
+                            <div class="col-auto">
+                              <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-6 mb-4">
+                      <div class="card border-left-primary shadow h-100">
+                        <div class="card-body">
+                          <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                              <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Logi58</div>
+                              <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                            </div>
+                            <div class="col-auto">
+                              <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-6 mb-4">
+                      <div class="card border-left-primary shadow h-100">
+                        <div class="card-body">
+                          <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                              <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Mobi58</div>
+                              <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                            </div>
+                            <div class="col-auto">
+                              <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!--end crusher-->
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-4 col-lg-4">
+              <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row bg-primary align-items-center justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-light">Mines</h6>
+                  <div class="dropdown no-arrow">
+                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                      <div class="dropdown-header">Dropdown Header:</div>
+                      <a class="dropdown-item" href="#">Action</a>
+                      <a class="dropdown-item" href="#">Another action</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                  </div>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-lg-6 mb-4">
+                      <div class="card border-left-primary shadow h-100">
+                        <div class="card-body">
+                          <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                              <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Sale</div>
+                              <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                            </div>
+                            <div class="col-auto">
+                              <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-6 mb-4">
+                      <div class="card border-left-primary shadow h-100">
+                        <div class="card-body">
+                          <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                              <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Purchase</div>
+                              <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                            </div>
+                            <div class="col-auto">
+                              <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-6 mb-4">
+                      <div class="card border-left-primary shadow h-100">
+                        <div class="card-body">
+                          <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                              <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Expenses</div>
+                              <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                            </div>
+                            <div class="col-auto">
+                              <i class="fas fa-money-check fa-2x text-gray-300"></i>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-6 mb-4">
+                      <div class="card border-left-primary shadow h-100">
+                        <div class="card-body">
+                          <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                              <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Inventory</div>
+                              <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                            </div>
+                            <div class="col-auto">
+                              <i class="fas fa-pallet fa-2x text-gray-300"></i>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-6 mb-4">
+                      <div class="card border-left-primary shadow h-100">
+                        <div class="card-body">
+                          <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                              <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Electricity</div>
+                              <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                            </div>
+                            <div class="col-auto">
+                              <i class="fas fa-lightbulb fa-2x text-gray-300"></i>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-6 mb-4">
+                      <div class="card border-left-primary shadow h-100">
+                        <div class="card-body">
+                          <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                              <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Machine</div>
+                              <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                            </div>
+                            <div class="col-auto">
+                              <i class="fas fa-tram fa-2x text-gray-300"></i>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-6 mb-4">
+                      <div class="card border-left-primary shadow h-100">
+                        <div class="card-body">
+                          <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                              <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Case</div>
+                              <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                            </div>
+                            <div class="col-auto">
+                              <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-6 mb-4">
+                      <div class="card border-left-primary shadow h-100">
+                        <div class="card-body">
+                          <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                              <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Case</div>
+                              <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                            </div>
+                            <div class="col-auto">
+                              <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!--end crusher-->
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-4 col-lg-4">
+              <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row bg-primary align-items-center justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-light">Crusher & Mines</h6>
+                  <div class="dropdown no-arrow">
+                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                      <div class="dropdown-header">Dropdown Header:</div>
+                      <a class="dropdown-item" href="#">Action</a>
+                      <a class="dropdown-item" href="#">Another action</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                  </div>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-lg-6 mb-4">
+                      <div class="card border-left-primary shadow h-100">
+                        <div class="card-body">
+                          <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                              <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Books58</div>
+                              <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                            </div>
+                            <div class="col-auto">
+                              <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-6 mb-4">
+                      <div class="card border-left-primary shadow h-100">
+                        <div class="card-body">
+                          <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                              <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Sale</div>
+                              <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                            </div>
+                            <div class="col-auto">
+                              <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-6 mb-4">
+                      <div class="card border-left-primary shadow h-100">
+                        <div class="card-body">
+                          <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                              <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Purchase</div>
+                              <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                            </div>
+                            <div class="col-auto">
+                              <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-6 mb-4">
+                      <div class="card border-left-primary shadow h-100">
+                        <div class="card-body">
+                          <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                              <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Expenses</div>
+                              <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                            </div>
+                            <div class="col-auto">
+                              <i class="fas fa-money-check fa-2x text-gray-300"></i>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-6 mb-4">
+                      <div class="card border-left-primary shadow h-100">
+                        <div class="card-body">
+                          <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                              <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Assets</div>
+                              <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                            </div>
+                            <div class="col-auto">
+                              <i class="fas fa-money-check fa-2x text-gray-300"></i>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-6 mb-4">
+                      <div class="card border-left-primary shadow h-100">
+                        <div class="card-body">
+                          <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                              <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Banking & Cash</div>
+                              <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                            </div>
+                            <div class="col-auto">
+                              <i class="fas fa-money-check fa-2x text-gray-300"></i>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-6 mb-4">
+                      <div class="card border-left-primary shadow h-100">
+                        <div class="card-body">
+                          <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                              <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Indirect Income</div>
+                              <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                            </div>
+                            <div class="col-auto">
+                              <i class="fas fa-money-check fa-2x text-gray-300"></i>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-6 mb-4">
+                      <div class="card border-left-primary shadow h-100">
+                        <div class="card-body">
+                          <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                              <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Duty & Tax</div>
+                              <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                            </div>
+                            <div class="col-auto">
+                              <i class="fas fa-money-check fa-2x text-gray-300"></i>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-6 mb-4">
+                      <div class="card border-left-primary shadow h-100">
+                        <div class="card-body">
+                          <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                              <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Balance Sheet</div>
+                              <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                            </div>
+                            <div class="col-auto">
+                              <i class="fas fa-money-check fa-2x text-gray-300"></i>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-6 mb-4">
+                      <div class="card border-left-primary shadow h-100">
+                        <div class="card-body">
+                          <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                              <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Privisional</div>
+                              <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                            </div>
+                            <div class="col-auto">
+                              <i class="fas fa-money-check fa-2x text-gray-300"></i>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-6 mb-4">
+                      <div class="card border-left-primary shadow h-100">
+                        <div class="card-body">
+                          <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                              <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Profit & Loss</div>
+                              <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                            </div>
+                            <div class="col-auto">
+                              <i class="fas fa-money-check fa-2x text-gray-300"></i>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-6 mb-4">
+                      <div class="card border-left-primary shadow h-100">
+                        <div class="card-body">
+                          <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                              <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Inventory</div>
+                              <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                            </div>
+                            <div class="col-auto">
+                              <i class="fas fa-pallet fa-2x text-gray-300"></i>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-6 mb-4">
+                      <div class="card border-left-primary shadow h-100">
+                        <div class="card-body">
+                          <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                              <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Electricity</div>
+                              <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                            </div>
+                            <div class="col-auto">
+                              <i class="fas fa-lightbulb fa-2x text-gray-300"></i>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-6 mb-4">
+                      <div class="card border-left-primary shadow h-100">
+                        <div class="card-body">
+                          <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                              <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Machine58</div>
+                              <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                            </div>
+                            <div class="col-auto">
+                              <i class="fas fa-tram fa-2x text-gray-300"></i>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-6 mb-4">
+                      <div class="card border-left-primary shadow h-100">
+                        <div class="card-body">
+                          <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                              <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">LEGAL58</div>
+                              <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                            </div>
+                            <div class="col-auto">
+                              <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-6 mb-4">
+                      <div class="card border-left-primary shadow h-100">
+                        <div class="card-body">
+                          <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                              <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">LOGI58</div>
+                              <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                            </div>
+                            <div class="col-auto">
+                              <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-6 mb-4">
+                      <div class="card border-left-primary shadow h-100">
+                        <div class="card-body">
+                          <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                              <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Mobi58</div>
+                              <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                            </div>
+                            <div class="col-auto">
+                              <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!--end crusher-->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /.container-fluid -->
+      </section>
+{% endblock %}
+
+          

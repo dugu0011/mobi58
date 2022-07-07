@@ -1,0 +1,115 @@
+ {% extends "web/jinja2/base.html.j2" %}
+{% block content %}
+<!-- Begin Page Content -->
+<section class="py-md-5">
+	<div class="container-fluid">
+		<div class="col-12">
+			<div class="card mb-4 border-1">
+				<div class="card-header py-3 px-0 align-items-center bg-white border-0">
+					<div class="row">
+						<div class="col-12">
+							<h3 class="m-0 px-3 font-weight-bold text-dark">Add Crusher Transaction Detail</h3>
+						</div>
+					</div>
+				</div>
+				<form  action="{{url('transaction-crusher')}}" method="post" enctype="multipart/form-data">
+				{{csrf_input}}
+				<div class="card-body px-0">
+                    <div class="row mx-0">
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="in_date">In Date*</label>
+                                <input type="date" name="in_date" id="in_date"  class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="in_time">In Time*</label>
+                                <input type="time" step="1" name="in_time" id="in_time" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="out_time">Product Type*</label>
+                                <select class="custom-select form-control form-control-user rounded-1" name="product" id="product">
+                                    <option value="" selected>Select</option>
+                                    {% for data in products %}
+									<option value="{{data.id}}">{{data.item_name}}</option>
+									{%endfor%}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="price">Price*</label>
+                                <input type="text" name="price" id="price" placeholder="0.00" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="weight">Weight <small>(Ton)</small>*</label>
+                                <input type="text" name="weight" id="weight" placeholder="0.00" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="kaata_no">Kaata No.*</label>
+                                <input type="text" name="kaata_no" id="Kaata_no" class="form-control">
+                            </div>
+                        </div><div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="in_weight">In Weight <small>(Ton)</small>*</label>
+                                <input type="text" name="in_weight" id="in_weight" placeholder="0.00" class="form-control">
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="amount">Amount*</label>
+                                <input type="text" name="amount" id="amount" placeholder="0.00" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="billing_amt">Billing Amount*</label>
+                                <input type="text" name="billing_amt" id="billing_amt" placeholder="0.00" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="pending_amt">Pending Amount*</label>
+                                <input type="text" name="pending_amt" id="pending_amt" placeholder="0.00" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    {#
+                    <div class="row mx-0">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <label for="mine_transaction_comment">Comment*</label>    
+                            <textarea class="form-control rounded-1 " id="mine_transaction_comment" name="mine_transaction_comment" rows="5" placeholder="Write here..."></textarea>                            
+                        </div>
+                    </div>
+                    #}
+                    <hr>	
+					<div class="row mx-0 position-relative">
+        
+						<div class=" col-12 pt-4 text-center">
+							<button type="reset" class="btn btn-white text-dark border rounded-1 bg-white f-s-18 px-4 py-2 mr-3">Reset</button>
+							<button type="submit"  class="btn bg-gradient-primary text-white rounded-1 f-s-18 px-4 py-2">Submit</button>
+						</div>
+					</div>
+				</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- End Here -->
+
+
+
+<script src="{{static ('vendor/jquery/jquery.min.js')}}"></script>
+
+
+{% endblock %}

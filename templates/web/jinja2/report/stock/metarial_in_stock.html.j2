@@ -1,0 +1,101 @@
+{% extends "web/jinja2/base.html.j2" %}
+{% block content %}
+<!-- Begin Page Content -->
+{#<style>
+    @media print{
+        body * {visibility:hidden;}
+        .print_part * {visibility:visible;}
+    }
+<style>#}
+<section class="py-md-5">
+	<div class="container-fluid">
+		<div class="col-12">
+			<div class="card mb-4 border-1">
+				<div class="card-header py-3 px-0 align-items-center bg-white border-0">
+					<div class="row">
+						<div class="col-9">
+							<h3 class="m-0 px-3 font-weight-bold text-dark">Live Stock</h3>
+						</div>
+					</div>
+				</div>
+                    <div class="row mx-0">
+                        <div class="col-12">
+                            <hr>
+                            <span>
+                                <form method="post">
+                                    {{csrf_input}}
+                                    <div class="row mx-0">
+                                        <input type="hidden" value="{{request.GET.company}}" name="company_id" id="company_id">
+                                        
+                                        <div class="col-lg-3 col-md-12 col-sm-12">
+                                            <label for="from_date">From</label>
+                                            <input type="date" name="from_date" id="from_date" class="form-control"> 
+                                        </div>
+                                        <div class="col-lg-3 col-md-12 col-sm-12">
+                                            <label for="to_date">To</label> 
+                                            <input type="date" name="to_date" id="to_date" class="form-control">
+                                        </div>
+
+                                        <div class="col-lg-2 col-md-12 col-sm-12" style="margin-top:2.3rem;">
+                                            <button type="submit" class="btn btn-primary"><i class="fa fa-filter"></i>Search Stock</submit>
+                                        </div>
+                                    </div>
+                                </form>
+                            </span>
+                            <hr>
+						</div>   
+                    </div>
+                    
+                    <div class="row mx-0">
+                        <div class="col-sm-12 col-md-6 col-lg-12">
+                            <table id="mineInfo" class="table table-border">
+                                <thead class="text-center">
+                                    <tr>
+                                        <th>In Net weight</th>
+                                        <th>Out Net Weight</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-center">
+                                     
+                                    <tr>
+                                        <td>{% if total_in_net_load %}{{total_in_net_load}}{%else%}0.00{%endif%}</td>
+                                        <td>{% if total_out_net_load %}{{total_out_net_load}}{%else%}0.00{%endif%}</td>
+                                    </tr>
+                                    
+
+                                </tbody>
+                            </table>            
+                        </div>
+					</div>
+				
+			</div>
+		</div>
+	</div>
+
+</section>
+
+
+<!-- End Here -->
+
+
+<script src="{{static ('vendor/jquery/jquery.min.js')}}"></script>
+
+<script>
+    $(document).ready(function(){
+        $('#mineInfo').DataTable({
+        "pagingType": "full_numbers"
+        });
+        $('dataTables_length').addClass('bs-select');
+    });
+    
+</script>
+
+<script>
+    $(document).ready(function() {
+        $('.select2_dropdown').select2();
+        });
+</script>
+
+
+
+{% endblock %}

@@ -1,0 +1,1 @@
+{{time.strftime("%m/%d/%Y %I:%M %p")}}

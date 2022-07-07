@@ -1,0 +1,21 @@
+/* [class^='select2']{
+    border-radius: 0px !important;
+} */
+
+.select2-container .select2-selection--single {
+    box-sizing: border-box;
+    cursor: pointer;
+    display: block;
+    height: 50px !important;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    line-height: 45px !important;
+    color:#8e9094e0 !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    top: 13px !important;
+}

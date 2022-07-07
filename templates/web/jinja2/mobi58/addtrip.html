@@ -1,0 +1,181 @@
+{% extends "web/jinja2/base.html.j2" %}
+{% block title %} Raise Ticket {% endblock %}
+{% block title_header %}Raise Ticket{% endblock %}
+{% block content %}
+
+
+<section class="py-2">
+    <div class="container-fluid">
+        <h1 class="h3 mb-2 text-gray-800">TRIP LIST</h1>
+        <p class="mb-4">you can add and view Trip of Vehicle.</p>
+        <div class="row">
+            <div class="col-12">
+                <div class="card mb-4 border-0">
+                    <div class="card-body position-relative pl-0 pr-0">
+                        <div class="card shadow mb-4">
+                            <div class="card-header bg-warning py-3">
+                                <div class="row w-100 align-items-center">
+                                    <div class="col-12 col-md-6">
+                                        <h6 class="m-0 font-weight-bold text-black">ALL TRIP</h6>
+                                    </div>
+                                    <div class="col-12 col-md-6 text-md-right mt-4 mt-sm-0">
+                                        <!-- <a href="" class="btn bg-transparent text-black">Add Transporter</a> -->
+
+                                        <button type="button" class="btn btn-primary" data-toggle="modal"
+                                            data-target="#exampleModal">
+                                            Add Trip
+                                        </button>
+
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header" style="    background-image: linear-gradient(315deg, #ff4e00 0%, #ec9f05 74%);">
+                                                        <h5 class="modal-title" id="exampleModalLabel"
+                                                            style="    margin-left: 135px; color:black">ADD Trip</h5>
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form method="post" enctype="multipart/form-data"
+                                                            action="{{url('add-trip')}}">
+                                                            {{csrf_input}}
+                                                            <div class="form-row">
+                                                                <div class="form-group col-md-6">
+                                                                    <p class="text-left">Transporter</p>
+                                                                    <select class="form-control"
+                                                                        id="exampleFormControlSelect1" name="transporter_name">
+                                                                        <option selected="">Please choose</option>
+                                                                        {% for u in alltransporter1 %}
+                                                                        <option value="{{u.id}}">{{u.transporter_name}}
+                                                                        </option>
+                                                                        {%endfor%}
+                                                                    </select>
+                                                                </div>
+                                                                <div class="form-group col-md-6">
+                                                                    <p class="text-left">Vehicle</p>
+                                                                    <select class="form-control" id="exampleFormControlSelect1" name="vehicle" >
+                                                                        <option selected="">Please choose</option>
+                                                                        {% for u in veh %}
+                                                                        <option value="{{u.id}}" >{{u.registeration_no}}</option>
+                                                                        {%endfor%}
+                                                                        </select>
+                                                                </div>
+                                                                <div class="form-group col-md-6">
+                                                                    <p class="text-left">Source</p>
+                                                                    <select class="form-control" id="exampleFormControlSelect1" name="source">
+                                                                        <option selected="">Please choose</option>
+                                                                        {% for u in SOURCE %}
+                                                                        <option value="{{u.0}}" >{{u.1}}</option>
+                                                                        {%endfor%}
+                                                                        </select>
+                                                                </div>
+                                                                <div class="form-group col-md-6">
+                                                                    <p class="text-left">Destination</p>
+                                                                    <select class="form-control" id="exampleFormControlSelect1" name="destination">
+                                                                        <option selected="">Please choose</option>
+                                                                        {% for u in DESTINATION %}
+                                                                        <option value="{{u.0}}" >{{u.1}}</option>
+                                                                        {%endfor%}
+                                                                        </select>
+                                                                </div>
+                                                                <div class="form-group col-md-6">
+                                                                    <p class="text-left">Approx Distance</p>
+                                                                    <input name="approx_distance" type="number"
+                                                                        class="form-control" id="inputEmail4"
+                                                                        placeholder="amount" value="100" >
+                                                                </div>
+                                                                <div class="form-group col-md-6">
+                                                                    <p class="text-left">Amount(Between S &
+                                                                        D)</p>
+                                                                    <input name="Fixed_amount_btw_s_d" type="number"
+                                                                        class="form-control" id="inputEmail4"
+                                                                        placeholder="amount" value="100" >
+                                                                </div>
+
+
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary"
+                                                                    data-dismiss="modal">Close</button>
+                                                                <button type="submit"
+                                                                    class="btn btn-primary">Submit</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <table id="company" class="table table-border">
+                                    <thead class="text-center">
+                                        <tr>
+                                            <th>S.No. </th>
+                                            <th>Transporter Name</th>
+                                            <th>Vehicle</th>
+                                            <th>From</th>
+                                            <th>To</th>
+                                            <th>Approx Distance</th>
+                                            <th>Amount b/w S & D (₹)
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-center">
+                                        {% for data in alltrip %}
+                                        <tr>
+                                            <td>{{data.id}}</td>
+                                            <td>{{data.transporter_name}}dygdywgdh</td>
+                                            <td>{{data.vehicle}}</td>
+                                            <td>{{data.source}}</td>
+                                            <td>{{data.destination}}</td>
+                                            <td>{{data.approx_distance}} KM</td>
+                                            <td>{{data.Fixed_amount_btw_s_d}} ₹
+                                            </td>
+                                              
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <hr>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+</section>
+
+
+
+
+
+
+
+<script src="{{static ('vendor/jquery/jquery.min.js')}}"></script>
+
+
+<script>
+    $(document).ready(function () {
+        $('#company').DataTable({
+            "pagingType": "full_numbers"
+        });
+        $('dataTables_length').addClass('bs-select');
+    });
+</script>
+
+
+
+
+
+
+
+
+{% endblock %}

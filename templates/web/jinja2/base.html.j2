@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>MOBI58</title>
+
+  <!-- Custom fonts for this template-->
+  {#
+  <!-- <link href="../static/vendor/fontawesome-free/css/fontawesome.min.css" rel="stylesheet" type="text/css"> --> #}
+  <link rel="stylesheet"
+    href="https://maxst.icons8.com/vue-static/landings/line-awesome/font-awesome-line-awesome/css/all.min.css">
+  <link
+    href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+    rel="stylesheet">
+  <link href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
+
+  <!-- Custom styles for this template-->
+  <link href="{{static ('css/sb-admin-2.css')}}" rel="stylesheet">
+  <link href="{{static('css/select-dropdown.css')}}" rel="stylesheet" />
+  <link href="{{static ('css/custom.css')}}" rel="stylesheet">
+  <link href="{{static ('css/bootstrap-select.css')}}" rel="stylesheet">
+  <link href="{{static('toastr/toastr.min.css')}}" rel="stylesheet" />
+
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/line-awesome/1.3.0/line-awesome/css/line-awesome.min.css"
+    integrity="sha512-vebUliqxrVkBy3gucMhClmyQP9On/HAWQdKDXRaAlb/FKuTbxkjPKUyqVOxAcGwFDka79eTF+YXwfke1h3/wfg=="
+    crossorigin="anonymous" />
+
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+  <style>
+    .show-loader {
+      border: 16px solid #f3f3f3;
+      /* Light grey */
+      border-top: 16px solid #3498db;
+      /* Blue */
+      border-radius: 50%;
+      width: 120px;
+      height: 120px;
+      animation: spin 2s linear infinite;
+      position: fixed;
+      z-index: 999;
+
+      overflow: show;
+      margin: auto;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    .hide-loader {
+      display: none;
+    }
+
+    .active {
+      left: 0;
+    }
+
+    .main {
+      margin-left: 201px;
+      opacity: 0.5;
+    }
+  </style>
+  <style>
+    #sidebar {
+      min-width: 250px;
+      max-width: 250px;
+      color: #fff;
+      transition: all 0.3s;
+    }
+
+    #sidebar.active {
+      min-width: 80px;
+      max-width: 80px;
+      text-align: center;
+    }
+
+    dropdown {
+      float: left;
+      overflow: hidden;
+    }
+
+    .dropdown .dropbtn {
+      font-size: 16px;
+      border: none;
+      outline: none;
+      color: white;
+      padding: 14px 16px;
+      background-color: inherit;
+      font-family: inherit;
+      margin: 0;
+    }
+
+
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #f9f9f9;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+      z-index: 1;
+    }
+
+    .dropdown-content a {
+      float: none;
+      color: black;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+      text-align: left;
+    }
+
+    .dropdown-content a:hover {
+      background-color: #ddd;
+    }
+
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+
+
+    .tab {
+      overflow: hidden;
+      border: 1px solid #ccc;
+      background-color: #f1f1f1;
+    }
+
+    /* Style the buttons that are used to open the tab content */
+    .tab button {
+      background-color: inherit;
+      float: left;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      padding: 14px 16px;
+      transition: 0.3s;
+    }
+
+    /* Change background color of buttons on hover */
+    .tab button:hover {
+      background-color: #ddd;
+    }
+
+    /* Create an active/current tablink class */
+    .tab button.active {
+      background-color: #ccc;
+    }
+
+    /* Style the tab content */
+    .tabcontent {
+      display: none;
+      padding: 6px 12px;
+      border: 1px solid #ccc;
+      border-top: none;
+    }
+
+
+
+    .tab .search-container {
+      float: right;
+    }
+
+    .tab input[type=text] {
+      padding: 6px;
+      margin-top: 8px;
+      font-size: 17px;
+      border: 1px solid #d1d3e2;
+      border-radius: 0.35rem;
+    }
+
+    .tab .search-container button {
+      float: right;
+      padding: 8px 10px;
+      margin-top: 0px;
+      margin-right: 16px;
+      background: #ddd;
+      font-size: 17px;
+      border: none;
+      cursor: pointer;
+    }
+
+    .tab .search-container button:hover {
+      background: #ccc;
+    }
+
+    .round {
+      -moz-border-radius: 15px;
+      border-radius: 11px;
+      padding: 5px;
+      border: 2px solid orange;
+      background: orange;
+    }
+
+    /* button css */
+
+
+    .btn3d {
+      position: relative;
+      top: -6px;
+      border: 0;
+      transition: all 40ms linear;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      margin-left: 2px;
+      margin-right: 2px;
+    }
+
+    .btn3d:active:focus,
+    .btn3d:focus:hover,
+    .btn3d:focus {
+      -moz-outline-style: none;
+      outline: medium none;
+    }
+
+    .btn3d:active,
+    .btn3d.active {
+      top: 2px;
+    }
+
+    .btn3d.btn-white {
+      color: #666666;
+      box-shadow: 0 0 0 1px #ebebeb inset, 0 0 0 2px rgba(255, 255, 255, 0.10) inset, 0 8px 0 0 #f5f5f5, 0 8px 8px 1px rgba(0, 0, 0, .2);
+      background-color: #fff;
+    }
+
+    .btn3d.btn-white:active,
+    .btn3d.btn-white.active {
+      color: #666666;
+      box-shadow: 0 0 0 1px #ebebeb inset, 0 0 0 1px rgba(255, 255, 255, 0.15) inset, 0 1px 3px 1px rgba(0, 0, 0, .1);
+      background-color: #fff;
+    }
+
+    .btn3d.btn-default {
+      color: #666666;
+      box-shadow: 0 0 0 1px #ebebeb inset, 0 0 0 2px rgba(255, 255, 255, 0.10) inset, 0 8px 0 0 #BEBEBE, 0 8px 8px 1px rgba(0, 0, 0, .2);
+      background-color: #f9f9f9;
+    }
+
+    .btn3d.btn-default:active,
+    .btn3d.btn-default.active {
+      color: #666666;
+      box-shadow: 0 0 0 1px #ebebeb inset, 0 0 0 1px rgba(255, 255, 255, 0.15) inset, 0 1px 3px 1px rgba(0, 0, 0, .1);
+      background-color: #f9f9f9;
+    }
+
+    .btn3d.btn-primary {
+      box-shadow: 0 0 0 1px #417fbd inset, 0 0 0 2px rgba(255, 255, 255, 0.15) inset, 0 8px 0 0 #4D5BBE, 0 8px 8px 1px rgba(0, 0, 0, 0.5);
+      background-color: #4274D7;
+    }
+
+    .btn3d.btn-primary:active,
+    .btn3d.btn-primary.active {
+      box-shadow: 0 0 0 1px #417fbd inset, 0 0 0 1px rgba(255, 255, 255, 0.15) inset, 0 1px 3px 1px rgba(0, 0, 0, 0.3);
+      background-color: #4274D7;
+    }
+
+    .btn3d.btn-success {
+      box-shadow: 0 0 0 1px #31c300 inset, 0 0 0 2px rgba(255, 255, 255, 0.15) inset, 0 8px 0 0 #5eb924, 0 8px 8px 1px rgba(0, 0, 0, 0.5);
+      background-color: #78d739;
+    }
+
+    .btn3d.btn-success:active,
+    .btn3d.btn-success.active {
+      box-shadow: 0 0 0 1px #30cd00 inset, 0 0 0 1px rgba(255, 255, 255, 0.15) inset, 0 1px 3px 1px rgba(0, 0, 0, 0.3);
+      background-color: #78d739;
+    }
+
+    .btn3d.btn-info {
+      box-shadow: 0 0 0 1px #00a5c3 inset, 0 0 0 2px rgba(255, 255, 255, 0.15) inset, 0 8px 0 0 #348FD2, 0 8px 8px 1px rgba(0, 0, 0, 0.5);
+      background-color: #39B3D7;
+    }
+
+    .btn3d.btn-info:active,
+    .btn3d.btn-info.active {
+      box-shadow: 0 0 0 1px #00a5c3 inset, 0 0 0 1px rgba(255, 255, 255, 0.15) inset, 0 1px 3px 1px rgba(0, 0, 0, 0.3);
+      background-color: #39B3D7;
+    }
+
+    .btn3d.btn-warning {
+      box-shadow: 0 0 0 1px #d79a47 inset, 0 0 0 2px rgba(255, 255, 255, 0.15) inset, 0 8px 0 0 #D79A34, 0 8px 8px 1px rgba(0, 0, 0, 0.5);
+      background-color: #FEAF20;
+    }
+
+    .btn3d.btn-warning:active,
+    .btn3d.btn-warning.active {
+      box-shadow: 0 0 0 1px #d79a47 inset, 0 0 0 1px rgba(255, 255, 255, 0.15) inset, 0 1px 3px 1px rgba(0, 0, 0, 0.3);
+      background-color: #FEAF20;
+    }
+
+    .btn3d.btn-danger {
+      box-shadow: 0 0 0 1px #b93802 inset, 0 0 0 2px rgba(255, 255, 255, 0.15) inset, 0 8px 0 0 #AA0000, 0 8px 8px 1px rgba(0, 0, 0, 0.5);
+      background-color: #D73814;
+    }
+
+    .btn3d.btn-danger:active,
+    .btn3d.btn-danger.active {
+      box-shadow: 0 0 0 1px #b93802 inset, 0 0 0 1px rgba(255, 255, 255, 0.15) inset, 0 1px 3px 1px rgba(0, 0, 0, 0.3);
+      background-color: #D73814;
+    }
+
+    .btn3d.btn-magick {
+      color: #fff;
+      box-shadow: 0 0 0 1px #9a00cd inset, 0 0 0 2px rgba(255, 255, 255, 0.15) inset, 0 8px 0 0 #9823d5, 0 8px 8px 1px rgba(0, 0, 0, 0.5);
+      background-color: #bb39d7;
+    }
+
+    .btn3d.btn-magick:active,
+    .btn3d.btn-magick.active {
+      box-shadow: 0 0 0 1px #9a00cd inset, 0 0 0 1px rgba(255, 255, 255, 0.15) inset, 0 1px 3px 1px rgba(0, 0, 0, 0.3);
+      background-color: #bb39d7;
+    }
+
+    th {
+      color: black;
+
+      
+    }
+
+    #blink {
+      font-size: 17px;
+      color:black;
+      font-weight:bold;
+      animation:blink 4.5s linear infinite alternate 3.5s;
+    
+    }
+    
+    @keyframes blink {
+      70% {
+        color:white;
+      }
+      90% {
+        color:rgb(247, 20, 12);
+      }
+      100% {
+        color:rgb(34, 33, 33);
+      }
+    }
+
+    .blinks{
+      color: black;
+      animation: blink 1s linear infinite;
+    }
+  @keyframes blinks {
+  0%{opacity: 0;}
+  50%{opacity: .5;}
+  100%{opacity: 1;}
+  }
+
+
+
+  
+  </style>
+  <script>
+    $(document).ready(function () {
+      $('.menu_bar').click(function () {
+        alert("helo");
+        $('header').toggleClass('active');
+        $('main').toggleClass('main');
+      })
+      $('#menu_close').click(function () {
+        if (document.getElementById('navheader').className == "active") {
+          $('header').toggleClass('active');
+          $('main').toggleClass('main');
+        }
+      })
+    })
+  </script>
+  <script>
+    function openCity(evt, cityName) {
+      // Declare all variables
+      var i, tabcontent, tablinks;
+
+      // Get all elements with class="tabcontent" and hide them
+      tabcontent = document.getElementsByClassName("tabcontent");
+      for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+      }
+
+      // Get all elements with class="tablinks" and remove the class "active"
+      tablinks = document.getElementsByClassName("tablinks");
+      for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+      }
+
+      // Show the current tab, and add an "active" class to the button that opened the tab
+      document.getElementById(cityName).style.display = "block";
+      evt.currentTarget.className += " active";
+    }
+  </script>
+
+
+
+</head>
+
+<body id="page-top">
+  <!-- Page Wrapper -->
+
+
+  <div id="wrapper">
+    <!-- Sidebar -->
+
+    {%if request.user.is_authenticated %}
+    {% include 'web/jinja2/partials/sidebar.html.j2' %}
+    {%endif%}
+    <!-- End of Sidebar -->
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column bg-white" style="margin-left: 70px;">
+
+      <!-- Main Content -->
+      <div id="content">
+
+        <!-- Topbar -->
+        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-0 static-top border-bottom">
+
+          <!-- Sidebar - Brand -->
+          {%if not request.user.is_authenticated%}
+
+
+
+          {%endif%}
+
+
+          <!-- Sidebar Toggle (Topbar) -->
+          <!-- <li class="nav-item d-none d-sm-inline-block">
+            <button id="sidebarCollapse" class="btn btn-link rounded-circle mr-3"><i class="fa fa-bars"></i></button>
+          </li> -->
+
+          <!-- Topbar Search -->
+          <!-- <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+            <div class="input-group">
+              <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+              <div class="input-group-append">
+                <button class="btn btn-primary" type="button">
+                  <i class="fas fa-search fa-sm"></i>
+                </button>
+              </div>
+            </div>
+          </form> -->
+
+          <!-- Topbar Navbar -->
+          {%if request.user.is_authenticated%}
+          <a class="nav-link  text-dark" href="/">
+            <button type="button" class="btn btn-primary btn"
+              style="background-image: linear-gradient(315deg, #ff4e00 0%, #ec9f05 74%);">DashBoard</button>
+          </a>
+          <ul class="navbar-nav ml-auto">
+
+            <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+            <!-- <li class="nav-item dropdown no-arrow d-sm-none">
+              <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-search fa-fw"></i>
+              </a> -->
+            <!-- Dropdown - Messages -->
+            <!-- <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
+                <form class="form-inline mr-auto w-100 navbar-search">
+                  <div class="input-group">
+                    <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                      <button class="btn btn-primary" type="button">
+                        <i class="fas fa-search fa-sm"></i>
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div> -->
+            <!-- </li> -->
+
+            <!-- Nav Item - Alerts -->
+            <li class="nav-item dropdown no-arrow mx-1">
+              <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-bell fa-2x"></i>
+                <span style="font-size:15px;" class="badge badge-danger badge-counter">{% if assign_me
+                  %}{{assign_me}}+{%endif%}</span>
+              </a>
+              <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                aria-labelledby="alertsDropdown">
+                <h6 class="dropdown-header">
+                  Alerts Center
+                </h6>
+                {% for n in notification %}
+                <a class="dropdown-item d-flex align-items-center" href="{{url('assignme')}}">
+                  <div class="mr-3">
+                    <div class="icon-circle bg-primary">
+                      <i class="fas fa-file-alt text-white"></i>
+                    </div>
+                  </div>
+                  <div class="myDiv">
+                    <div class="small text-gray-500">{{n.created}}</div>
+                    <span class="font-weight-bold">subject: {{n.subject}} <br> You have Assign a Ticket please
+                      check</span>
+                  </div>
+                </a>
+                {% endfor %}
+
+
+                <!-- <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a> -->
+              </div>
+            </li>
+
+
+            
+            <!-- <li class="nav-item dropdown no-arrow mx-1">
+              <a class="nav-link dropdown-toggle text-dark" href="#">
+                Project
+              </a>
+              <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                <a class="dropdown-item" href="#">
+                  <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                  New Project
+                </a>
+                <a class="dropdown-item" href="#">
+                  <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                  New Task
+                </a>
+                
+              </div>
+            </li> -->
+            <!-- <li class="nav-item">
+            <div class="dropdown">
+              <button type="button" class="btn btn-primary btn-lg" style="    margin-top: 10px;">Project</button>
+              <div class="dropdown-content">
+                <a href="#">New Project</a>
+                <a href="#">New Task</a>
+              </div>
+            </div>
+          </li> -->
+
+
+
+            <!-- Nav Item - User Information -->
+            <li class="nav-item dropdown no-arrow border-left">
+              <a class="nav-link dropdown-toggle px-4 text-dark" href="#" id="userDropdown" role="button"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                {{request.user.username|title}} <i class="fas fa-angle-down pl-2"></i>
+              </a>
+              <!-- Dropdown - User Information -->
+
+              <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                {%if request.user.is_authenticated%}
+                <a class="dropdown-item" href="#">
+                  <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Profile
+                </a>
+                <a class="dropdown-item" href="#">
+                  <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Settings
+                </a>
+                <a class="dropdown-item" href="#">
+                  <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Activity Log
+                </a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="{{url('logout')}}" data-toggle="modal" data-target="#logoutModal">
+                  <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Logout
+                </a>
+                {%else%}
+
+                {%endif%}
+              </div>
+            </li>
+
+          </ul>
+          {%endif%}
+        </nav>
+
+        <!-- End of Topbar -->
+
+        <!-- Begin Page Content -->
+        {% block content %}
+
+
+        <!-- <section class="pt-3 pb-5">
+          <div class="container-fluid">
+
+            <div class="row">
+              <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-primary shadow h-100 py-2">
+                  <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                      <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"><a
+                            href="{{url('assignme')}}">Assign to me</a></div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800"><a href="#">{{assign_me}}</a></div>
+                      </div>
+                      <div class="col-auto">
+                        <i class="fas fa-count fa-2x text-gray-300"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-primary shadow h-100 py-2">
+                  <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                      <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"><a
+                            href="{{url('viewticket')}}">Raised by me</a> </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">Total Tickets: {{total_ticket}}</div>
+                      </div>
+                      <div class="col-auto">
+                        <i class="fas fa-count fa-2x text-gray-300"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {% if request.user.is_admin == True %}
+              <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-primary shadow h-100 py-2">
+                  <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                      <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"> <a
+                            href="{{url('viewticket')}}">View all Tickets</a> </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">Total Tickets: {{total_ticket}}</div>
+                      </div>
+                      <div class="col-auto">
+                        <i class="fas fa-count fa-2x text-gray-300"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {%endif%}
+
+            </div>
+          </div>
+        </section> -->
+
+
+
+
+
+        <br>
+        <!-- Tab content -->
+
+
+
+
+
+
+        
+        
+
+        
+        
+
+
+        {% endblock %}
+        <!-- /.container-fluid -->
+
+
+      </div>
+      <!-- End of Main Content -->
+
+      <!-- Footer -->
+      <!-- <footer class="sticky-footer bg-white border-top">
+        <div class="container my-auto">
+          <div class="copyright text-center my-auto">
+            <span>Copyright &copy; Crusher&Mines 2021</span>
+          </div>
+        </div>
+      </footer> -->
+      <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+  </div>
+  <!-- End of Page Wrapper -->
+
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+
+  <!-- Global CSRF-TOKEN-->
+  <div class="d-none csrf-token" data-csrf-token="{{csrf_token}}">
+  </div>
+  <!-- Global looged-in user-id-->
+  <div class="d-none user-id" data-user="{{request.user.id}}">
+  </div>
+
+  <!-- Logout Modal-->
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+          <a class="btn btn-primary" href="{{url('logout')}}">Logout</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End of Page Wrapper -->
+
+  <!-- Bootstrap core JavaScript-->
+  {%block footer%}
+  <script src="{{static ('vendor/jquery/jquery.min.js')}}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.0.4/popper.js"></script>
+  <script src="{{static ('vendor/bootstrap/js/bootstrap.min.js')}}"></script>
+
+  <!-- Core plugin JavaScript-->
+  <script src="{{static ('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
+
+  <!-- Custom scripts for all pages-->
+  <script src="{{static ('js/sb-admin-2.min.js')}}"></script>
+  <script src="{{static ('js/search-filter.js')}}"></script>
+
+  <!-- Page level plugins -->
+  <script src="../static/vendor/chart.js/Chart.min.js"></script>
+
+  <!-- Page level custom scripts -->
+
+  <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+  <!-- Added By Desh Deepak -->
+
+  {#
+  <script src="{{static ('js/demo/chart-area-demo.js')}}"></script> #}
+  <script src="{{static ('js/demo/chart-pie-demo.js')}}"></script>
+  <!-- <script src="{{static ('vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
+  <script src="{{static ('vendor/datatables/jquery.dataTables.min.js')}}"></script> -->
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"
+    type="text/javascript"></script>
+  <script src="{{static ('js/bootstrap-select.js')}}"></script>
+  <script>
+    $(document).ready(function () {
+      $('.select2_dropdown').select2();
+    });
+  </script>
+  <script>
+    $('.custom-file-input').on('change', function () {
+      var fileName = document.getElementById("customFile").files[0].name;
+      $(this).next('.custom-file-label').addClass("selected").html(fileName);
+    })
+  </script>
+  <script>
+    $('.dropdown-toggle').dropdown();
+
+  </script>
+  <script>
+    $(".datepicker").flatpickr({
+      dateFormat: "Y-m-d",
+      altInput: true,
+      allowInput: true,
+    });
+    $(".timepicker").flatpickr({
+      enableTime: true,
+      noCalendar: true,
+      dateFormat: "H:i",
+      allowInput: true,
+      time_24hr: true,
+    });
+
+    //$( document ).ready(function() {
+    // var oTable= $('#dataTable1').DataTable({
+    //     "searching": false,
+    // "bInfo": false,
+    //"lengthChange": false,
+    //      "order": [],
+    //    'columnDefs': [{
+    //        "targets": [0,1,2,3,4,5,6,7,8],
+    //      "orderable": false
+    //}]
+    //});
+
+    //    })
+    $('#dataTable, #dataTable-new, #dataTable1').DataTable({ "order": [] });
+  </script>
+
+
+  <script src="{{static ('js/valid-form.js')}}"></script>
+
+  <script src="{{static ('js/custom-validation.js')}}"></script>
+  <script src="{{static ('js/validation.js')}}"></script>
+  <script src="{{ static('toastr/toastr.min.js')  }}"></script>
+  <script src="{{static ('js/price.js')}}"></script>
+  <script src="{{static ('js/ratings.js')}}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+  <script>
+    $(document).ready(function () {
+
+      $('#sidebarCollapse').on('click', function () {
+        $('#sidebar').toggleClass('active', 'fixed');
+
+      });
+
+    });
+  </script>
+  <script>
+
+  </script>
+  <script>
+    $(document).ready(function () {
+      $('#dtBasicExample').DataTable();
+      $('.dataTables_length').addClass('bs-select');
+    });
+  </script>
+  <script>
+    $(document).ready(function () {
+      $("#myInput").on("keyup", function () {
+        var value = $(this).val().toLowerCase();
+        $("#myTable tr").filter(function () {
+          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+      });
+    });
+  </script>
+  <script>
+    $(document).ready(function () {
+      $("#myInput").on("keyup", function () {
+        var value = $(this).val().toLowerCase();
+        $("#mytable tr").filter(function () {
+          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+      });
+    });
+  </script>
+  <script>
+    $(document).ready(function () {
+      $("#myInput").on("keyup", function () {
+        var value = $(this).val().toLowerCase();
+        $("#myTtable tr").filter(function () {
+          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+      });
+    }); myTtable
+  </script>
+  
+  <script>
+    $('#dtBasicExample').dataTable({searching: false});
+  </script>
+  <script>
+    $('#dtBasicExample11').dataTable({searching: false});
+  </script>
+  <script>
+    $('#dtOrderExample1').dataTable({searching: false});
+
+    
+  </script>
+
+
+
+
+
+
+  {%if toastrerror%}
+  <script type="text/javascript">
+    toastr.error('{{toastrerror}}');
+  </script>
+  {%endif%}
+
+  {%if toastrsuccess %}
+  <script type="text/javascript">
+    toastr.success('{{toastrsuccess}}');
+  </script>
+  {%endif%}
+  {% block extra_footer_script %}
+  {% endblock %}
+  {%endblock%}
+
+  {% block javascript %}
+  {% endblock javascript %}
+
+
+
+</body>
+
+</html>

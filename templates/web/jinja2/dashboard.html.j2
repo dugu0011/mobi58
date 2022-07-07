@@ -1,0 +1,771 @@
+{% extends "web/jinja2/base.html.j2" %}
+{% block content %}
+<section class="py-2">
+    <div class="container-fluid">
+      <h1 class="h3 mb-2 text-gray-800">Dashboard</h1>
+      <p class="mb-3">Company over all dashboard.</p>
+      <div class="row">
+        <!-- Start Crusher mines Module -->
+        <div class="col-xl-4 col-lg-4">
+          <div class="card shadow mb-3">
+            <!-- Card Header - Dropdown -->
+            <div class="card-header py-3 d-flex flex-row bg-warning align-items-center justify-content-between">
+              <h6 class="m-0 font-weight-bold text-black">Crusher & Mines</h6>
+              <div class="dropdown no-arrow">
+                <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                  <div class="dropdown-header">Dropdown Header:</div>
+                  <a class="dropdown-item" href="#">Action</a>
+                  <a class="dropdown-item" href="#">Another action</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="#">Something else here</a>
+                </div>
+              </div>
+            </div>
+            <!-- Card Body -->
+            <div class="card-body">
+              <div class="row">
+                
+                <div class="col-lg-6 mb-3" data-toggle="collapse" href="#CrusherMines" aria-expanded="false" aria-controls="CrusherMines">
+                  <div class="card border-left-primary shadow h-100">
+                    <div class="card-body">
+                      <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                          <div class="text-xs font-weight-bold text-primary text-uppercase mb-1" data-toggle="modal" data-target="">Books58</div>
+                          <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                        </div>
+                        <div class="col-auto">
+                          <i class="fas fa-book fa-2x text-gray-300"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="collapse multi-collapse" id="CrusherMines">
+                  <div class="row">
+                    <div class="col-12 pr-4 pl-4 d-flex">
+                      <div class="col-xl-3 col-md-6 mb-2">
+                        <div class="card border-left-primary shadow h-100">
+                          <div class="card-body text-center p-0">
+                            <a href="/employee/office/details/">
+                              <p class="mb-0"><i class="fas fa-sort-amount-up-alt text-black fa-3x"></i></p>
+                              <p class="text-xs font-weight-bold text-primary text-uppercase mb-1">Sale</p>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-xl-3 col-md-6 mb-2">
+                        <div class="card border-left-primary shadow h-100">
+                          <div class="card-body text-center p-0">
+                            <a href="/employee/office/details/">
+                              <p class="mb-0"><i class="fas fa-store-alt text-black fa-3x"></i></p>
+                              <p class="text-xs font-weight-bold text-primary text-uppercase mb-1">Purchase</p>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-xl-3 col-md-6 mb-2">
+                        <div class="card border-left-primary shadow h-100">
+                          <div class="card-body text-center p-0">
+                            <a href="/employee/office/details/">
+                              <p class="mb-0"><i class="fas fa-money-bill-alt text-black fa-3x"></i></p>
+                              <p class="text-xs font-weight-bold text-primary text-uppercase mb-1">Expenses</p>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-xl-3 col-md-6 mb-2">
+                        <div class="card border-left-primary shadow h-100">
+                          <div class="card-body text-center p-0">
+                            <a href="/employee/office/details/">
+                              <p class="mb-0"><i class="fab fa-accusoft text-black text-black fa-3x"></i></p>
+                              <p class="text-xs font-weight-bold text-primary text-uppercase mb-1">Assets</p>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12 pr-4 pl-4 d-flex">
+                      <div class="col-xl-3 col-md-6 mb-2">
+                        <div class="card border-left-primary shadow h-100">
+                          <div class="card-body text-center p-0">
+                            <a href="/employee/office/details/">
+                              <p class="mb-0"><i class="fas fa-university text-black text-black fa-3x"></i></p>
+                              <p class="text-xs font-weight-bold text-primary text-uppercase mb-1">Banking & Cash</p>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-xl-3 col-md-6 mb-2">
+                        <div class="card border-left-primary shadow h-100">
+                          <div class="card-body text-center p-0">
+                            <a href="/employee/office/details/">
+                              <p class="mb-0"><i class="far fa-credit-card text-black text-black fa-3x"></i></p>
+                              <p class="text-xs font-weight-bold text-primary text-uppercase mb-1">Indirect Income</p>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-xl-3 col-md-6 mb-2">
+                        <div class="card border-left-primary shadow h-100">
+                          <div class="card-body text-center p-0">
+                            <a href="/employee/office/details/">
+                              <p class="mb-0"><i class="fas fa-comment-dollar text-black text-black fa-3x"></i></p>
+                              <p class="text-xs font-weight-bold text-primary text-uppercase mb-1">Duty & Tax</p>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-xl-3 col-md-6 mb-2">
+                        <div class="card border-left-primary shadow h-100">
+                          <div class="card-body text-center p-0">
+                            <a href="/employee/office/details/">
+                              <p class="mb-0"><i class="far fa-folder text-black text-black fa-3x"></i></p>
+                              <p class="text-xs font-weight-bold text-primary text-uppercase mb-1">Balance Sheet</p>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12 pr-4 pl-4 d-flex">
+                      <div class="col-xl-3 col-md-6 mb-2">
+                        <div class="card border-left-primary shadow h-100">
+                          <div class="card-body text-center p-0">
+                            <a href="/employee/office/details/">
+                              <p class="mb-0"><i class="far fa-file-alt text-black text-black fa-3x"></i></p>
+                              <p class="text-xs font-weight-bold text-primary text-uppercase mb-1">Provisional</p>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-xl-3 col-md-6 mb-2">
+                        <div class="card border-left-primary shadow h-100">
+                          <div class="card-body text-center p-0">
+                            <a href="/employee/office/details/">
+                              <p class="mb-0"><i class="far fa-file-alt text-black h1"></i></p>
+                              <p class="text-xs font-weight-bold text-primary text-uppercase mb-1">Profit & Loss</p>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-xl-3 col-md-6 mb-2">
+                        <div class="card border-left-primary shadow h-100">
+                          <div class="card-body text-center p-0">
+                            <a href="/employee/office/details/">
+                              <p class="mb-0"><i class="fas fa-boxes text-black text-black fa-3x"></i></p>
+                              <p class="text-xs font-weight-bold text-primary text-uppercase mb-1">Inventory</p>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-xl-3 col-md-6 mb-2">
+                        <div class="card border-left-primary shadow h-100">
+                          <div class="card-body text-center p-0">
+                            <a href="/employee/office/details/">
+                              <p class="mb-0"><i class="far fa-file-alt text-black h1"></i></p>
+                              <p class="text-xs font-weight-bold text-primary text-uppercase mb-1">Others</p>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>                  
+                <div class="col-lg-6 mb-3">
+                  <div class="card border-left-primary shadow h-100">
+                    <div class="card-body">
+                      <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                          <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Electricity</div>
+                          <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                        </div>
+                        <div class="col-auto">
+                          <i class="fas fa-lightbulb fa-2x text-gray-300"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-6 mb-3">
+                  <div class="card border-left-primary shadow h-100">
+                    <div class="card-body">
+                      <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                          <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Machine58</div>
+                          <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                        </div>
+                        <div class="col-auto">
+                          <i class="fas fa-tram fa-2x text-gray-300"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-6 mb-3">
+                  <div class="card border-left-primary shadow h-100">
+                    <div class="card-body">
+                      <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                          <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">LEGAL58</div>
+                          <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                        </div>
+                        <div class="col-auto">
+                          <i class="fas fa-balance-scale fa-2x text-gray-300"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-6 mb-3">
+                  <div class="card border-left-primary shadow h-100">
+                    <div class="card-body">
+                      <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                          <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">LOGI58</div>
+                          <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                        </div>
+                        <div class="col-auto">
+                          <i class="fas fa-truck fa-2x text-gray-300"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-6 mb-3">
+                  <div class="card border-left-primary shadow h-100">
+                    <div class="card-body">
+                      <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                          <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Mobi58</div>
+                          <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                        </div>
+                        <div class="col-auto">
+                          <i class="fas fa-address-book fa-2x text-gray-300"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!--end crusher-->
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- End Crusher mines Module -->
+        <!-- Start Crusher Module -->
+        <div class="col-xl-4 col-lg-4">
+          <div class="card shadow mb-3">
+            <!-- Card Header - Dropdown -->
+            <div class="card-header py-3 d-flex flex-row bg-warning align-items-center justify-content-between">
+              <h6 class="m-0 font-weight-bold text-black">Crusher</h6>
+              <div class="dropdown no-arrow">
+                <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                  <div class="dropdown-header">Dropdown Header:</div>
+                  <a class="dropdown-item" href="#">Action</a>
+                  <a class="dropdown-item" href="#">Another action</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="#">Something else here</a>
+                </div>
+              </div>
+            </div>
+            <!-- Card Body -->
+            <div class="card-body">
+              <div class="row">
+                
+                <div class="col-lg-6 mb-3" data-toggle="collapse" href="#Crusher" aria-expanded="false" aria-controls="Crusher">
+                  <div class="card border-left-primary shadow h-100">
+                    <div class="card-body">
+                      <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                          <div class="text-xs font-weight-bold text-primary text-uppercase mb-1" data-toggle="modal" data-target="">Books58</div>
+                          <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                        </div>
+                        <div class="col-auto">
+                          <i class="fas fa-book fa-2x text-gray-300"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="collapse multi-collapse" id="Crusher">
+                  <div class="row">
+                    <div class="col-12 pr-4 pl-4 d-flex">
+                      {% for c in request.user.company.all() %}
+                      <div class="col-xl-3 col-md-6 mb-2">
+                        <div class="card border-left-primary shadow h-100">
+                          <div class="card-body text-center p-0">
+                            <a href="/reports/crusher/sale/report/?company={{c.id}}">
+                              <p class="mb-0"><i class="fas fa-sort-amount-up-alt text-black fa-3x"></i></p>
+                              <p class="text-xs font-weight-bold text-primary text-uppercase mb-1">Sale</p>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="col-xl-3 col-md-6 mb-2">
+                        <div class="card border-left-primary shadow h-100">
+                          <div class="card-body text-center p-0">
+                            <a href="/reports/crusher/purchase/report/?company={{c.id}}">
+                              <p class="mb-0"><i class="fas fa-store-alt text-black fa-3x"></i></p>
+                              <p class="text-xs font-weight-bold text-primary text-uppercase mb-1">Purchase</p>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="col-xl-3 col-md-6 mb-2">
+                        <div class="card border-left-primary shadow h-100">
+                          <div class="card-body text-center p-0">
+                            <a href="/machine/expenses/?company={{c.id}}">
+                              <p class="mb-0"><i class="fas fa-money-bill-alt text-black fa-3x"></i></p>
+                              <p class="text-xs font-weight-bold text-primary text-uppercase mb-1">Expenses</p>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="col-xl-3 col-md-6 mb-2">
+                        <div class="card border-left-primary shadow h-100">
+                          <div class="card-body text-center p-0">
+                            <a href="/employee/office/details/">
+                              <p class="mb-0"><i class="fab fa-accusoft text-black text-black fa-3x"></i></p>
+                              <p class="text-xs font-weight-bold text-primary text-uppercase mb-1">Assets</p>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12 pr-4 pl-4 d-flex">
+                      <div class="col-xl-3 col-md-6 mb-2">
+                        <div class="card border-left-primary shadow h-100">
+                          <div class="card-body text-center p-0">
+                            <a href="/employee/office/details/">
+                              <p class="mb-0"><i class="fas fa-university text-black text-black fa-3x"></i></p>
+                              <p class="text-xs font-weight-bold text-primary text-uppercase mb-1">Banking & Cash</p>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-xl-3 col-md-6 mb-2">
+                        <div class="card border-left-primary shadow h-100">
+                          <div class="card-body text-center p-0">
+                            <a href="/employee/office/details/">
+                              <p class="mb-0"><i class="far fa-credit-card text-black text-black fa-3x"></i></p>
+                              <p class="text-xs font-weight-bold text-primary text-uppercase mb-1">Indirect Income</p>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-xl-3 col-md-6 mb-2">
+                        <div class="card border-left-primary shadow h-100">
+                          <div class="card-body text-center p-0">
+                            <a href="/employee/office/details/">
+                              <p class="mb-0"><i class="fas fa-comment-dollar text-black text-black fa-3x"></i></p>
+                              <p class="text-xs font-weight-bold text-primary text-uppercase mb-1">Duty & Tax</p>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-xl-3 col-md-6 mb-2">
+                        <div class="card border-left-primary shadow h-100">
+                          <div class="card-body text-center p-0">
+                            <a href="/employee/office/details/">
+                              <p class="mb-0"><i class="far fa-folder text-black text-black fa-3x"></i></p>
+                              <p class="text-xs font-weight-bold text-primary text-uppercase mb-1">Balance Sheet</p>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12 pr-4 pl-4 d-flex">
+                      <div class="col-xl-3 col-md-6 mb-2">
+                        <div class="card border-left-primary shadow h-100">
+                          <div class="card-body text-center p-0">
+                            <a href="/employee/office/details/">
+                              <p class="mb-0"><i class="far fa-file-alt text-black text-black fa-3x"></i></p>
+                              <p class="text-xs font-weight-bold text-primary text-uppercase mb-1">Provisional</p>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-xl-3 col-md-6 mb-2">
+                        <div class="card border-left-primary shadow h-100">
+                          <div class="card-body text-center p-0">
+                            <a href="/employee/office/details/">
+                              <p class="mb-0"><i class="far fa-file-alt text-black text-black fa-3x"></i></p>
+                              <p class="text-xs font-weight-bold text-primary text-uppercase mb-1">Profit & Loss</p>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-xl-3 col-md-6 mb-2">
+                        <div class="card border-left-primary shadow h-100">
+                          <div class="card-body text-center p-0">
+                            <a href="/employee/office/details/">
+                              <p class="mb-0"><i class="fas fa-boxes text-black text-black fa-3x"></i></p>
+                              <p class="text-xs font-weight-bold text-primary text-uppercase mb-1">Inventory</p>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-xl-3 col-md-6 mb-2">
+                        <div class="card border-left-primary shadow h-100">
+                          <div class="card-body text-center p-0">
+                            <a href="{{url('royalty')}}">
+                              <p class="mb-0"><i class="far fa-file-alt text-black text-black fa-3x"></i></p>
+                              <p class="text-xs font-weight-bold text-primary text-uppercase mb-1">Royalty</p>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>                 
+                  <div class="col-lg-6 mb-3">
+                    <div class="card border-left-primary shadow h-100">
+                      <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                          <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"><a href="/power-factor">Electricity</a></div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                          </div>
+                          <div class="col-auto">
+                            <i class="fas fa-lightbulb fa-2x text-gray-300"></i>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                
+                <div class="col-lg-6 mb-3">
+                  <div class="card border-left-primary shadow h-100">
+                    <div class="card-body">
+                      <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                          <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"><a href="/machine/machine-view/?company={{c.id}}">Machine58</a></div>
+                          <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                        </div>
+                        <div class="col-auto">
+                          <i class="fas fa-tram fa-2x text-gray-300"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-6 mb-3">
+                  <div class="card border-left-primary shadow h-100">
+                    <div class="card-body">
+                      <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                          <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">LEGAL58</div>
+                          <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                        </div>
+                        <div class="col-auto">
+                          <i class="fas fa-balance-scale fa-2x text-gray-300"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-6 mb-3">
+                  <div class="card border-left-primary shadow h-100">
+                    <div class="card-body">
+                      <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                          <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"><a href="{{url('logi')}}">LOGI58</a></div>
+                          <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                        </div>
+                        <div class="col-auto">
+                          <i class="fas fa-truck fa-2x text-gray-300"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-6 mb-3">
+                  <div class="card border-left-primary shadow h-100">
+                    <div class="card-body">
+                      <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                          <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Mobi58</div>
+                          <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                        </div>
+                        <div class="col-auto">
+                          <i class="fas fa-address-book fa-2x text-gray-300"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {% endfor%}
+                <!--end crusher-->
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- End Crusher Module -->
+        <!-- Start Mines Module -->
+        <div class="col-xl-4 col-lg-4">
+          <div class="card shadow mb-3">
+            <!-- Card Header - Dropdown -->
+            <div class="card-header py-3 d-flex flex-row bg-warning align-items-center justify-content-between">
+              <h6 class="m-0 font-weight-bold text-black">Mines</h6>
+              <div class="dropdown no-arrow">
+                <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                  <div class="dropdown-header">Dropdown Header:</div>
+                  <a class="dropdown-item" href="#">Action</a>
+                  <a class="dropdown-item" href="#">Another action</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="#">Something else here</a>
+                </div>
+              </div>
+            </div>
+            <!-- Card Body -->
+            <div class="card-body">
+              <div class="row">
+                
+                <div class="col-lg-6 mb-3" data-toggle="collapse" href="#Mines" aria-expanded="false" aria-controls="Mines">
+                  <div class="card border-left-primary shadow h-100">
+                    <div class="card-body">
+                      <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                          <div class="text-xs font-weight-bold text-primary text-uppercase mb-1" data-toggle="modal" data-target="">Books58</div>
+                          <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                        </div>
+                        <div class="col-auto">
+                          <i class="fas fa-book fa-2x text-gray-300"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="collapse multi-collapse" id="Mines">
+                  <div class="row">
+                    <div class="col-12 pr-4 pl-4 d-flex">
+                      <div class="col-xl-3 col-md-6 mb-2">
+                        <div class="card border-left-primary shadow h-100">
+                          <div class="card-body text-center p-0">
+                            <a href="/employee/office/details/">
+                              <p class="mb-0"><i class="fas fa-sort-amount-up-alt text-black fa-3x"></i></p>
+                              <p class="text-xs font-weight-bold text-primary text-uppercase mb-1">Sale</p>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-xl-3 col-md-6 mb-2">
+                        <div class="card border-left-primary shadow h-100">
+                          <div class="card-body text-center p-0">
+                            <a href="/employee/office/details/">
+                              <p class="mb-0"><i class="fas fa-store-alt text-black fa-3x"></i></p>
+                              <p class="text-xs font-weight-bold text-primary text-uppercase mb-1">Purchase</p>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-xl-3 col-md-6 mb-2">
+                        <div class="card border-left-primary shadow h-100">
+                          <div class="card-body text-center p-0">
+                            <a href="/employee/office/details/">
+                              <p class="mb-0"><i class="fas fa-money-bill-alt text-black fa-3x"></i></p>
+                              <p class="text-xs font-weight-bold text-primary text-uppercase mb-1">Expenses</p>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-xl-3 col-md-6 mb-2">
+                        <div class="card border-left-primary shadow h-100">
+                          <div class="card-body text-center p-0">
+                            <a href="/employee/office/details/">
+                              <p class="mb-0"><i class="fab fa-accusoft text-black text-black fa-3x"></i></p>
+                              <p class="text-xs font-weight-bold text-primary text-uppercase mb-1">Assets</p>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12 pr-4 pl-4 d-flex">
+                      <div class="col-xl-3 col-md-6 mb-2">
+                        <div class="card border-left-primary shadow h-100">
+                          <div class="card-body text-center p-0">
+                            <a href="/employee/office/details/">
+                              <p class="mb-0"><i class="fas fa-university text-black text-black fa-3x"></i></p>
+                              <p class="text-xs font-weight-bold text-primary text-uppercase mb-1">Banking & Cash</p>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-xl-3 col-md-6 mb-2">
+                        <div class="card border-left-primary shadow h-100">
+                          <div class="card-body text-center p-0">
+                            <a href="/employee/office/details/">
+                              <p class="mb-0"><i class="far fa-credit-card text-black text-black fa-3x"></i></p>
+                              <p class="text-xs font-weight-bold text-primary text-uppercase mb-1">Indirect Income</p>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-xl-3 col-md-6 mb-2">
+                        <div class="card border-left-primary shadow h-100">
+                          <div class="card-body text-center p-0">
+                            <a href="/employee/office/details/">
+                              <p class="mb-0"><i class="fas fa-comment-dollar text-black text-black fa-3x"></i></p>
+                              <p class="text-xs font-weight-bold text-primary text-uppercase mb-1">Duty & Tax</p>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-xl-3 col-md-6 mb-2">
+                        <div class="card border-left-primary shadow h-100">
+                          <div class="card-body text-center p-0">
+                            <a href="/employee/office/details/">
+                              <p class="mb-0"><i class="far fa-folder text-black text-black fa-3x"></i></p>
+                              <p class="text-xs font-weight-bold text-primary text-uppercase mb-1">Balance Sheet</p>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12 pr-4 pl-4 d-flex">
+                      <div class="col-xl-3 col-md-6 mb-2">
+                        <div class="card border-left-primary shadow h-100">
+                          <div class="card-body text-center p-0">
+                            <a href="/employee/office/details/">
+                              <p class="mb-0"><i class="far fa-file-alt text-black text-black fa-3x"></i></p>
+                              <p class="text-xs font-weight-bold text-primary text-uppercase mb-1">Provisional</p>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-xl-3 col-md-6 mb-2">
+                        <div class="card border-left-primary shadow h-100">
+                          <div class="card-body text-center p-0">
+                            <a href="/employee/office/details/">
+                              <p class="mb-0"><i class="far fa-file-alt text-black h1"></i></p>
+                              <p class="text-xs font-weight-bold text-primary text-uppercase mb-1">Profit & Loss</p>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-xl-3 col-md-6 mb-2">
+                        <div class="card border-left-primary shadow h-100">
+                          <div class="card-body text-center p-0">
+                            <a href="/employee/office/details/">
+                              <p class="mb-0"><i class="fas fa-boxes text-black text-black fa-3x"></i></p>
+                              <p class="text-xs font-weight-bold text-primary text-uppercase mb-1">Inventory</p>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-xl-3 col-md-6 mb-2">
+                        <div class="card border-left-primary shadow h-100">
+                          <div class="card-body text-center p-0">
+                            <a href="/employee/office/details/">
+                              <p class="mb-0"><i class="far fa-file-alt text-black h1"></i></p>
+                              <p class="text-xs font-weight-bold text-primary text-uppercase mb-1">Others</p>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>                  
+                <div class="col-lg-6 mb-3">
+                  <div class="card border-left-primary shadow h-100">
+                    <div class="card-body">
+                      <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                          <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Electricity</div>
+                          <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                        </div>
+                        <div class="col-auto">
+                          <i class="fas fa-lightbulb fa-2x text-gray-300"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-6 mb-3">
+                  <div class="card border-left-primary shadow h-100">
+                    <div class="card-body">
+                      <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                          <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Machine58</div>
+                          <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                        </div>
+                        <div class="col-auto">
+                          <i class="fas fa-tram fa-2x text-gray-300"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-6 mb-3">
+                  <div class="card border-left-primary shadow h-100">
+                    <div class="card-body">
+                      <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                          <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">LEGAL58</div>
+                          <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                        </div>
+                        <div class="col-auto">
+                          <i class="fas fa-balance-scale fa-2x text-gray-300"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-6 mb-3">
+                  <div class="card border-left-primary shadow h-100">
+                    <div class="card-body">
+                      <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                          <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">LOGI58</div>
+                          <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                        </div>
+                        <div class="col-auto">
+                          <i class="fas fa-truck fa-2x text-gray-300"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-6 mb-3">
+                  <div class="card border-left-primary shadow h-100">
+                    <div class="card-body">
+                      <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                          <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Mobi58</div>
+                          <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                        </div>
+                        <div class="col-auto">
+                          <i class="fas fa-address-book fa-2x text-gray-300"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!--end crusher-->
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- End Mines Module -->
+        
+      </div>
+    </div>
+    <!-- /.container-fluid -->
+</section>   
+{% endblock %}
+
+          

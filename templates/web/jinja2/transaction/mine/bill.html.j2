@@ -1,0 +1,117 @@
+<html>
+    <head>
+        <title></title>
+        <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/font-awesome-line-awesome/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+  <link href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
+
+  <!-- Custom styles for this template-->
+  <link href="{{static ('css/sb-admin-2.css')}}" rel="stylesheet">
+  <link href="{{static ('css/custom.css')}}" rel="stylesheet">
+  <link href="{{static ('css/bootstrap-select.css')}}" rel="stylesheet">
+  <link href="{{static('toastr/toastr.min.css')}}" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/line-awesome/1.3.0/line-awesome/css/line-awesome.min.css" integrity="sha512-vebUliqxrVkBy3gucMhClmyQP9On/HAWQdKDXRaAlb/FKuTbxkjPKUyqVOxAcGwFDka79eTF+YXwfke1h3/wfg==" crossorigin="anonymous" />
+    
+    <style>
+        @media print{
+                body * {visibility:hidden;}
+                .print_part * {visibility:visible;}
+            }
+        .dynmic_data p{
+                margin-bottom:0px!important;
+                color:black;
+            }
+    </style>
+
+    </head>
+    
+    <body style="background-color:black;font-size:0.9rem;">
+        <div class="container-flood print_part">
+            <div class="col-3 bg-light ml-5 mt-2" style="border-radius:8px;">
+                <div class="text-center heading">
+                    <strong>{% if obj_get.company_name == None %} -- {% else %}{{obj_get.company_name}}{% endif %}<br>Tax invoice</strong>
+                </div>
+                <hr>
+                <div class="dynmic_data">
+                    <p><b>Address</b>: Dalpatpura Sikar Raj(566448)<p>
+                    <p><b>Gst No.</b>: 07AAPFK4501PDY<p>
+                    <p><b>Bill No.</b>: 00015<p>
+                    <p><b>Bill Date</b>: {%if obj_get.in_date %}{{obj_get.in_date}}{%else%}--{%endif%}<p>
+                    <p><b>Vehicle No.</b>: {%if obj_get.vehicle_no %}{{obj_get.vehicle_no}}{%else%}--{%endif%}<p>
+                </div>
+
+            <hr>
+            <div class="dynmic_data">
+                <p><b>Client Name</b>: {%if obj_get.customer_name %}{{obj_get.customer_name}}{%else%}--{%endif%}<p>
+                <p><b>Gst No.</b>: 07AAPFK4587GDJ<p>
+                <p><b>Address</b>:{%if address == None%}--{%else%}{{address}}{%endif%}<p>
+            </div>
+                <hr>
+
+            <div class="">
+                <table class="table table-bordered" style="font-size:10px;">
+                        <thead>
+                            <tr style="font-weight:bold; color:black;">
+                                <th scope="col">Item</th>
+                                <th scope="col">HSN Code</th>
+                                <th scope="col">QTY</th>
+                                <th scope="col">Rate</th>
+                                <th scope="col">Amount</th>
+                            </tr>
+                                
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>{%if obj_get.item_name%}{{obj_get.item_name}}{%else%}--{%endif%}</td>
+                            <td>--</td>
+                            <td>{%if obj_get.qty%}{{obj_get.qty}}{%else%}--{%endif%}</td>
+                            <td>{%if obj_get.billing_price%}{{obj_get.billing_price}}{%else%}--{%endif%}</td>
+                            <td>{%if obj_get.amount%}{{obj_get.amount}}{%else%}--{%endif%}</td>
+                        </tr>
+                        
+                        <tr class="text-right">
+                        <td colspan="4" style="color:black;">GST(5%)
+                        </td>
+                        <td>{%if obj_get.gst_amt%}{{obj_get.gst_amt}}{%else%}--{%endif%}</td>
+                        </tr>
+
+                        <tr class="text-right">
+                        <td colspan="4" style="color:black;">Total Amount</td>
+                        <td>{%if obj_get.grand_total%}{{obj_get.grand_total}}{%else%}--{%endif%}</td>
+                        </tr>
+                        </tbody>    
+                </table>                
+            </div>
+            <div class="">
+                <strong>Terms & condition</strong>
+                <p>All Disputes are subject to sikar court only.</p>
+                <div class="text-right">
+                    <p>For {% if obj_get.company_name == None %} -- {% else %}{{obj_get.company_name}}{% endif %}</p>
+                    
+                    <p class="mt-5">Authorised Signatery</p>
+                    <hr>
+                </div>
+            </div>
+            
+            <div class="text-center" style="padding:5px;">
+                <p>Thank you for visit</p>
+            </div>
+            
+          </div>  
+ 
+        </div>
+
+        <div style="margin-left:12%">
+            <button class="btn btn-primary btn-sm" onclick="window.print()">Print</button>
+            {% if obj_get.mine_transaction_id %}
+            <a href="/transaction/exit-list/" class="btn btn-primary btn-sm" style="background-color:skyblue!important;">Back</a>
+            {% elif obj_get.transaction_type=='inbound' %}
+            <a href="/transaction/crusher/exit-list/" class="btn btn-primary btn-sm" style="background-color:skyblue!important;">Back</a>
+            {%else%}
+            <a href="/crusher/outbondexit/info-list/?company={{company}}" class="btn btn-primary btn-sm" style="background-color:skyblue!important;">Back</a>
+            {% endif %}
+        </div>     
+    </body>
+</html>
+        

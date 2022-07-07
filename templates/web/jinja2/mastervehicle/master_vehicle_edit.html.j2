@@ -1,0 +1,112 @@
+ {% extends "web/jinja2/base.html.j2" %}
+{% block content %}
+
+
+<!-- Begin Page Content -->
+<section class="py-md-5">
+	<div class="container-fluid">
+		<div class="col-12">
+			<div class="card mb-4 border-1">
+				<div class="card-header py-3 px-0 align-items-center bg-white border-0">
+					<div class="row">
+						<div class="col-12">
+							<h3 class="m-0 px-3 font-weight-bold text-dark">Vehicle Edit</h3>
+						</div>
+					</div>
+				</div>
+				<form method="post" enctype="multipart/form-data">
+				{{csrf_input}}
+                
+				<div class="card-body px-0 text-dark font-weight-bold">
+                    {% for data in vehicle_edit %}
+                    <div class="row mx-0">
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="vehicle_no">Vehicle No*</label>
+                                <input type="text" value="{{data.vehicle_no}}" name="vehicle_no" id="vehicle_no"  class="form-control" readonly>
+                            </div>
+                        </div>
+                        {#
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="driver_name">Driver Name*</label>
+                                <input type="text" value="{{data.driver_name}}" name="driver_name" id="driver_name"  class="form-control">
+                            </div>
+                        </div>#}
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="mobile">Mobile*</label>
+                                <input type="text" value="{{data.mobile}}" name="mobile" id="mobile"  class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="vehicle_type">Vehicle Type*</label>
+                                <input type="text" value="{{data.vehicle_type}}" name="vehicle_type" id="vehicle_type"  class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="chassis_no">Chassis No*</label>
+                                <input type="text" value="{{data.chassis_no}}" name="chassis_no" id="chassis_no"  class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="engine_no">Engine No*</label>
+                                <input type="text" value="{{data.engine_no}}" name="engine_no" id="engine_no"  class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="fuel_type">Fuel Type*</label>
+                                <input type="text" value="{{data.fuel_type}}" name="fuel_type" id="fuel_type"  class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="purchase_date">Purchase Date*</label>
+                                <input type="text" value="{{data.purchase_date}}" name="purchase_date" id="purchase_date"  class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="location">Location</label>
+                                <input type="text" value="{{data.location}}" name="location" id="location"  class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mt-5">
+                                <label for="self_owner">Self/Own*</label>
+                                
+                                <input type="checkbox" {% if data.self_owner == True %}checked{% endif %} value="{{data.self_owner}}" name="self_owner" id="self_owner" readonly>
+                                
+                            </div>
+                        </div>
+
+                        {#<div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="comment">Comment*</label>
+                                <textarea rows="5" class="form-control" value="{{data.comment}}" name="comment" id="comment"></textarea>
+                            </div>
+                        </div>#}
+                    </div> 
+                    {% endfor %}
+					<div class="row mx-0 position-relative">
+        
+						<div class=" col-12 pt-4 text-center">
+							<button type="submit" class="btn bg-gradient-primary text-white rounded-1 f-s-18 px-4 py-2">Update</button>
+						</div>
+					</div>
+				</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- End Here -->
+
+<script src="{{static ('vendor/jquery/jquery.min.js')}}"></script>
+
+{% endblock %}

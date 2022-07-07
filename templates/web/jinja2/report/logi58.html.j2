@@ -1,0 +1,243 @@
+{% extends "web/jinja2/base.html.j2" %}
+{% block content %}
+<section class="py-2">
+	<div class="container-fluid">
+		<h1 class="h3 mb-2 text-gray-800">Logi58</h1>
+    	<p class="mb-4">you can add and view list of Logi58.</p>
+		<div class="row">
+			<div class="col-12">
+				<div class="card mb-4 border-0">
+					<div class="card-body position-relative pl-0 pr-0">
+						<div class="card shadow mb-4">
+                            <div class="card-header py-3 bg-warning">
+                                <div class="row w-100 align-items-center">
+                                    <div class="col-12 col-md-6">
+                                        <h6 class="m-0 font-weight-bold text-black">Logi58</h6>
+                                    </div>
+                                    <div class="col-12 col-md-6 text-md-right mt-4 mt-sm-0">
+                                        <a class="btn btn-warning text-black" href="javascript:void(0);" data-toggle="modal" data-target="#power-factor" >Add Vehicle</a> 
+                                    </div>
+                                </div>
+                            </div>
+                        <div class="card-body">
+                            <div class="table">
+                                <table class="table" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Sr.No.</th>
+											<th>Vehicle No.</th>
+                                            <th>Chassis No.</th>
+                                            <th>Engine No.</th>
+                                            <th>Registraion No.</th>
+                                            <th>Vehicle Type</th>
+                                            <th>Location</th>
+                                            <th>Satus</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {%for data in vehicles%}
+                                        <tr>
+                                            <th>{{loop.index}}</th>
+                                            <td>{% if data.vehicle_no %}{{data.vehicle_no}}{% else %}--{% endif%}</td>
+                                            <td>{% if data.chassis_no %}{{data.chassis_no}}{% else %}--{% endif%}</td>
+                                            <td>{% if data.engine_no %}{{data.engine_no}}{% else %}--{% endif%}</td>
+                                            <td>{% if data.rc_no %}{{data.rc_no}}{% else %}--{% endif%}</td>
+                                            <td>{% if data.vehicle_type %}{{data.vehicle_type}}{% else %}--{% endif%}</td>
+                                            <td>{% if data.location %}{{data.location}}{% else %}--{% endif%}</td>
+                                            <td class="text-success">Active</td>
+                                        </tr>
+                                        {%endfor%}
+									</tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+  <div class="col-md-4">
+      <div class="modal fade" id="power-factor" tabindex="-1" role="dialog" aria-labelledby="modal-form" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-warning">
+                <h5 class="modal-title text-black" id="exampleModalLabel3">Add Vehicle</h5>
+                <button type="button" class="close text-danger" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+            <div class="modal-body p-0">
+            <div class="card shadow border-0">
+                <div class="card-body px-lg-5 py-lg-5">
+                    <form method="POST" action="" enctype="multipart/form-data">
+                     {{csrf_input}}
+                        <div class="row">
+                            <div class="col-lg-12 border-bottom mb-1">
+                                <label for="self_owner">Self/Own</label>
+                                <input type="checkbox" name="self_owner" id="self_owner" class="self_owner">
+                            </div>
+                            {% for c in request.user.company.all() %}                          
+                            <input type="hidden" value="{{c.id}}" name="company_id">
+                            {% endfor%}
+                            <div class="col-lg-3 col-md-4 col-sm-12">
+                                <div class="form-group mb-4">
+                                    <label for="vehicle_no">Vehicle No.*</label>
+                                    <input type="text" name="vehicle_no" id="vehicle_no" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-4 col-sm-12">
+                                <div class="form-group mb-4">
+                                    <label for="driver_name">Driver Name*</label>
+                                    <select class="custom-select form-control" name="driver_name" id="driver_name">
+                                        <option value="" selected>Select</option>
+                                        {% for data in drivers %}
+                                        <option value="{{data.id}}">{{data.driver_name}}</option>
+                                        {% endfor %}                                               
+                                    </select>
+                                </div>
+                            </div>                           
+                            <div class="col-lg-3 col-md-4 col-sm-12">
+                                <div class="form-group mb-4">
+                                    <label for="vehicle_type">Vehicle Type*</label>
+                                    <select class="custom-select form-control" id="" name="vehicle_type" required>
+                                        <option value="" selected>Select</option>
+                                        {% for v in type_vehicle %}
+                                        <option value="{{v.0}}">{{v.1}}</option>
+                                        {% endfor %}
+                                    </select>    
+                                </div>
+                            </div>
+                            {#<div class="col-lg-3 col-md-4 col-sm-12">
+                                <div class="form-group mb-4">
+                                    <label for="mobile">Mobile*</label>
+                                    <input type="number" name="mobile" class="form-control" required>
+                                </div>
+                            </div>#} 
+                            <div class="col-lg-3 col-md-4 col-sm-12">
+                                <div class="form-group mb-4">   
+                                    <label for="Chassis No">Chassis No.</label>
+                                    <input type="text" name="chassis_no" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-4 col-sm-12">
+                                <div class="form-group mb-4">
+                                    <label for="Engine No">Engine No.</label>
+                                    <input type="text" name="engine_no" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-4 col-sm-12">
+                                <div class="form-group mb-4">
+                                    <label for="Fuel Type">Fuel Type</label>
+                                    <select class="custom-select form-control form-control-user rounded-1 fuel_type" id="" name="fuel_type">
+                                        <option value="" selected>Select</option>
+                                        {% for f in fuels %}
+                                        <option value="{{f.0}}">{{f.1}}</option>
+                                        {% endfor %}
+                                    </select>    
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-4 col-sm-12">
+                                <div class="form-group mb-4">
+                                    <label for="Purchase Date">Purchase Date</label>
+                                    <input type="date" name="purchase_date" class="form-control">
+                                </div>
+                            </div>
+                            <hr>    
+                            <div class="col-lg-3 col-md-4 col-sm-12">
+                                <div class="form-group mb-4">
+                                    <label for="rc_no">Registraion No.
+                                        <div class="fileUpload bg-white text-red" style="float:right" title="Upload Registraion File">
+                                            <span><i class="fa fa-camera" aria-hidden="true"></i></span>
+                                            <input type="hidden" id="uploadFile" class="form-control bg-white rounded-1" placeholder="Choose File" disabled="disabled" />
+                                            <input type="file" class="upload" id="rc_file" name="rc_file">
+                                        </div>
+                                    </label>
+                                    <input type="text" name="rc_no" id="registration_no" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-4 col-sm-12">
+                                <div class="form-group mb-4">
+                                    <label for="Insurance Validity">Insurance Validity
+                                        <div class="fileUpload bg-white text-red" style="float:right" title="Upload Registraion File">
+                                            <span><i class="fa fa-camera" aria-hidden="true"></i></span>
+                                            <input type="hidden" id="uploadFile" class="form-control bg-white rounded-1" placeholder="Choose File" disabled="disabled" />
+                                            <input type="file" class="upload" id="insurance_file" name="insurance_file">
+                                        </div>
+                                    </label>
+                                    <input type="date" name="insurance" class="form-control">
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-3 col-md-4 col-sm-12 customer_hideshow">
+                                <div class="form-group mb-4">
+                                    <label for="vehicle-customer">Customer*</label><br>
+                                    <select class="ustom-select form-control form-control-user select2_dropdown" style="width: 100%" id="vehicle-customer" name="vehicle-customer">
+                                        <option value="" selected>Select</option>
+                                        {% for data in customers %}
+                                        <option value="{{data.id}}">{{data.customer_name}}</option>
+                                        {%endfor%}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-4 col-sm-12">
+                                <div class="form-group mb-4">
+                                    <label for="Location">Location</label>
+                                    <input type="text" name="location" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-4 col-sm-12">
+                                <div class="form-group mb-4">
+                                    <label for="Pollution Validity">Pollution Validity 
+                                        <div class="fileUpload bg-white text-red" style="float:right" title="Upload Registraion File">
+                                            <span><i class="fa fa-camera" aria-hidden="true"></i></span>
+                                            <input type="hidden" id="uploadFile" class="form-control bg-white rounded-1" placeholder="Choose File" disabled="disabled" />
+                                            <input type="file" class="upload" id="pollution_file" name="pollution_file">
+                                        </div>
+                                    </label>
+                                    <input type="date" name="pollution" class="form-control">
+                                </div>
+                            </div> 
+                                            
+                        </div>
+                        <div class="text-center">
+                            <button type="submit"  class="btn btn-primary my-4">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+  <script src="{{static ('vendor/jquery/jquery.min.js')}}"></script>
+  <script>
+      $(document).ready(function() {
+          $('.select2_dropdown').select2();
+          });
+  </script>
+  
+  <script>
+      $('#vehicle_no').keyup(function(){
+        $('#registration_no').val($('#vehicle_no').val());
+        });  
+  </script>
+  
+  <script>
+      $(document).ready(function() {
+          $('.self_owner').on('change', function(){
+              if ($('.self_owner').is(':checked'))
+                  $('.customer_hideshow').hide();
+                  else
+                  {
+                  $('.customer_hideshow').show(); 
+                   }  
+          })
+      });
+               //   if ($('.self_owner').is(':checked')); 
+             //     $('.customer_hideshow').hide();
+              //else:
+                //  $('.customer_hideshow').show();
+  </script>
+{% endblock %}

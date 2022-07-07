@@ -1,0 +1,201 @@
+{% extends "web/jinja2/base.html.j2" %}
+{% block content %}
+<section class="py-2">
+	<div class="container-fluid">
+		<h1 class="h3 mb-2 text-gray-800">Power Factor</h1>
+    	<p class="mb-4">you can add and view list of power factor.</p>
+		<div class="row">
+			<div class="col-12">
+				<div class="card mb-4 border-0">
+					<div class="card-body position-relative pl-0 pr-0">
+						<div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <div class="row w-100 align-items-center">
+                                    <div class="col-12 col-md-6">
+                                        <h6 class="m-0 font-weight-bold text-black">Power Factor</h6>
+                                    </div>
+                                    <div class="col-12 col-md-6 text-md-right mt-4 mt-sm-0">
+                                        <a class="btn bg-transparent text-black" href="javascript:void(0);" data-toggle="modal" data-target="#power-factor" >Add Detail</a> 
+                                    </div>
+                                </div>
+                            </div>
+                        <div class="card-body">
+                            <div class="table">
+                                <table class="table" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Sr.No.</th>
+											<th scope="col">Date <i class="far fa-calendar-alt text-black font-18 pl-2 align-middle"></i></th>
+											<th scope="col">Lock-KWH</th>
+											<th scope="col">Lock-KVAH</th>
+											<th scope="col">KWH</th>
+											<th scope="col">KWH(Unit)</th>
+											<th scope="col">KVAH</th>
+											<th scope="col">KVAH(Unit)</th>
+											<th scope="col">Power Factor</th>
+											<th scope="col">Daily Power Factor</th>
+										</tr>
+                                    </thead>
+                                    <tbody>
+                                        {%for data in power%}
+                                        <tr>
+                                            <td>{{loop.index}}</td>
+                                            <td>{{data.created_at.strftime("%d/%m/%Y %I:%M %p")}}</td>
+                                            <td>{{data.lockkwh}}</td>
+                                            <td>{{data.lockkvah}}</td>
+                                            <td>{{data.kwh}}</td>
+                                            <td>{{data.netkwh}}</td>
+                                            <td>{{data.kvah}}</td>
+                                            <td>{{data.netkvah}}</td>
+                                            <!--<?php if($exv2['power'] >=0.95 AND $exv2['power'] <=1) { ?>-->
+                                            {%if data.power|float <= 0.95%}
+                                            <td class="text-danger">{{data.power}} Fail</td>
+                                            {%else%}
+                                            <td class="text-success">{{data.power}} Pass</td>
+                                            {%endif%}
+                                            <td>{{data.dailypower}}</td>
+                                        </tr>
+                                        {%endfor%}
+									</tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+  <div class="col-md-4">
+      <div class="modal fade" id="power-factor" tabindex="-1" role="dialog" aria-labelledby="modal-form" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-warning">
+                <h5 class="modal-title text-black" id="exampleModalLabel3">Add Power Factor</h5>
+                <button type="button" class="close text-danger" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+            <div class="modal-body p-0">
+            <div class="card shadow border-0">
+                <div class="card-body px-lg-5 py-lg-5">
+                    <form method="POST" action="" enctype="multipart/form-data">
+                     {{csrf_input}}
+                        <div class="row">
+                            <div class="col-sm-3">
+                            <!-- text input -->
+                            <div class="form-group">
+                                <label>KWH</label>
+                                <input type="text" name="kwh" id="kwh" onchange="myfunction()" class="form-control" placeholder="Enter KWH">
+                            </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label>KVAH</label>
+                                    <input type="text" name="kvah" id="kvah" onchange="myf()" class="form-control" placeholder="Enter KVAH">
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label>Total KWH</label>
+                                    <input type="text" name="netkwh" id="netkwh" class="form-control bg-white" readonly>
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label>Total KVAH</label>
+                                    <input type="text" name="netkvah" id="netkvah" class="form-control bg-white" readonly>
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label>Total Unit</label>
+                                    <input type="text" name="power" id="power" class="form-control bg-white" readonly>
+                                </div>
+                            </div>
+                        </div> 
+                        <div class="row">
+                            <div class="col-sm-3">
+                            <!-- text input -->
+                            <div class="form-group">
+                                <label>Last KWH</label>
+                                <input type="text" name="dlkwh" id="dlkwh" value="{%if lastkwh.kwh%}{{lastkwh.kwh}}{%else%}0{%endif%}" class="form-control bg-white" >
+                            </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label>Last KVAH</label>
+                                    <input type="text" name="dlkvah" id="dlkvah" value="{%if lastkwh.kvah%}{{lastkwh.kvah}}{%else%}0{%endif%}" class="form-control bg-white" >
+                                    <input type="hidden" name="lockkvah" id="lockkvah" value="{%if lastkwh.lockkvah%}{{lastkwh.lockkvah}}{%else%}0{%endif%}" class="form-control">
+                                    <input type="hidden" name="lockkwh" id="lockkwh" value="{%if lastkwh.lockkwh%}{{lastkwh.lockkwh}}{%else%}0{%endif%}" class="form-control">
+                                    {% for c in request.user.company.all() %}
+                                    <input type="hidden" name="company_id" id="company_id" value="{{c.id}}" class="form-control">
+                                    {%endfor%}
+                                    <input type="hidden" name="created_by" id="created_by" value="{{request.user.id}}" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label>Total KWH</label>
+                                    <input type="text" name="dlnetkwh" id="dlnetkwh" class="form-control bg-white" readonly>
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label>Total KVAH</label>
+                                    <input type="text" name="dlnetkvah" id="dlnetkvah" class="form-control bg-white" readonly>
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label>Total Unit</label>
+                                    <input type="text" name="dlpower" id="dlpower" class="form-control bg-white" readonly>
+                                </div>
+                            </div>
+                        </div>                       
+                      	<div class="text-center">
+                            <button type="submit"  class="btn btn-primary my-4">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    function myf() {  
+     var dlkwh = document.getElementById("dlkwh").value;
+     var dlkvah = document.getElementById("dlkvah").value; 
+     var kwh = document.getElementById("kwh").value;
+     var kvah = document.getElementById("kvah").value; 
+     var lockkwh = document.getElementById("lockkwh").value;
+     var lockkvah = document.getElementById("lockkvah").value;    
+     var netkwh=parseFloat(kwh)-parseFloat(lockkwh);
+     var netkvah=parseFloat(kvah)-parseFloat(lockkvah);
+     var netwt=parseFloat(netkwh)/parseFloat(netkvah);
+     document.getElementById("netkwh").value=netkwh;
+     document.getElementById("netkvah").value=netkvah;
+     document.getElementById("power").value=netwt.toFixed(3); 
+     var dlnetkwh=parseFloat(kwh)-parseFloat(dlkwh);
+     var dlnetkvah=parseFloat(kvah)-parseFloat(dlkvah);
+     var dlnetwt=parseFloat(dlnetkwh)/parseFloat(dlnetkvah);
+     document.getElementById("dlnetkwh").value=dlnetkwh;
+     document.getElementById("dlnetkvah").value=dlnetkvah;
+     document.getElementById("dlpower").value=dlnetwt.toFixed(3); 
+  }; 
+ </script>
+ <script>
+    function myfunction() {  
+     var kwh = document.getElementById("kwh").value;
+     var dlkwh = document.getElementById("dlkwh").value;
+     var lockkwh = document.getElementById("lockkwh").value;
+     var netkwh=parseFloat(kwh)-parseFloat(lockkwh);
+     document.getElementById("netkwh").value=netkwh;
+     var dlnetkwh=parseFloat(kwh)-parseFloat(dlkwh);
+     document.getElementById("dlnetkwh").value=dlnetkwh;
+  }; 
+ </script>
+<script src="{{static ('vendor/jquery/jquery.min.js')}}"></script>
+{% endblock %}

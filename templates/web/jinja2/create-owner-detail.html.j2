@@ -1,0 +1,73 @@
+{% extends "web/jinja2/base.html.j2" %}
+{% block content %}
+<!-- Begin Page Content -->
+<section class="py-md-5">
+	<div class="container-fluid">
+		<div class="col-12">
+			<div class="card mb-4 border-1">
+				<div class="card-header py-3 px-0 align-items-center bg-white border-0">
+					<div class="row">
+						<div class="col-12">
+							<h3 class="m-0 px-3 font-weight-bold text-dark">Add Owner Detail</h3>
+						</div>
+					</div>
+				</div>
+				<form  action="{{url('owner-create')}}" method="post" enctype="multipart/form-data">
+				{{csrf_input}}
+				<div class="card-body px-0">
+                    <div class="row mx-0">
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="owner-name">Owner Name*</label>
+                                <input type="text" name="owner_name" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="lease_number">Percentage % *</label>
+                                <input type="text" name="percentage" class="form-control" required>
+                            </div>
+                        </div>
+                        
+                        {#
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="owner_company">Company*</label>
+                                <select class="custom-select form-control form-control-user rounded-1" id="owner_company" name="owner_company" required>
+                                    <option value="" selected>Select</option>
+                                    {% for data in companies %}
+									<option value="{{data.id}}">{{data.name}}</option>
+									{%endfor%}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="owner_mine">Mine*</label>
+                                <select class="custom-select form-control form-control-user rounded-1" id="owner_mine" name="owner_mine" required>
+                                    <option value="" selected>Select</option>
+                                    {% for data in mines %}
+									<option value="{{data.id}}">{{data.mine_name}}</option>
+									{%endfor%}
+                                </select>
+                            </div>
+                        </div>
+                        #}                 
+                    </div>
+                    <hr>
+					<div class="row mx-0 position-relative">        
+						<div class=" col-12 pt-4 text-center">
+							<button type="reset" class="btn btn-white text-dark border rounded-1 bg-white f-s-18 px-4 py-2 mr-3">Reset</button>
+							<button type="submit"  class="btn bg-gradient-primary text-white rounded-1 f-s-18 px-4 py-2">Submit</button>
+						</div>
+					</div>
+				</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- End Here -->
+
+
+{% endblock %}

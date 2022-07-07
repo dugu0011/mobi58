@@ -1,0 +1,348 @@
+{% extends "web/jinja2/base.html.j2" %} {% block title %} Scheduler {% endblock %} {% block title_header %}Raise Ticket{% endblock %} 
+{% block content %}
+
+<style>
+td{
+    text-align:left;
+}
+
+
+
+
+
+#profile {
+  background-color: unset
+}
+
+#post {
+  margin: 10px;
+  padding: 6px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  text-align: center;
+  background-color: #ecb21f;
+  border-color: #a88734 #9c7e31 #846a29;
+  color: black;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 13px;
+  width: 50%
+}
+
+
+
+
+
+.comments {
+  margin-top: 5%;
+  margin-left: 20px
+}
+
+.darker {
+  border: 1px solid #ecb21f;
+  
+  float: right;
+  border-radius: 5px;
+  padding-left: 40px;
+  padding-right: 30px;
+  padding-top: 10px
+}
+
+.comment {
+  
+  float: left;
+  border-radius: 5px;
+  padding-left: 40px;
+  padding-right: 30px;
+  padding-top: 10px
+}
+
+.comment h4,
+.comment span,
+.darker h4,
+.darker span {
+  display: inline
+}
+
+.comment p,
+.comment span,
+.darker p,
+.darker span {
+  color: rgb(184, 183, 183)
+}
+
+h1,
+h4 {
+  color: white;
+  font-weight: bold
+}
+
+label {
+  color: rgb(212, 208, 208)
+}
+
+#align-form {
+  margin-top: 20px
+}
+
+.form-group p a {
+  color: white
+}
+
+
+
+#darker img {
+  margin-right: 15px;
+  position: static
+}
+
+.form-group input,
+.form-group textarea {
+  
+  border-radius: 12px
+}
+
+form {
+  border-radius: 5px;
+  padding: 20px
+}
+
+
+
+
+  input[type=text],
+  input[type=email],
+  input[type=file],
+  select,
+  textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      margin-top: 6px;
+      margin-bottom: 16px;
+      resize: vertical;
+  }
+
+  input[type=submit] {
+      background-color: #4e73df;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      cursor: pointer;
+  }
+
+  input[type=submit]:hover {
+      background-color: #4e73df;
+  }
+
+  /* Create two columns that float next to eachother */
+
+  .column {
+      float: left;
+      width: 50%;
+      margin-top: 6px;
+      padding: 20px;
+  }
+
+  /* Clear floats after the columns */
+
+  .row:after {
+      content: "";
+      display: table;
+      clear: both;
+  }
+
+  /* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+
+  @media screen and (max-width: 600px) {
+
+      .column,
+      input[type=submit] {
+          width: 100%;
+          margin-top: 0;
+      }
+  }
+
+  td {
+      text-align: left;
+  }
+</style>
+{% block js %}
+{% if msg %}
+<script>
+  alert("{{msg}}");
+</script>
+{% endif %}
+
+
+
+{% endblock %}
+
+
+<!-- 
+<section class="py-md-5">
+	<div class="container-fluid">
+		<div class="col-12">
+			<div class="card shadow mb-4 border-1">
+				<div class="card-header py-3 px-0 align-items-center bg-warning border-0">
+					<div class="row">
+						<div class="col-12">
+							<h3 class="m-0 px-3 font-weight-bold text-dark" style="text-align: center; color:black">Ticket Detail</h3>
+						</div>
+					</div>
+				</div>
+<form class="" method="post" name="assignForm" style="width: 100%;" >
+  {{csrf_input}}
+  <div class="card-body px-0 text-dark font-weight-bold">
+    <hr> -->
+  <!-- <div class="form-group">
+    <h4 style="color: black; text-align:center">Ticket Details</h4> 
+    <label for="exampleFormControlInput1" style="">Ticket ID</label>
+    <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="" value="{{ticket.ticket_id}}" disabled>
+  </div> -->
+  
+
+<!-- <div class="row mx-0"> -->
+  <!-- <div class="col-lg-3 col-md-3 col-sm-12">
+            <div class="form-group mb-4">
+        <label for="mine_id" style="color:black">Ticket ID</label>
+        <input type="text" value="{{ticket.ticket_id}}"  disabled>
+    </div>
+</div> -->
+<!-- <div class="col-lg-3 col-md-3 col-sm-12">
+  <div class="form-group mb-4">
+    <label for="exampleFormControlSelect1" style="color:black">Category</label>
+    <select class="form-control" id="exampleFormControlSelect1">
+      <option>CNM</option>
+      <option>CNM58</option>
+      <option>Ultracon</option>
+      <option>Tech58</option>
+      <option>Dagars Group</option>
+    </select>
+  </div>
+  </div>
+  <div class="col-lg-3 col-md-3 col-sm-12">
+    <div class="form-group mb-4">
+    <label for="exampleFormControlSelect1" style="color:black">sub Category</label>
+    <select class="form-control" id="exampleFormControlSelect1">
+      <option>CNM</option>
+      <option>CNM58</option>
+      <option>Ultracon</option>
+      <option>Tech58</option>
+      <option>Dagars Group</option>
+    </select>
+  </div>
+  </div> -->
+  <!-- <div class="col-lg-3 col-md-3 col-sm-12">
+    <div class="form-group mb-4">
+    <label for="exampleFormControlInput1" style="color:black">Subject</label>
+    <input type="text" value=""  id="exampleFormControlInput1" placeholder="" name="subject">
+  </div>
+  </div>
+  {% if request.user.is_admin == True %}
+  <div class="col-lg-3 col-md-3 col-sm-12">
+    <div class="form-group mb-4">
+    <label for="exampleFormControlSelect1" style="color:black">Assign to</label>
+    <select class="form-control" id="exampleFormControlSelect1" name='assign_to'>
+      {% for u in allusers%}
+      <option value="{{u.id}}">{{u.name}}</option>
+      {%endfor%}
+      
+    </select>
+  </div>
+  </div> -->
+  <!-- <div class="col-lg-3 col-md-3 col-sm-12">
+    <div class="form-group mb-4">
+    <label for="exampleFormControlSelect1" style="color:black">Status</label>
+    <select class="form-control" id="exampleFormControlSelect1" name='status'>
+      
+      <option value="">Active</option>
+      <option value="">WIP</option>
+      <option value="">Close</option>
+      <option value="">Reject</option>
+      
+      
+    </select>
+  </div>
+  </div> -->
+  {%endif%}
+  <!-- <div class="col-lg-3 col-md-3 col-sm-12">
+    <div class="form-group mb-4">
+    
+    <label style="color:black">Resources</label>
+    {% if ticket.img %}
+    <input type="file" value="{{ticket.img.url}}">
+    {% else %}
+    <input type="text" value="No Resource" disabled>
+    {% endif %}
+      
+  </div>
+  </div> -->
+
+  <!-- <div class="col-lg-3 col-md-3 col-sm-12">
+    <div class="form-group mb-4">
+    <label for="exampleFormControlTextarea1" style="color:black">Message</label>
+    <textarea  id="exampleFormControlTextarea1" rows="3" name="msg" ></textarea>
+  </div>
+  </div>
+  <div class="col-lg-3 col-md-3 col-sm-12">
+    <div class="form-group mb-4">
+    <label for="exampleFormControlSelect1" style="color:black">Scheduler</label>
+    <select class="form-control" id="exampleFormControlSelect1" name='time_period'> -->
+      <!-- {% for s in SCHEDULER_STATUS %} -->
+      <!-- <option value="{{s.0}}">{{s.1}}</option> -->
+      <!-- <option value="">Weekly</option>
+      <option value="">Monthly</option> -->
+      <!-- {%endfor%} -->
+      
+    <!-- </select>
+  </div>
+  </div> -->
+  <!-- <div class="col-lg-3 col-md-3 col-sm-12">
+    <div class="form-group mb-4">
+<label for="mine_id" style="color:black">User</label>
+<input type="text" value=""  disabled>
+</div>
+</div>
+<div class="col-lg-3 col-md-3 col-sm-12">
+  <div class="form-group mb-4">
+<label for="mine_id" style="color:black">Created at</label>
+<input type="text" value=""  disabled>
+</div>
+</div>
+<div class="col-lg-3 col-md-3 col-sm-12">
+  <div class="form-group mb-4">
+<label for="mine_id" style="color:black">Last Comment</label>
+<input type="text" value=""  disabled>
+</div>
+</div> -->
+  
+  
+  <!-- <h1 style="color: black; text-align:center"> All Comments</h1>
+              {% for comm in myComment %}
+              <div class="comment mt-4 text-justify float-left">
+                  <h4>{{ comm.user.name }}</h4> <span>{{ comm.created_at }}</span> <br>
+                  <p>{{ comm.message}}</p>
+              </div>
+              
+              {% endfor %} -->
+              <!-- </div>
+  <hr>	
+					<div class="row mx-0 position-relative">
+        
+						<div class=" col-12 pt-4 text-center">
+							<button type="submit"  class="btn bg-gradient-primary text-white rounded-1 f-s-18 px-4 py-2">Submit</button>
+              
+						</div>
+					</div>
+          
+          
+       </div>       
+</form>
+</div>
+</div>
+</div>
+</section> -->
+
+
+{% endblock %}

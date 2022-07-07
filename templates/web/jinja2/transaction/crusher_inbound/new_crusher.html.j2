@@ -1,0 +1,509 @@
+ {% extends "web/jinja2/base.html.j2" %}
+{% block content %}
+<!-- Begin Page Content -->
+<section class="py-md-5">
+	<div class="container-fluid">
+		<div class="col-12">
+			<div class="card mb-4 border-1">
+				<div class="card-header py-3 px-0 align-items-center bg-white border-0">
+					<div class="row">
+						<div class="col-12">
+							<h3 class="m-0 px-3 font-weight-bold text-dark">Crusher Outside-Vehicle IN</h3>
+						</div>
+					</div>
+				</div>
+                <form method="post" enctype="multipart/form-data">
+				{{csrf_input}}
+				<div class="card-body px-0 text-dark font-weight-bold">
+                <input type="hidden" value="{{request.GET.company}}" name="company_id">
+                <input type="hidden" name="crusher_unique_id" value="{{gen_crusher_tr_id}}">
+                    <div class="row mx-0">
+                        <div class="col-lg-12 col-md-12 col-sm-12 bg-primary">
+                            <h5 style="color:white;"> In Detail </h5>
+                        </div>    
+                    </div>    
+                    <div class="row mx-0">
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="vendor_name">Customer*</label>
+                                <select class="custom-select form-control form-control-user rounded-1 select2_dropdown" name="vendor_name" id="vendor_name" required>
+                                    {#<option value="">Choose a value</option>#}    
+                                    {% for data in customers %}
+									<option value="{{data.id}}">{{data.customer_name}}</option>
+									{%endfor%}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="customer_mine_name">Mine Name*</label>
+                                <select class="custom-select form-control form-control-user rounded-1" name="customer_mine_name" id="customer_mine_name">
+                                        
+                                    {% for data in customer_mine %}
+									<option value="{{data.id}}">{{data.mine_name}}</option>
+									{%endfor%}
+                                </select>
+                            </div>
+                            <input type='hidden' id="subcategory">
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="crusher_name">Crusher Name*</label>
+                                <select class="custom-select form-control form-control-user rounded-1" name="crusher_name" id="crusher_name">
+                                        
+                                    {% for data in crusher %}
+									<option value="{{data.id}}">{{data.crusher_name}}</option>
+									{%endfor%}
+                                </select>
+                            </div>
+
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="in_date">In Date*</label>
+                                <input type="text" name="in_date" value="{{current_date}}" id="in_date" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="in_time">In Time*</label>
+                                <input type="text" step="1" name="in_time" value="{{current_time}}" id="in_time" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="vehicle_no">Vehicle No*</label>
+                                <select class="custom-select form-control form-control-user rounded-1 select2_dropdown vehicle_no" name="vehicle_no" id="vehicle_no" required>
+                                    {#<option value="" selected>Select</option>#}    
+                                    {% for data in vehicles %}
+									<option value="{{data.id}}" class="{{data.vehicle_no}}">{{data.vehicle_no}}</option>
+									{%endfor%}
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="driver_name">Driver Name*<i class="fas fa-plus-circle text-success"  data-toggle="modal" data-target=".AddDriverModal" id="plusButton" title="New Driver"></i></label>
+                                {#<input type="text" name="driver_name" id="driver_name" class="form-control" required>#} 
+                                <select class="custom-select form-control form-control-user rounded-1 select2_dropdown driver_name" name="driver_name" id="driver_name">
+                                        {#<option value="" selected>Select</option>#}
+                                        {% for data in drivers %}
+                                        <option value="{{data.id}}" class="{{data.mobile}}">{{data.driver_name}}</option>
+                                        {% endfor %}
+                                </select>
+                            </div>
+                            <input type='hidden' id="alldrivers">
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="mobile">Mobile*</label>
+                                <input type="text" name="mobile" id="mobile"  class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="product">Product Type*</label>
+                                <select class="custom-select form-control form-control-user rounded-1 select2_dropdown" name="product" id="product" required>
+                                    <option value="" selected>Select</option>    
+                                    {% for data in products %}
+									<option value="{{data.id}}" class="{{data.sale_rate}},{{data.bill_rate}},{{data.gst_percent}}">{{data.item_name}}</option>
+									{%endfor%}
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="in_kaata_no">In Kaata No.*</label>
+                                <select class="custom-select form-control form-control-user rounded-1 select2_dropdown" name="in_kaata_no" id="in_kaata_no">
+                                    <option value="" selected>Select</option>
+                                    {% for data in kaata_number %}
+                                    <option value="{{data.id}}">{{data.kaata_no}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="full_load">Full Load <small>(Ton)</small>*</label>
+                                <input type="number" name="full_load" id="full_load" step=".001" placeholder="0.00" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="price">Price*</label>
+                                <input type="number" name="price" id="price" placeholder="0.00" class="form-control" readonly>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="ravana_no">Ravana No.*</label>
+                                <input type="text" name="ravana_no" id="ravana_no" class="form-control">
+                            </div>
+                        </div>
+
+                        <input type="hidden" name="product_rate" id="product_rate" readonly>
+                        <input type="hidden" name="gst_per" id="gst_per" readonly>
+
+                        
+                          {#
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="amount">Amount*</label>
+                                <input type="text" name="amount" id="amount" value="" placeholder="0.00" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="billing_amt">Billing Amount*</label>
+                                <input type="text" name="billing_amt" id="billing_amt" value="" placeholder="0.00" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="pending_amt">Pending Amount*</label>
+                                <input type="text" name="pending_amt" id="pending_amt" value="" placeholder="0.00" class="form-control">
+                            </div>
+                        </div>#}
+                    </div>
+                    <hr>
+                    {#
+                    <div class="row mx-0">
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="out_date">Out Date*</label>
+                                <input type="date" name="out_date" id="out_date" value="{{current_date}}" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="out_time">Out Time*</label>
+                                <input type="time" step="1" name="out_time" value="{{current_time}}" id="out_time" class="form-control">
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="out_kaata_no">Out Kaata No.*</label>
+                                <input type="text" name="out_kaata_no" id="out_kaata_no" class="form-control">
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="out_weight">Out Weight <small>(Ton)</small>*</label>
+                                <input type="text" name="out_weight" id="out_weight" placeholder="0.00" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <hr>#}
+                    {#
+                    <div class="row mx-0">
+                        
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="actual_weight">Difference of Weight <small>(Ton)</small>*</label>
+                                <input type="text" name="actual_weight" id="actual_weight" placeholder="0.00" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+
+                        <hr> #} 
+
+
+                    {#
+                    <div class="row mx-0">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <label for="new_crusher_transaction_comment">Comment*</label>    
+                            <textarea class="form-control rounded-1 " id="new_crusher_transaction_comment" name="new_crusher_transaction_comment" rows="5" placeholder="Write here..."></textarea>                            
+                        </div>
+                    </div>#}
+                    
+					<div class="row mx-0 position-relative">
+        
+						<div class=" col-12 pt-4 text-center">
+							<button type="reset" class="btn btn-white text-dark border rounded-1 bg-white f-s-18 px-4 py-2 mr-3">Reset</button>
+							<button type="submit"  class="btn bg-gradient-primary text-white rounded-1 f-s-18 px-4 py-2">Submit</button>
+						</div>
+					</div>
+				</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- End Here -->
+<section>
+  <!-- Add Driver Modal-->
+    <div class="modal fade AddDriverModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-warning">
+                    <h5 class="modal-title ml-5 text-danger" id="exampleModalLabel">Add Driver</h5>
+                    <button class="close text-danger" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>        
+                {#<form method="post" enctype="multipart/form-data" name="add_new_driver">
+                {{csrf_input}}#}
+                    <div class="card-body px-0 text-dark font-weight-bold">
+                        <div class="row mx-0">
+                            <div class="col-lg-4 col-md-3 col-sm-12">
+                                <div class="form-group mb-4">
+                                    <label for="add_vehicle">Vehicle No.*</label>
+                                    <input type="text" name="add_vehicle" id="add_vehicle"  class="form-control" readonly>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-3 col-sm-12">
+                                <div class="form-group mb-4">
+                                    <label for="add_driver_name">Driver Name*</label>
+                                    <input type="text" name="add_driver_name" id="add_driver_name" class="form-control" required>
+                                    {#<select class="custom-select form-control form-control-user rounded-1 select2_dropdown" name="add_driver_name" id="add_driver_name">
+                                        <option value="" selected>Select</option>
+                                        {% for data in drivers %}
+                                        <option value="{{data.id}}">{{data.driver_name}}</option>
+                                        {% endfor %}
+                                    </select>#}
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-4 col-md-3 col-sm-12">
+                                <div class="form-group mb-4">
+                                    <label for="add_mobile">Mobile*</label>
+                                    <input type="number" name="add_mobile" id="add_mobile"  class="form-control" required>
+                                </div>
+                            </div>
+                        </div>                 	
+                        <div class="row mx-0">
+                            <div class=" col-12 pt-4 text-center">
+                                {#<button type="reset" class="btn bg-gradient-danger text-white border rounded-1 bg-white f-s-18 px-4 py-2 mr-3">Reset</button>#}
+                                <button type="submit" class="btn bg-gradient-primary text-white rounded-1 f-s-18 px-4 py-2" data-dismiss="modal" id="adddriverbutton">Add</button>
+                            </div>
+                        </div>
+                    </div>
+                {#</form>#}
+            </div>
+        </div>
+  </div>
+</section>
+
+
+<script src="{{static ('vendor/jquery/jquery.min.js')}}"></script>
+<script src="{{static ('js/tech58/new_entry.js')}}"></script>
+
+<script>
+    $(document).ready(function() {
+        $('.select2_dropdown').select2();
+        });
+</script>
+<script>
+    $('#plusButton').click(function(e){
+        var vehicle_no_pick = $('.vehicle_no').find(':selected').attr('class');
+        $('#add_vehicle').val(vehicle_no_pick);
+    });
+</script>
+
+<script>
+    $(function() {
+        $('#product').change(function(){
+            $('#price').val($(this).find(':selected').attr('class'));
+            });
+        });
+</script>
+
+<script>
+    $('#in_weight,#out_weight').keyup(function(){
+        $('#actual_weight').val($('#out_weight').val()-$('#in_weight').val());
+    });
+</script>
+
+<script>
+    $(function() {
+        $('#product').change(function(){
+             var dat = $(this).find(':selected').attr('class');
+             var dd = dat.split(',');  
+             $('#price').val(dd[0]);
+             $('#product_rate').val(dd[1]);
+             $('#gst_per').val(dd[2]);
+            $('#b_item_name').val($(this).find(':selected').text());
+            });
+        });
+</script>
+
+
+<script>
+$(document).ready(function(){
+    $('#vendor_name').change(function(e){
+        var vendor = $('#vendor_name').val();
+        var cat_add = $('#subcategory').val();
+        
+        myselect = $('#customer_mine_name');
+        
+        $.ajax({
+            url:"/crushermine/select/?vendor="+vendor+"",
+            success: function(data)
+                {
+                   myselect.empty();
+                   myselect.append("<option value='0' selected='selected'> Choose a value</option>");
+                   for (i = 0; i<Object.keys(data).length;i++)
+                   
+                    
+                    {
+                        {
+                        myselect.append("<option value="+Object.keys(data)[i]+">" +Object.values(data)[i] + "</option>");
+                        
+                        }
+                        }
+
+                       
+                }
+            })
+    }); 
+
+        }); 
+
+
+    $(document).ready(function(e){
+    console.log("Running");
+        var vendor = $('#vendor_name').val();
+        var cat_add = $('#subcategory').val();
+        
+        myselect = $('#customer_mine_name');
+        $.ajax({
+            url:"/crushermine/select/?vendor="+vendor+"",
+            success: function(data)
+                {
+                   myselect.empty();
+                   myselect.append("<option value='0' selected='selected'> Choose a value</option>");
+                   for (i = 0; i<Object.keys(data).length;i++) 
+                    {
+                    
+                    if ((Object.keys(data)[i]*1) == (cat_add*1))
+                    
+                    {
+                    myselect.append("<option value="+Object.keys(data)[i]+" selected='selected'>" +Object.values(data)[i] + "</option>");
+                    }
+                    else
+                    {
+                     myselect.append("<option value="+Object.keys(data)[i]+">" +Object.values(data)[i] + "</option>");   
+                    }
+                    }
+
+                }
+
+            })
+    }); 
+        
+</script>
+
+
+<script>
+$(document).ready(function(){
+    $('.vehicle_no').change(function(e){
+            var vehicle = $('.vehicle_no').val();
+            var driver_add = $('#alldrivers').val(); 
+            selected_driver = $('#driver_name');   
+            $.ajax({
+                url:"/vehicle/driver/select/?vehicle="+vehicle+"",
+                success: function(data)
+                    {
+                        selected_driver.empty();
+                        selected_driver.append("<option value='0' selected='selected'> Choose a value</option>");
+                            for (i = 0; i<Object.keys(data).length;i++)
+                        {
+                            {
+                            selected_driver.append("<option value="+Object.keys(data)[i]+">" +Object.values(data)[i] + "</option>");
+                            }
+                        }            
+                    }
+                })
+        }); 
+    });
+
+    $(document).ready(function(e){
+        var vehicle = $('.vehicle_no').val();
+        //alert(vehicle);
+        var driver_add = $('#alldrivers').val();
+        selected_driver = $('#driver_name'); 
+        $.ajax({
+            url:"/vehicle/driver/select/?vehicle="+vehicle+"",
+            success: function(data)
+                {
+                    selected_driver.empty();
+                    selected_driver.append("<option value='0' selected='selected'> Choose a value</option>");
+                   for (i = 0; i<Object.keys(data).length;i++) 
+                    {
+                    
+                    if ((Object.keys(data)[i]*1) == (driver_add*1))
+                    
+                    {
+                        selected_driver.append("<option value="+Object.keys(data)[i]+" selected='selected'>" +Object.values(data)[i] + "</option>");
+                    }
+                    else
+                    {
+                        selected_driver.append("<option value="+Object.keys(data)[i]+">" +Object.values(data)[i] + "</option>");   
+                    }
+                    }
+
+                }
+
+            })
+    });
+    </script>
+
+<script>
+
+    $(document).ready(function(){
+    $('.driver_name').change(function(e){
+            var driver = $('.driver_name').val();
+            selected_mobile = $('#mobile');
+            $.ajax({
+                url:"/vehicle/driver/mobile/?driver="+driver+"",
+                success: function(data)
+                    {
+
+                        for (i = 0; i<Object.keys(data).length;i++)
+                        {
+                            {
+                            selected_mobile.val(Object.values(data)[i]);
+                            
+                            }
+                        }            
+                    }
+                })
+        }); 
+    });
+
+    $(document).ready(function(e){
+        var driver = $('.driver_name').val();
+        var mobile_add = $('#allmobiles').val();
+        selected_mobile = $('#mobile'); 
+        $.ajax({
+            url:"/vehicle/driver/mobile/?driver="+driver+"",
+            success: function(data)
+                {
+                    selected_mobile.empty();
+                    selected_mobile.append("<option value='0' selected='selected'> Choose a value</option>");
+                   for (i = 0; i<Object.keys(data).length;i++) 
+                    {
+                    
+                    if ((Object.keys(data)[i]*1) == (mobile_add*1))
+                    
+                    {
+                        selected_driver.append("<option value="+Object.keys(data)[i]+" selected='selected'>" +Object.values(data)[i] + "</option>");
+                    }
+                    else
+                    {
+                        selected_driver.append("<option value="+Object.keys(data)[i]+">" +Object.values(data)[i] + "</option>");   
+                    }
+                    }
+
+                }
+
+            })
+    });
+    </script>
+
+{% endblock %}

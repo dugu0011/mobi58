@@ -1,0 +1,608 @@
+{% extends "web/jinja2/base.html.j2" %}
+{% block content %}
+<!-- Begin Page Content -->
+<section class="py-md-5">
+	<div class="container-fluid">
+		<div class="col-12">
+			<div class="card mb-4 border-1">
+				<div class="card-header py-3 px-0 align-items-center bg-white border-0">
+					<div class="row">
+						<div class="col-12">
+							<h3 class="m-0 px-3 font-weight-bold text-dark">Add Company</h3>
+						</div>
+					</div>
+				</div>
+				<form id="create-customer-form" action="{{url('create-company')}}" method="post" enctype="multipart/form-data">
+				{{csrf_input}}
+				<div class="card-body px-0">
+					<div class="row mx-0">
+						<div class="col-lg-4 col-md-4 col-sm-12">
+							<div class="form-group mb-4">
+                                <label for="customer-type">Select Company Type*</label>
+								<select class="custom-select form-control form-control-user rounded-1" id="customer-type" name="customer-type" onchange="show_hide_inputs(this.value)">
+									<option value="" selected>Select</option>
+									<option value="individual">Individual</option>
+									<option value="properitor">Properitor</option>
+									<option value="partner">Partner</option>
+									<option value="llp">LLP</option>
+									<option value="pvt_ltd">PVT LTD</option>
+									<option value="ltd">LTD</option>
+								</select>
+								<!-- <label for="sale_type">Select Sale Category Type*</label>
+								<select class="custom-select form-control form-control-user rounded-1" id="sale_type" name="sale_type">
+									<option value="" selected>Select</option>
+									<option value="mine">Mine</option>
+									<option value="crusher">Crusher</option>
+									<option value="distributer">Distributer,1</option>
+									<option value="nhai">NHAI,1</option>
+									<option value="precast">Precast,1</option>
+									<option value="real_estate">Real Estate,1</option>
+									<option value="rmc">RMC,1</option>
+									<option value="supplier">Supplier,1</option>
+									<option value="stp">STP,1</option>
+									<option value="water_treatment_htp">Water Treatment & HTP,1</option>
+									<option value="infra_projects">Infra Projects,1</option>
+									<option value="retail">Retail,1</option>
+									<option value="metro">Metro,1</option>
+									<option value="pwd">PWD,1</option>
+								</select> -->
+							</div>
+						</div>
+						<div class="col-lg-2 col-md-2 col-sm-12 pr-0 partner d-none">
+							<div class="form-group mb-4">
+								<label for="exampleInputEmail1">GST No.</label>
+								<input type="text" id="customer-gst-number" name="customer-gst-number" onchange="getGSTinfo(this.value)" class="form-control bg-white rounded-1" />
+							</div>
+						</div>
+						<div class="col-12 col-md-5 partner d-none">
+							<div class="row">
+								<div class="col-lg-4 col-md-2 ">
+									<div class="form-group">
+											<label for="exampleInputEmail1">GST No.</label>
+											<input id="uploadFile2" class="form-control bg-white rounded-1" placeholder="Choose File" disabled="disabled" />
+									</div>
+								</div>
+								<div class="col-lg-5 col-md-12">
+									<div class="form-group">
+										<div class="fileUpload btn bg-white text-black border-black rounded-1 px-4 py-2 rounded-1 mt-35">
+												<span>Upload GST Certificate</span>
+												<input id="customer-gst-file" name="customer-gst-file" type="file" class="upload" />
+											</div>
+										</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-4 col-md-4 col-sm-12">
+							<div class="form-group mb-4">
+                                <label for="customer-type">Select Parent Group <small>(optional)</small></label>
+								<select class="custom-select form-control form-control-user rounded-1" id="customer-company-id" name="customer-company">
+									<option value="" selected>Select</option>
+									{% for data in companies %}
+									<option value="{{data.id}}">{{data.name}}</option>
+									{%endfor%}
+								</select>
+							</div>
+						</div>
+						<div class="col-md-4 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="sale_type">Select Sale Category Type*</label>
+								<select class="custom-select form-control form-control-user rounded-1 sale_type" id="sale_type" name="sale_type">
+									<option value="" selected>Select</option>
+									<option value="mine">Mine</option>
+									<option value="crusher">Crusher</option>
+									<option value="distributer">Distributer</option>
+									<option value="nhai">NHAI</option>
+									<option value="precast">Precast</option>
+									<option value="real_estate">Real Estate</option>
+									<option value="rmc">RMC</option>
+									<option value="supplier">Supplier</option>
+									<option value="stp">STP</option>
+									<option value="water_treatment_htp">Water Treatment & HTP</option>
+									<option value="infra_projects">Infra Projects</option>
+									<option value="retail">Retail</option>
+									<option value="metro">Metro</option>
+									<option value="pwd">PWD</option>
+								</select>
+							</div>
+						</div>
+						
+					</div>					
+					<hr>
+					<div class="row mx-0">
+						<div class="col-lg-2 col-md-2 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="name">Company Name*</label>
+								<input type="text" required class="form-control rounded-1" id="customer-name" name="customer-name" onchange="validate_company_name(this)" placeholder="">
+							</div>
+						</div>
+						<div class="col-lg-2 col-md-2 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="sort_name">Sort Name*</label>
+								<input type="text" required class="form-control rounded-1" id="sort_name" name="sort_name" onchange="validate_sort_name(this)" placeholder="">
+							</div>
+						</div>
+						<div class="col-md-2 col-sm-12">
+							<div class="form-group mb-2">
+								<label for="customer-mobile">Mobile No*</label>
+								<input type="number" class="form-control rounded-1 mobile-num" id="customer-mobile" name="customer-mobile" onchange="validate_mobile(this , 'mobile')" placeholder="">
+							</div>
+						</div>
+						
+						<div class="col-md-2 col-sm-12 ">
+							<div class="form-group mb-2">
+								<label for="customer-email">Email address*</label>
+								<input type="email" class="form-control rounded-1" id="customer-email" name="customer-email" placeholder="Email">
+							</div>
+						</div>
+						<div class="col-lg-2 col-md-2 col-sm-12">
+							<div class="form-group mb-2">
+								<label for="customer-pan-number">Pan Number*</label>
+								<input type="text" class="form-control rounded-1 text-uppercase" id="customer-pan-number" name="customer-pan-number" placeholder="">
+							</div>
+						</div>
+						<div class="col-lg-2 col-md-2 col-sm-12">
+							<div class="form-group mb-2">
+								<div class="fileUpload btn bg-white text-black border-black rounded-1 px-4 py-2 rounded-1 mt-35">
+									<span>Upload PAN</span>
+									<input type="hidden" id="uploadFile" class="form-control bg-white rounded-1" placeholder="Choose File" disabled="disabled" />
+									<input type="file" class="upload" id="customer-pan-file" name="customer-pan-file" />
+								</div>
+							</div>
+						</div>
+					</div>
+					<hr>
+					<div id="add-new-address-form">
+						<div class="row mx-0 align-items-center">
+							<div class="col-sm-12 px-0">
+								<div class="mx-0 row address-form">
+									<div class="col-md-2 col-sm-12">
+										<div class="form-group mb-4">
+											<label for="customer-pincode">Address Type*</label>
+											<select class="custom-select form-control form-control-user rounded-1"  name="address_type">
+												<option value="1" selected>Shipping</option>
+												<option value="0">Billing</option>
+											</select>
+										</div>
+									</div>
+									<div class="col-lg-2 col-sm-12">
+										<div class="form-group mb-2">
+											<label for="customer-category">Select Country*</label>
+											<select class="custom-select form-control form-control-user rounded-1" onchange="getCustomerStates(this)" id="customer-country" name="customer-country">
+												<option value="" selected>Select</option>
+												{% for data in countries %}
+												<option value="{{data.code}}">{{data.name|title}}</option>
+												{%endfor%}
+											</select>
+										</div>
+								</div>
+									<div class="col-md-2 col-sm-12">
+										<div class="form-group mb-2">
+											<label for="customer-category">Select State*</label>
+											<select class="custom-select form-control form-control-user rounded-1 customer-state"  onchange="getCustomerDistricts(this)" id="customer-state" name="customer-state">
+												<option value="" selected>Select</option>
+												{% for data in states %}
+												<option value="{{data.id}}">{{data.name|title}}</option>
+												{%endfor%}
+											</select>
+										</div>
+									</div>
+									<div class="col-md-2 col-sm-12">
+										<div class="form-group mb-2">
+											<label for="customer-district">Select District*</label>
+											<select class="custom-select form-control form-control-user rounded-1 customer-district" id="customer-district" onchange="getCustomerCities(this)" name="customer-district">
+												<option value="" selected>Select</option>
+												{% for data in districts %}
+												<option value="{{data.id}}">{{data.name|title}}</option>
+												{%endfor%}
+											</select>
+										</div>
+									</div>
+									{#<div class="col-md-2 col-sm-12 ">
+										<div class="form-group mb-2">
+											<label for="customer-district">District*</label>
+											<input type="text" class="form-control rounded-1" id="customer-district" name="customer-district" placeholder="">
+										</div>
+									</div>#}
+									<div class="col-md-2 col-sm-12">
+										<div class="form-group mb-2">
+											<label for="customer-category">Select City*</label>
+											<select class="custom-select form-control form-control-user rounded-1 customer-city " id="customer-city" name="customer-city">
+												<option value="" selected>Select</option>
+												{% for data in cities %}
+												<option value="{{data.id}}">{{data.name|title}}</option>
+												{%endfor%}
+											</select>
+										</div>
+									</div>
+									<div class="col-md-2 col-sm-12">
+										<div class="form-group mb-2">
+											<label for="customer-pincode">Pincode*</label>
+												<input type="number" class="form-control rounded-1" id="customer-pincode" name="customer-pincode" placeholder="">
+										</div>
+									</div>	
+								</div>
+							</div>
+							<div class="col-md-10 col-sm-12">
+								<div class="form-group">
+									<label for="customer-address">Address*</label>
+									<textarea class="form-control rounded-1 " id="customer-address" name="customer-address" rows="2"></textarea>
+								</div>
+							</div>
+							<div class="col-md-2 col-12">
+								<a href="javascript:void(0);" class="border-primary btn" onclick="addnewaddress()"><i class="fas fa-plus fz-20 delete-row mt-1"></i></a>
+								<a type="button" class="delete-row delete-row btn border-danger text-danger mx-3" onclick="removeRowAddress(this)"><i class="fas fa-trash-alt fz-20 delete-row mt-1"></i></a>
+							</div>
+						</div>
+					</div>
+
+					<hr>
+					<!--<div class="row mx-0">
+						<div class="col-lg-4 col-md-6 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="customer-pan-number">Pan Number*</label>
+								<input type="text" class="form-control rounded-1 text-uppercase" id="customer-pan-number" name="customer-pan-number" placeholder="" onchange="validate_pan_no(this, 'Please enter valid pan card.')">
+							</div>
+						</div>
+						<div class="col-12 col-md-6 col-lg-7">
+							<div class="row">
+								<div class="col-lg-8 col-md-8">
+									<div class="form-group">
+											<label for="exampleInputEmail1">PAN*</label>
+											<input id="uploadFile" class="form-control bg-white rounded-1" placeholder="Choose File" disabled="disabled" />
+									</div>
+								</div>
+								<div class="col-lg-4 col-md-4">
+									<div class="form-group">
+										<div class="fileUpload btn bg-white text-black border-black rounded-1 px-4 py-2 rounded-1 mt-35">
+														<span>Upload PAN</span>
+														<input  type="file" class="upload" id="customer-pan-file" name="customer-pan-file" />
+												</div>
+										</div>
+								</div>
+							</div>
+						</div>
+					</div>-->
+					<div class="row mx-0">
+						<div class="col-md-12 col-sm-12 px-0">
+							<div class="mx-0 row">
+								{# <div class="col-md-3 col-sm-12 pr-0 partner d-none">
+									<div class="form-group">
+										<label for="exampleInputEmail1">GST No.</label>
+										<input type="text" id="customer-gst-number" name="customer-gst-number" onchange="getGSTinfo(this.value)" class="form-control bg-white rounded-1" />
+									</div>
+								</div>
+								<div class="col-12 col-md-5 partner d-none">
+									<div class="row">
+										<div class="col-lg-7 col-md-12 ">
+											<div class="form-group">
+													<label for="exampleInputEmail1">GST No.</label>
+													<input id="uploadFile2" class="form-control bg-white rounded-1" placeholder="Choose File" disabled="disabled" />
+											</div>
+										</div>
+										<div class="col-lg-5 col-md-12">
+											<div class="form-group">
+												<div class="fileUpload btn bg-white text-black border-black rounded-1 px-4 py-2 rounded-1 mt-35">
+																<span>Upload GST Certificate</span>
+																<input id="customer-gst-file" name="customer-gst-file" type="file" class="upload" />
+														</div>
+												</div>
+										</div>
+									</div>
+								</div> #}
+								<div class="col-12 col-md-12">
+									<div class="col-md-12 col-sm-12 pr-0 partner d-none">
+										<div class="row">
+											<div class="col-lg-2 col-md-12">
+												<div class="form-group">
+													<div>
+														<label for="exampleInputEmail1">MSME</label>
+													</div>
+													<div class="form-control px-0 rounded-1 border-0">
+														<div class="form-check form-check-inline">
+															<input class="form-check-input" type="radio" name="customer-msme" id="inlineRadio1" value="option1">
+															<label class="form-check-label" for="inlineRadio1">Yes</label>
+														</div>
+														<div class="form-check form-check-inline pl-3">
+															<input class="form-check-input" type="radio" name="customer-msme" id="inlineRadio2" value="option2">
+															<label class="form-check-label" for="inlineRadio2">No</label>
+														</div>
+														<!-- <input id="uploadFile2" class="border py-2 pl-2 bg-white rounded-1" placeholder="Choose File" disabled="disabled" /> -->
+													</div>
+												</div>
+											</div>
+											<div class="col-lg-2 col-md-12">
+												<div class="form-group">
+													<div class="fileUpload btn bg-white mt-35 text-black border-black rounded-1 px-3 py-2 rounded-1">
+														<span>Upload MSME Certificate</span>
+														<input id="customer-msme-file" name="customer-msme-file" type="file" class="upload" />
+													</div>
+												</div>
+											</div>
+											<div class="col-lg-2 col-md-12 ">
+											<div class="form-group">
+											    <label for="exampleInputEmail1">CIN No.</label>
+											    <input type="text" id="customer-cin-number" name="customer-cin-number" class="form-control bg-white rounded-1" />
+											</div>
+										</div>
+										<div class="col-12 col-lg-6">
+											<div class="row">
+												<div class="col-lg-4 col-md-4">
+													<div class="form-group">
+															<label for="exampleInputEmail1">CIN</label>
+															<input id="uploadFile1" class="form-control bg-white rounded-1" placeholder="Choose File" disabled="disabled" />
+														</div>
+												</div>
+												<div class="col-lg-4 col-md-4">
+													<div class="form-group">
+														<div class="fileUpload btn bg-white text-black border-black rounded-1 px-4 py-2 rounded-1 mt-35">
+																<span>Upload CIN</span>
+																<input id="customer-cin-file" name="customer-cin-file" type="file" class="upload" />
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<div class="row mx-0 position-relative">
+						<div class="col-md-12 col-sm-12 px-0 partner d-none" id="add-more-contacts">
+							<!-- <a href="javascript:void(0);" class="mb-2" onclick="addNewContactDetail()">+ Add more contact</a> -->
+							<div class="mx-0 row contact-form align-items-center">
+								<div class="col-10 col-md-10">
+									<div class="row">
+										<div class="col-md-3 col-sm-12">
+											<div class="form-group mb-4">
+												<label for="customer-contact-name">Contact Person</label>
+												<input type="text" class="form-control rounded-1" id="customer-contact-name" name="contact-name" placeholder="Name">
+											</div>
+										</div>
+										<div class="col-md-3 col-sm-12 ">
+											<div class="form-group mb-4">
+												<label for="customer-contact-designation">Designation</label>
+												<input type="text" class="form-control rounded-1" id="customer-contact-designation" name="contact-designation" placeholder="Designation">
+											</div>
+										</div>
+										<div class="col-md-3 col-sm-12">
+											<div class="form-group mb-4">
+												<label for="customer-contact-mobile">Mobile</label>
+												<input type="number" class="form-control rounded-1 mobile-num" id="customer-contact-mobile" onchange="validate_mobile(this ,'c_mobile')" name="contact-mobile" placeholder="Mobile">
+											</div>
+										</div>
+										<div class="col-md-3 col-sm-12">
+											<div class="form-group mb-4">
+												<label for="customer-contact-email">Email Id</label>
+												<input type="email" class="form-control rounded-1" id="customer-contact-email" onchange="validate_user_email(this,'Contact with this email is already exist')" name="contact-email" placeholder="Email">
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-2 col-md-2 px-0 delete-once-row">
+									<a href="javascript:void(0);" class="border-primary btn" onclick="addNewContactDetail()"><i class="fas fa-plus fz-20 mt-1"></i></a>
+									<a type="button" class="delete-row delete-row btn border-danger text-danger mx-3" onclick="removeRow(this)"><i class="fas fa-trash-alt fz-20 delete-row mt-1"></i></a>
+									
+								</div>
+							</div>
+						</div>
+						<div class="col-md-12">
+							<div class="form-group">
+								<label for="customer-remarks">Remarks*</label>
+								<textarea class="form-control rounded-1" id="customer-contact-remarks" name="customer-remarks" rows="2"></textarea>
+							</div>
+						</div>
+						<div class=" col-12 pt-4 text-center">
+							<button type="reset" class="btn btn-white text-dark border rounded-1 bg-white f-s-18 px-4 py-2 mr-3">Reset</button>
+							<button type="button" onclick="validateCreateCustomerForm()" class="btn bg-gradient-primary text-white rounded-1 f-s-18 px-4 py-2">Submit</button>
+						</div>
+					</div>
+				</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- End Here -->
+<script>
+	document.getElementById("customer-pan-file").onchange = function () {
+    document.getElementById("uploadFile").value = this.value;
+};
+	document.getElementById("customer-cin-file").onchange = function () {
+    document.getElementById("uploadFile1").value = this.value;
+};
+document.getElementById("customer-gst-file").onchange = function () {
+	document.getElementById("uploadFile2").value = this.value;
+};
+	document.getElementById("customer-msme-file").onchange = function () {
+    document.getElementById("uploadFile2").value = this.value;
+};
+</script>
+<script src="{{static ('vendor/jquery/jquery.min.js')}}"></script>
+<script>
+	$( document ).ready(function() {
+    $(".partner").addClass('d-none');
+})
+</script>
+<script>
+	$('input:radio[name="customer-msme"]').change(
+    function(){
+        if ($(this).is(':checked') && $(this).val() == 'option2') {
+            $("#customer-msme-file").prop('disabled',true);
+        }
+		else{
+			$("#customer-msme-file").prop('disabled',false);
+		}
+    });
+</script>
+<script>
+	var row=1;
+	function removeRow(e){
+		//console.log($(this).parent("div"))
+		if(row>1) {
+			$(e).parent("div").parent("div").remove();
+			row--;
+		}
+		else{
+			show_message('Contact detail is required.')
+		}
+	}
+	function addNewContactDetail(){
+		html = `<div class="mx-0 row contact-form align-items-center">
+			<div class="col-10 col-md-10">
+				<div class="row">
+					<div class="col-md-6 col-lg-6 col-sm-12">
+						<div class="form-group mb-4">
+							<label for="customer-contact-name">Contact Person Name</label>
+							<input type="text" class="form-control rounded-1 " name="contact-name" placeholder="">
+						</div>
+					</div>
+					<div class="col-md-6 col-lg-6 col-sm-12">
+						<div class="form-group mb-4">
+							<label for="customer-contact-designation">Contact Person Designation</label>
+							<input type="text" class="form-control rounded-1 "  name="contact-designation" placeholder="">
+						</div>
+					</div>
+					<div class="col-md-6 col-lg-6 col-sm-12">
+						<div class="form-group mb-4">
+							<label for="customer-contact-mobile">Contact Person Mobile</label>
+							<input type="number" class="form-control rounded-1 mobile-num"  onchange="validate_mobile(this ,'c_mobile')" name="contact-mobile" placeholder="">
+						</div>
+					</div>
+					<div class="col-md-6 col-lg-6 col-sm-12">
+						<div class="form-group mb-4">
+							<label for="customer-contact-email">Contact Person Email Id</label>
+							<input type="email" class="form-control rounded-1" onchange="validate_user_email(this)" name="contact-email" placeholder="">
+						</div>
+					</div>
+				</div>
+			</div>
+				<div class="col-2 col-md-2 px-0 delete-once-row">
+					<a type="button" class="delete-row delete-row btn border-danger text-danger mx-3" onclick="removeRow(this)"><i class="fas fa-trash-alt fz-20 delete-row mt-1"></i></a>
+				</div>
+				</div>`;
+		$("#add-more-contacts").append(html);
+		row++;
+  	return false;
+	}
+</script>
+<script>
+	var newrow=1;
+	function removeRowAddress(e){
+		//console.log($(this).parent("div"))
+		if(newrow>1) {
+			$(e).parent("div").parent("div").remove();
+			newrow--;
+		}
+		else{
+			show_message('One Address Required.')
+		}
+	}
+	function addnewaddress(){
+
+		html = `<div id="add-new-address-form border-1">
+						<div class="row mx-0 align-items-center">
+							<div class="col-sm-12 px-0">
+								<div class="mx-0 row address-form">
+									<div class="col-md-2 col-sm-12">
+										<div class="form-group mb-4">
+											<label for="customer-pincode">Address Type*</label>
+											<select class="custom-select form-control form-control-user rounded-1"  name="address_type">
+												<option value="1" selected>Shipping</option>
+												<option value="0">Billing</option>
+											</select>
+										</div>
+									</div>
+									<div class="col-lg-2 col-sm-12">
+										<div class="form-group mb-2">
+											<label for="customer-category">Select Country*</label>
+											<select class="custom-select form-control form-control-user rounded-1" onchange="getCustomerStates(this)" id="customer-country" name="customer-country">
+												<option value="" selected>Select</option>
+												{% for data in countries %}
+												<option value="{{data.code}}">{{data.name|title}}</option>
+												{%endfor%}
+											</select>
+										</div>
+								</div>
+									<div class="col-md-2 col-sm-12">
+										<div class="form-group mb-2">
+											<label for="customer-category">Select State*</label>
+											<select class="custom-select form-control form-control-user rounded-1 customer-state"  onchange="getCustomerDistricts(this)" id="customer-state" name="customer-state">
+												<option value="" selected>Select</option>
+												{% for data in states %}
+												<option value="{{data.id}}">{{data.name|title}}</option>
+												{%endfor%}
+											</select>
+										</div>
+									</div>
+									<div class="col-md-2 col-sm-12">
+										<div class="form-group mb-2">
+											<label for="customer-district">Select District*</label>
+											<select class="custom-select form-control form-control-user rounded-1 customer-district" id="customer-district" onchange="getCustomerCities(this)" name="customer-district">
+												<option value="" selected>Select</option>
+												{% for data in districts %}
+												<option value="{{data.id}}">{{data.name|title}}</option>
+												{%endfor%}
+											</select>
+										</div>
+									</div>
+									{#<div class="col-md-2 col-sm-12 ">
+										<div class="form-group mb-2">
+											<label for="customer-district">District*</label>
+											<input type="text" class="form-control rounded-1" id="customer-district" name="customer-district" placeholder="">
+										</div>
+									</div>#}
+									<div class="col-md-2 col-sm-12">
+										<div class="form-group mb-2">
+											<label for="customer-category">Select City*</label>
+											<select class="custom-select form-control form-control-user rounded-1 customer-city " id="customer-city" name="customer-city">
+												<option value="" selected>Select</option>
+												{% for data in cities %}
+												<option value="{{data.id}}">{{data.name|title}}</option>
+												{%endfor%}
+											</select>
+										</div>
+									</div>
+									<div class="col-md-2 col-sm-12">
+										<div class="form-group mb-2">
+											<label for="customer-pincode">Pincode*</label>
+												<input type="number" class="form-control rounded-1" id="customer-pincode" name="customer-pincode" placeholder="" onchange="validate_pin_code(this, 'Please enter valid pin code.')">
+										</div>
+									</div>
+									
+									
+								</div>
+							</div>
+							<div class="col-md-9 col-sm-12">
+								<div class="form-group">
+									<label for="customer-address">Address*</label>
+									<textarea class="form-control rounded-1 " id="customer-address" name="customer-address" rows="2"></textarea>
+								</div>
+							</div>
+							<div class="col-md-2 col-12">
+								<a href="javascript:void(0);" class="border-primary btn" onclick="addnewaddress()"><i class="fas fa-plus fz-20 delete-row mt-1"></i></a>
+								<a type="button" class="delete-row delete-row btn border-danger text-danger mx-3" onclick="removeRowAddress(this)"><i class="fas fa-trash-alt fz-20 delete-row mt-1"></i></a>
+							</div>
+						</div>
+					</div>`;
+		$("#add-new-address-form").append(html);
+		newrow++;
+		getNewAddedStates();
+  	return false;
+	}
+</script>
+<script>
+$(".mobile-num").keyup(function(ev){
+    var x = $(this).val();
+        
+    if (x.match(/^0+/)) {
+	toastr.error('The first digit should not be 0','Alert')
+
+      $(this).val(x.substr(0,-1));
+    }
+
+});
+</script>
+{% endblock %}

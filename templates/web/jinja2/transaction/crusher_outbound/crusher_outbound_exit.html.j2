@@ -1,0 +1,74 @@
+{% extends "web/jinja2/base.html.j2" %}
+{% block content %}
+<!-- Begin Page Content -->
+<section class="py-md-5">
+	<div class="container-fluid">
+		<div class="col-12">
+			<div class="card mb-4 border-1">
+				<div class="card-header py-3 px-0 align-items-center bg-white border-0">
+					<div class="row">
+						<div class="col-12">
+							<h3 class="m-0 px-3 font-weight-bold text-dark">Crusher Sale-Vehicle OUT</h3>
+						</div>
+					</div>
+				</div>
+				<div class="card-body px-0">
+                    <div class="row mx-0">
+                        <div class="col-lg-12 col-md-12 col-sm-12 table-responsive">
+                    <table id="mineout" class="table table-border">
+                        <thead class="text-center">
+                            <tr>
+                                <th>Vehicle No.</th>
+                                <th>Driver Name</th>
+								<th>Mobile</th>
+								<th>Date</th>
+                                <th>Weight</th>
+								<th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-center">    
+                            {% for data in outbound_crusher %} 
+								<td><a href="/crusher/outbound/update/{{data.id}}/?company={{company_id}}">{{data.vehicle_no}}</a></td>
+                                <td>{{data.driver_name}}</td>
+								<td>{{data.mobile}}</td>
+								<td>{{data.in_date}}</td>
+                                <td>{{data.in_weight}}</td>
+								<td>
+									<div class="dropdown show">
+										<a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+											<i class="fas fa-ellipsis-v"></i>
+										</a>													
+										<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+											<a href="#" data-toggle="modal" data-target="#DetailViewList{{data.id}}" class="dropdown-item" title="View">View</a>
+											<a href="/crusher/outbound-token/?id={{data.id}}" class="dropdown-item" title="Token"><i class="fa fa-adjust" style="color:blue"></i> Token</a>
+										</div>
+									</div>
+								</td>
+                            </tr>
+							{% endfor %}
+                        </tbody>
+                    </table>            
+                </div>
+                        <hr>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- End Here -->
+
+<script src="{{static ('vendor/jquery/jquery.min.js')}}"></script>
+
+<script>
+    $(document).ready(function(){
+        $('#mineout').DataTable({
+        "pagingType": "full_numbers"
+        });
+        $('dataTables_length').addClass('bs-select');
+    });
+</script>
+
+
+{% endblock %}

@@ -1,0 +1,243 @@
+{% extends "web/jinja2/base.html.j2" %}
+{% block content %}
+<!-- Begin Page Content -->
+<section class="pt-3 pb-5">
+	<div class="container-fluid">
+	
+
+		<!-- Content Row -->
+		<div class="row justify-content-end">
+			<!-- Earnings (Monthly) Card Example -->
+			<!-- <div class="col-md-2 col-12 mb-4">
+				<div class="card h-100">
+					<div class="card-body py-2 px-3">
+						<div class="row no-gutters align-items-center">
+							<div class="col mr-2">
+								<h6 class="text-md font-weight-bold text-primary text-uppercase mb-0">OCTOBER</h6>
+							</div>
+							<div class="col-auto">
+								<i class="fas fa-calendar fa-2x text-gray-300"></i>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div> -->
+		</div>
+		<div class="row">
+		
+
+			<!-- Pending Requests Card Example -->
+	{#
+					{% if 'superuser' in own_roles %}
+
+						<div class="col-xl-3 col-md-6 mb-4">
+							<div class="card border-left-success shadow h-100 py-2">
+								<div class="card-body">
+									<div class="row no-gutters align-items-center">
+										<div class="col mr-2">
+											<div class="text-xs font-weight-bold text-primary text-uppercase mb-1"> Superuser User</div>
+											<div class="h5 mb-0 font-weight-bold text-gray-800">Fully Access</div>
+										</div>
+										<div class="col-auto">
+											<i class="fas fa-rupee-sign fa-2x text-gray-300"></i>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>	
+								
+					{% endif %}	
+					
+					{% if 'admin' in own_roles %}
+						<div class="col-xl-3 col-md-6 mb-4">
+							<div class="card border-left-warning shadow h-100 py-2">
+								<div class="card-body">
+									<div class="row no-gutters align-items-center">
+										<div class="col mr-2">
+											<div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Admin User</div>
+											<div class="h5 mb-0 font-weight-bold text-gray-800">Admin Access</div>
+										</div>
+										<div class="col-auto">
+											<i class="fas fa-comments fa-2x text-gray-300"></i>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					{% endif %}	
+
+					{% if 'hr' in own_roles %}
+					
+						<div class="col-xl-3 col-md-6 mb-4">
+							<div class="card border-left-primary shadow h-100 py-2">
+								<div class="card-body">
+									<div class="row no-gutters align-items-center">
+										<div class="col mr-2">
+											<div class="text-xs font-weight-bold text-primary text-uppercase mb-1"> HR Team</div>
+											<div class="h5 mb-0 font-weight-bold text-gray-800">HR Access</div>
+										</div>
+										<div class="col-auto">
+											<i class="fas fa-calendar fa-2x text-gray-300"></i>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					{% endif %}	
+
+					{% if 'client' in own_roles %}
+					
+						<div class="col-xl-3 col-md-6 mb-4">
+							<div class="card border-left-primary shadow h-100 py-2">
+								<div class="card-body">
+									<div class="row no-gutters align-items-center">
+										<div class="col mr-2">
+											<div class="text-xs font-weight-bold text-primary text-uppercase mb-1"> New User</div>
+											<div class="h5 mb-0 font-weight-bold text-gray-800">Limited Access</div>
+										</div>
+										<div class="col-auto">
+											<i class="fas fa-calendar fa-2x text-gray-300"></i>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+					{% else %}
+			
+  
+			
+					<!-- Earnings (Monthly) Card Example -->
+					<div class="col-xl-3 col-md-6 mb-4">
+						<div class="card border-left-info shadow h-100 py-2">
+							<div class="card-body">
+								<div class="row no-gutters align-items-center">
+									<div class="col mr-2">
+										<div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Account Still Approval</div>
+										<div class="h5 mb-0 font-weight-bold text-gray-800">You is in Under Review</div>							</div>
+									<div class="col-auto">
+										<i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					{% endif %}
+
+	#}
+
+		</div>
+
+		<!-- Content Row -->
+
+		<div class="row">
+
+			<!-- Content Column -->
+			<div class="col-lg-6 mb-4">
+
+				<!-- Project Card Example -->
+				{%if sale_order%}
+				<div class="card shadow mb-4">
+					<div class="card-header py-3 bg-white border-0">
+						<h5 class="m-0 font-weight-bold text-dark">Latest / Pending Orders</h5>
+					</div>
+					<div class="card-body">
+						<div class="table-responsive">
+							<table class="table" id="dataTable" width="100%" cellspacing="0">
+								<tbody>
+								{%for order in sale_order.order_by('-created_at')[:5]%}
+									<tr>
+										<td>#{{order.sale_order_id()}}</td>
+										<td>{{order.sale_quotation.user.name}}</td>
+										<td>{{order.created_at|naturaldateyear}}</td>
+										<td>
+											{% if order.status == "payment_done" %}
+											Dispatched
+											{% elif order.status == "payment_pending" %}
+											Pending
+											{% elif order.status == "cancelled" %}
+											Cancelled
+											{% elif order.status == "completed" %}
+											Completed
+											{%endif%}
+										</td>
+										{# <td>SQ 234</td> #}
+									</tr>
+								{%endfor%}
+									{# <tr>
+										<td>#SO4586L</td>
+										<td>ABC Client</td>
+										<td>24 Oct 2020</td>
+										<td>SQ 234</td>
+									</tr>
+									<tr>
+										<td>#SO4586L</td>
+										<td>ABC Client</td>
+										<td>24 Oct 2020</td>
+										<td>SQ 234</td>
+									</tr>
+									<tr>
+										<td>#SO4586L</td>
+										<td>ABC Client</td>
+										<td>24 Oct 2020</td>
+										<td>SQ 234</td>
+									</tr> #}
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				{%endif%}
+
+			</div>
+			{%if quotation%}
+			<div class="col-lg-6 mb-4">
+				<!-- Project Card Example -->
+				<div class="card shadow mb-4">
+					<div class="card-header py-3 bg-white border-0">
+						<h5 class="m-0 font-weight-bold text-dark">Latest / Sales Quotations</h5>
+					</div>
+					<div class="card-body">
+						<div class="table-responsive">
+							<table class="table" id="dataTable" width="100%" cellspacing="0">
+								<tbody>
+								{%for q in quotation[:5]%}
+									<tr>
+										<td>#{{q.sale_quote_id()}}</td>
+										<td>{{q.user.name}}</td>
+										<td>{{q.created_at|naturaldateyear}}</td>
+										{# <td>SQ 234</td> #}
+									</tr>
+								{%endfor%}
+									{# <tr>
+										<td>#SO4586L</td>
+										<td>ABC Client</td>
+										<td>24 Oct 2020</td>
+										<td>SQ 234</td>
+									</tr>
+									<tr>
+										<td>#SO4586L</td>
+										<td>ABC Client</td>
+										<td>24 Oct 2020</td>
+										<td>SQ 234</td>
+									</tr>
+									<tr>
+										<td>#SO4586L</td>
+										<td>ABC Client</td>
+										<td>24 Oct 2020</td>
+										<td>SQ 234</td>
+									</tr> #}
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+			{%endif%}
+		</div>
+	</div>
+</section>
+<!-- End Here -->
+ {# <script src="{{static ('js/demo/chart-area-demo.js')}}"></script>#}
+
+{% endblock %}

@@ -1,0 +1,96 @@
+{% extends "web/jinja2/base.html.j2" %}
+{% block content %}
+<!-- Begin Page Content -->
+<section class="py-md-5">
+	<div class="container-fluid">
+		<div class="col-12">
+			<div class="card mb-4 border-1">
+				<div class="card-header py-3 px-0 align-items-center bg-white border-0">
+					<div class="row">
+						<div class="col-10">
+							<h3 class="m-0 px-3 font-weight-bold text-dark">Master Product</h3>
+						</div>
+                        <div class="col-2">
+							<a href="/master-product/?company={{company_id}}" class="btn btn-primary font-18"><i class="fa fa-plus"></i>Add Product</a>
+						</div>
+					</div>
+				</div>
+				<div class="card-body px-0">
+                    <div class="card-body px-0">
+                    <div class="row mx-0">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                    <table id="master_product" class="table table-border">
+                        <thead class="text-center">
+                            <tr>
+                                <th>C&M</th>
+                                <th>Category</th>
+								<th>Product Name</th>
+                                <th>Base Sale Rate</th>
+                                <th>Sale Royalty</th>
+                                <th>Sale Rate</th>
+                                <th>Base Bill Rate</th>
+                                <th>Bill Royalty</th>
+                                <th>Bill Rate</th>
+                                <th>GST %</th>
+                                <th>HSN Code</th>
+								<th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-center">  
+							{% for data in products %}  
+                            <tr>
+								<td>{% if data.crusher_mine %}{{data.crusher_mine|title}}{%else%}--{%endif%}</td>
+								<td>{% if data.product_category %}{{data.product_category|title}}{%else%}--{%endif%}</td>
+                                <td>{{data.item_name}}</td>
+                                <td>{% if data.base_sale_rate %}{{data.base_sale_rate}}{%else%}0{%endif%}</td>
+                                <td>{% if data.sale_royalty_charges %}{{data.sale_royalty_charges}}{%else%}0{%endif%}</td>
+                                <td>{{data.sale_rate}}</td>
+                                <td>{% if data.base_bill_rate %}{{data.base_bill_rate}}{%else%}0{%endif%}</td>
+                                <td>{% if data.bill_royalty_charges %}{{data.bill_royalty_charges}}{%else%}0{%endif%}</td>
+                                <td>{{data.bill_rate}}</td>
+                                <td>{{data.gst_percent}}</td>
+                                <td>{% if data.hsn_code %}{{data.hsn_code}}{%else%}--{%endif%}</td>
+                                <td>
+                                    <div class="tools">
+                                        <div class="text-right btn-group">
+                                            <button type="button" class="btn btn-box-tool dropdown-toggle" 
+                                                    data-toggle="dropdown" aria-expanded="false">
+                                            <i class="fa fa-ellipsis-v"></i>
+                                            </button>
+                                            <ul class="dropdown-menu" role="menu">
+                                                <li><a href="/master-product-edit/{{data.id}}/?company={{company_id}}" style="color:inherit;"><i class="fa fa-edit"></i>Edit</a>
+                                                </li>
+                                                <li><a href="/master-product-delete/{{data.id}}/?company={{company_id}}" onclick="return confirm('Are you sure?')"; style="color:inherit;"><i class="fa fa-delete"></i>Delete</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+							{% endfor %}
+                        </tbody>
+                    </table>            
+                </div>
+                    <hr>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- End Here -->
+
+<script src="{{static ('vendor/jquery/jquery.min.js')}}"></script>
+
+
+<script>
+    $(document).ready(function(){
+        $('#master_product').DataTable({
+        "pagingType": "full_numbers"
+        });
+        $('dataTables_length').addClass('bs-select');
+    });
+</script>
+
+
+{% endblock %}

@@ -1,0 +1,357 @@
+<!-- Sidebar -->
+
+
+
+
+
+<style>
+	
+.fa-2x {
+font-size: 4em;
+}
+.fa {
+position: relative;
+display: table-cell;
+width: 60px;
+height: 36px;
+text-align: center;
+vertical-align: middle;
+font-size:25px;
+color: white;
+}
+
+.fas-2x {
+	font-size: 4em;
+	}
+	.fas {
+	position: relative;
+	display: table-cell;
+	width: 60px;
+	height: 36px;
+	text-align: center;
+	vertical-align: middle;
+	font-size:25px;
+	color: white;
+
+	}
+
+
+
+
+.main-menu:hover,nav.main-menu.expanded {
+width:200px;
+overflow:visible;
+}
+
+.main-menu {
+
+position:absolute;
+top:0;
+bottom:0;
+height:100%;
+left:0;
+width:60px;
+overflow:hidden;
+-webkit-transition:width .05s linear;
+transition:width .05s linear;
+-webkit-transform:translateZ(0) scale(1,1);
+z-index:1000;
+}
+
+.main-menu>ul {
+margin:0 0;
+}
+
+.main-menu li {
+position:relative;
+display:block;
+width:224px;
+}
+
+.main-menu li>a {
+position:relative;
+display:flex;
+border-collapse:collapse;
+border-spacing:0;
+color:#999;
+ font-family: arial;
+font-size: 14px;
+text-decoration:none;
+-webkit-transition:all .1s linear;
+transition:all .1s linear;
+}
+
+.main-menu .nav-icon {
+position:relative;
+display:table-cell;
+width:60px;
+height:36px;
+text-align:center;
+vertical-align:middle;
+font-size:18px;
+}
+
+.main-menu .nav-text {
+position:relative;
+display:table-cell;
+vertical-align:middle;
+width:190px;
+  font-family: 'Titillium Web', sans-serif;
+}
+
+.main-menu>ul.logout {
+position:absolute;
+left:0;
+bottom:0;
+}
+
+.no-touch .scrollable.hover {
+overflow-y:hidden;
+}
+
+.no-touch .scrollable.hover:hover {
+overflow-y:auto;
+overflow:visible;
+}
+
+a:hover,a:focus {
+text-decoration:none;
+}
+
+nav {
+-webkit-user-select:none;
+-moz-user-select:none;
+-ms-user-select:none;
+-o-user-select:none;
+user-select:none;
+}
+
+nav ul,nav li {
+outline:0;
+margin:0;
+padding:0;
+}
+.main-menu li:hover>a,nav.main-menu li.active>a,.dropdown-menu>li>a:hover,.dropdown-menu>li>a:focus,.dropdown-menu>.active>a,.dropdown-menu>.active>a:hover,.dropdown-menu>.active>a:focus,.no-touch .dashboard-page nav.dashboard-menu ul li:hover a,.dashboard-page nav.dashboard-menu ul li.active a {
+color:#fff;
+background-color:#5fa2db;
+}
+#nav1{
+	color: white;
+}
+
+
+
+
+	
+	
+		
+	
+	
+	
+
+</style>
+
+
+
+
+
+<nav class="main-menu">
+	<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion " id="accordionSidebar" style="margin: 0px"}>
+
+	<!-- Sidebar - Brand -->
+
+	<!-- <a class="menu_bar sidebar-brand d-flex align-items-center justify-content-center px-2 bg-white text-dark" href="/"id="trtr">
+	<div class="sidebar-brand-text font-weight-bold">Crusher&Mines2</div>
+	</a> -->
+	
+	{#
+	<li class=" active">
+		<a class="nav-link collapsed mx-0" href="{{url('create-access')}}">
+		 	<span>Permission</span>
+		</a>
+	</li>#}
+	<a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
+        <!--<div class="sidebar-brand-icon rotate-n-15">
+          <i class="fas fa-laugh-wink"></i>
+        </div>-->
+		<div class="sidebar-brand-text mx-3">CRUSHER & MINES</div>
+      </a>
+	  <hr>
+
+	{% for r in request.user.user_role.all() %}
+	{% if r.id == 15 %}
+	<!-- Add New Company -->
+    
+	<li >		
+		
+		<a class="nav-link collapsed mx-0" href="{{url('company-list-page')}}" aria-expanded="false" aria-controls="collapsePages">
+			<i class="fa fa-fw fa-out"></i>
+		 	<span class="text-white font-weight-bold" cursor:pointer;">Add Company</span>	
+		</a>
+	</li>
+	{% endif %}
+	{% endfor %}
+
+
+
+	<!-- Company Displayed -->
+	{% for c in request.user.company.all() %}
+
+	<li >		
+		
+		<a class="nav-link collapsed mx-0" href="#" aria-expanded="false" aria-controls="collapsePages">
+			<i class="fa fa-fw fa-out"></i>
+		 	<span class="text-white font-weight-bold" style="text-decoration:underline;cursor:pointer;">{{c.name|title}}</span>	
+		</a>
+			<li >
+			<a class="nav-link  mx-0"  href="{{url('sale-dashboard')}}" aria-expanded="false"><i class="fas fa-fw fa-tachometer-alt"></i><span id="nav1">Dashboard</span></a>
+		</li>
+		{% for r in request.user.user_role.all() %}
+			{% if r.id == 15 %}			
+		{% if c.is_master == True %}
+		<li >
+		<a class="nav-link collapsed mx-0" data-toggle="collapse" data-target=".submenu{{c.id}}" href="#" aria-expanded="false" aria-controls="collapsePages">
+			<i class="fa fa-fw fa-user"></i>
+			<span id="nav1">Master</span>	
+		</a>
+		{% include 'web/jinja2/partials/user/master/sidebar.html.j2' %}
+		</li>
+		{% endif %}
+			{% endif %}
+		{% endfor %}
+
+
+		
+		{% for r in request.user.user_role.all() %}
+			{% if r.id == 19 %}			
+		{% if c.is_submaster == True %}
+		<li >
+		<a class="nav-link collapsed mx-0" data-toggle="collapse" data-target=".submaster{{c.id}}" href="#" aria-expanded="false" aria-controls="collapsePages">
+			<i class="fa fa-fw fa-user"></i>
+			<span id="nav1">Sub Master</span>	
+		</a>
+		{% include 'web/jinja2/partials/user/submaster/sidebar.html.j2' %}
+		</li>
+		{% endif %}
+			{% endif %}
+		{% endfor %}
+
+
+		{% for r in request.user.user_role.all() %}
+		{% if r.id == 16 %}	
+		<li >
+		<a class="nav-link collapsed mx-0" data-toggle="collapse" data-target=".mine_transaction{{c.id}}" href="#" aria-expanded="false" aria-controls="collapsePages">
+			<i class="fa fa-fw fa-chart-bar"></i>
+			<span id="nav1">Mine Sale</span>	
+		</a>
+		{% include 'web/jinja2/transaction/mine/sidebar.html.j2' %}
+		</li>
+		{% endif %}
+		{% endfor %}
+
+	{% for r in request.user.user_role.all() %}
+		{% if r.id == 17 %}	
+	<li >
+		<a class="nav-link collapsed mx-0" data-toggle="collapse" data-target=".crusher_inbound{{c.id}}" href="#" aria-expanded="false" aria-controls="collapsePages">
+			<i class="fa fa-fw fa-file-alt"></i>
+			<span id="nav1">Crusher Purchase</span>	
+		</a>
+		{% include 'web/jinja2/transaction/crusher_inbound/sidebar.html.j2' %}
+		</li>
+		{% endif %}
+		{% endfor %}
+
+		{% for r in request.user.user_role.all() %}
+		{% if r.id == 18 %}	
+		<li >
+			<a class="nav-link collapsed mx-0" data-toggle="collapse" data-target=".crusher_outbound{{c.id}}" href="#" aria-expanded="false" aria-controls="collapsePages">
+				<i class="fa fa-fw fa-file-alt"></i>
+				<span id="nav1">Crusher Sale</span>	
+			</a>
+			{% include 'web/jinja2/transaction/crusher_outbound/sidebar.html.j2' %}
+		</li>
+		{% endif%}
+		{%endfor%}
+
+		{% for r in request.user.user_role.all() %}
+		{% if r.id == 20 %}	
+		<li >
+			<a class="nav-link collapsed mx-0" data-toggle="collapse" data-target=".machine{{c.id}}" href="#" aria-expanded="false" aria-controls="collapsePages">
+				<i class="fas fa-fw fa-cog"></i>
+				<span id="nav1">Machine</span>	
+			</a>
+			{% include 'web/jinja2/machine/sidebar.html.j2' %}
+		</li>
+		{% endif%}
+		{%endfor%}
+
+		{% for r in request.user.user_role.all() %}
+		{% if r.id == 21 %}	
+		<li >
+			<a class="nav-link collapsed mx-0" data-toggle="collapse" data-target=".driver{{c.id}}" href="#" aria-expanded="false" aria-controls="collapsePages">
+				<i class="fas fa-fw fa-wrench"></i>
+				<span id="nav1">Driver</span>	
+			</a>
+			{% include 'web/jinja2/machine58/driver/sidebar.html.j2' %}
+		</li>
+		{% endif%}
+		{%endfor%}
+
+		{% for r in request.user.user_role.all() %}
+		{% if r.id == 22 %}	
+		<li >
+			<a class="nav-link collapsed mx-0" data-toggle="collapse" data-target=".expenses{{c.id}}" href="#" aria-expanded="false" aria-controls="collapsePages">
+				<i class="fas fa-fw fa-folder"></i>
+				<span id="nav1">Expenses</span>	
+			</a>
+			{% include 'web/jinja2/machine58/expenses/sidebar.html.j2' %}
+		</li>
+		{% endif%}
+		{%endfor%}		
+
+		</li>	
+		<li >
+			<a class="nav-link mx-0"  href="{{url('power-factor')}}" aria-expanded="false"><i class="fas fa-lightbulb"></i><span id="nav1">Power Factar</span></a>
+		</li>
+		<li >
+			<a class="nav-link mx-0"  href="{{url('royalty')}}" aria-expanded="false"><i class="fas fa-lightbulb"></i><span id="nav1">Royalty</span></a>
+		</li>
+	{% endfor %}
+	<!-- End Company displayed -->
+		
+
+	
+	{#
+	<li >
+		<a class="nav-link collapsed mx-0" href="{{url('todo-list')}}" aria-expanded="false" aria-controls="collapsePages">
+			<i class="fa fa-fw fa-balance-scale"></i>
+			<span class="text-white">To Do List</span>
+		</a>
+	</li>
+	<!-- End Here -->
+	#}
+
+	{#
+	<div class="text-center d-none d-md-inline mt-4">
+		<button class="border-0" id="sidebarToggle"></button> 
+	</div>
+	#}
+
+</ul>
+
+</nav>
+
+
+
+
+
+<!-- End of Sidebar -->
+
+
+
+
+
+
+
+
+

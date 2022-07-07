@@ -1,0 +1,643 @@
+{% extends "web/jinja2/base.html.j2" %}
+{% block content %}
+<!-- Begin Page Content -->
+<section class="py-md-5">
+	<div class="container-fluid">
+		<div class="col-12">
+			<div class="card mb-4 border-1">
+				<div class="card-header py-3 px-0 align-items-center bg-white border-0">
+					<div class="row">
+						<div class="col-12">
+							<h3 class="m-0 px-3 font-weight-bold text-dark">Add Crusher Detail</h3>
+						</div>
+					</div>
+				</div>
+				<form method="post" enctype="multipart/form-data">
+				{{csrf_input}}
+				<div class="card-body px-0">
+                    <div class="row mx-0">
+                    <input type="hidden" value="{{request.GET.company}}" name="company_id">
+                        <div class="col-lg-2 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="crusher-id">Crusher ID*</label>
+                                <input type="text" name="crusher_id" value="" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="crusher-name">Crusher Name*</label>
+                                <input type="text" name="crusher_name" class="form-control" required>
+                            </div>
+                        </div>
+                        {#<div class="col-lg-2 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="lease_number">Lease No.*</label>
+                                <input type="text" id="lease_id" name="lease_number" value="CH-" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="crusher_mineral_type">Mineral Type</label>
+                                <select class="custom-select form-control form-control-user rounded-1" name="crusher_mineral_type" id="crusher_mineral_type">
+                                    <option value="" selected>Select</option>
+                                    <option value="bolder-01">Bolder-01</option>
+                                    <option value="bolder-02">Bolder-02</option>
+                                </select>
+                            </div>
+                        </div>
+                         #}   
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="kaata_no">Kaata No.</label>
+                                <select class="custom-select form-control form-control-user rounded-1 select2_dropdown" multiple="multiple" name="kaata_no" id="kaata_no">
+                                    <option value="" selected>Select</option>
+                                    {% for data in customers %}
+                                    <option value="{{data.id}}">{{data.kaata_no}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+
+                    <div id="add-new-owner-form">
+						<div class="row mx-0 align-items-center">
+							<div class="col-sm-12 px-0">
+								<div class="mx-0 row address-form">
+									<div class="col-md-4 col-sm-12">
+										<div class="form-group mb-4">
+											<label for="lease_owner">Lease owner</label>
+											<input type="text" class="form-control form-control-user rounded-1" id="lease_owner" name="lease_owner" placeholder="Enter owner">
+										</div>
+									</div>
+									<div class="col-md-4 col-sm-12">
+										<div class="form-group mb-2">
+											<label for="lease_percentage">Percentage</label>
+												<input type="number" class="form-control rounded-1" id="percentage" name="percentage" placeholder="0.00 %">
+										</div>
+									</div>
+                                    <div class="col-md-2 col-12 mt-4">
+                                        <a href="javascript:void(0);" class="border-primary btn" onclick="addnewowner()"><i class="fas fa-plus fz-20 delete-row mt-1"></i></a>
+                                        <a type="button" class="delete-row delete-row btn border-danger text-danger mx-3" onclick="removeRowOwner(this)"><i class="fas fa-trash-alt fz-20 delete-row mt-1"></i></a>
+                                    </div>	
+								</div>
+							</div>
+
+						     
+						</div>
+					</div>
+
+					<hr>
+
+					<div class="row mx-0">
+                        <div class="col-lg-2 col-md-2 col-sm-12">
+                            <h5 class="m-0 font-weight-bold text-dark">Permission:</h5>
+                            <hr>
+                        </div>
+                    </div>    
+                   {# <div class="row mx-0">
+                        <!-- hidden field for lease -->
+                            <input type="hidden" name="type_of_lease1" id='type_of_lease'>  
+    
+                        <div class="col-lg-2 col-md-2 col-sm-12">
+                            <div class="form-group mt-5">
+                                <p class="m-0 font-weight-bold">Lease Date</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="from_date">From</label>
+                                <input type="date" name="from_date_lease" id="from_date_lease" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="to_date">To</label>
+                                <input type="date" name="to_date_lease" id="to_date_lease" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-12">
+                            <div class="form-group mt-4">
+                                <a href="#" class="btn bg-gradient-success text-white rounded-1 f-s-18 px-4 py-2" data-toggle="modal" data-target="#LeaseUpdateModal">Update</a>
+                            </div>
+                        </div>           
+                    </div>#}
+
+                    <div class="row mx-0">
+                        <!-- hidden field for pollution -->
+                        <input type="hidden" name="type_of_pollution2" id='type_of_pollution'>
+                        
+                        <div class="col-lg-2 col-md-2 col-sm-12">
+                            <div class="form-group mt-5">
+                                <p class="m-0 font-weight-bold">Pollution Date</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="from_date_pollution">From</label>
+                                <input type="date" name="from_date_pollution" id="from_date_pollution" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="to_date_pollution">To</label>
+                                <input type="date" name="to_date_pollution" id="to_date_pollution" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-12">
+                            <div class="form-group mt-4">
+                                <a href="#" class="btn bg-gradient-success text-white rounded-1 f-s-18 px-4 py-2" data-toggle="modal" data-target="#PollutionUpdateModal">Update</a>
+                            </div>
+                        </div>
+                                         
+                    </div>
+                    <div class="row mx-0">
+                        <!-- hidden field for ec -->
+                            <input type="hidden" name="type_of_ec3" id='type_of_ec'>
+                        
+                        <div class="col-lg-2 col-md-2 col-sm-12">
+                            <div class="form-group mt-5">
+                                <p class="m-0 font-weight-bold">EC Date</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="from_date_ec">From</label>
+                                <input type="date" name="from_date_ec" id="from_date_ec" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="to_date_ec">To</label>
+                                <input type="date" name="to_date_ec" id="from_from_ec" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-12">
+                            <div class="form-group mt-4">
+                                <a href="#" class="btn bg-gradient-success text-white rounded-1 f-s-18 px-4 py-2" data-toggle="modal" data-target="#EcUpdateModal">Update</a>
+                            </div>
+                        </div>
+                                         
+                    </div>
+                    <hr>
+					<div class="row mx-0">
+                        <div class="col-lg-2 col-md-2 col-sm-12">
+                            <h5 class="m-0 font-weight-bold text-dark mb-4">Coordinates:</h5>
+                        </div>
+                    </div>
+					<div class="row mx-0">
+						<div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="coordinated_a">Coordinate A</label>
+                                <input type="number" placeholder="0.00000" name="coordinated_a" maxlength="8" class="form-control coordinates">
+                            </div>
+                        </div>
+						<div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="coordinated_b">Coordinate B</label>
+                                <input type="number" placeholder="0.00000" name="coordinated_b" maxlength="8" class="form-control coordinates">
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="coordinated_c">Coordinate C</label>
+                                <input type="number" placeholder="0.00000" name="coordinated_c" maxlength="8" class="form-control coordinates">
+                            </div>
+                        </div>
+						<div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="coordinated_d">Coordinate D</label>
+                                <input type="number" placeholder="0.00000" name="coordinated_d" maxlength="8" class="form-control coordinates">
+                            </div>
+                        </div>
+					</div>
+					<hr>
+                    <div class="row mx-0">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <label for="crusher-address">Address</label>    
+                            <textarea class="form-control rounded-1 " id="crusher-address" name="crusher-address" rows="5" placeholder="Write address here..."></textarea>                            
+                        </div>
+                    </div>
+                    <hr>	
+					<div class="row mx-0 position-relative">
+        
+						<div class=" col-12 pt-4 text-center">
+							<button type="reset" class="btn btn-white text-dark border rounded-1 bg-white f-s-18 px-4 py-2 mr-3">Reset</button>
+							<button type="submit"  class="btn bg-gradient-primary text-white rounded-1 f-s-18 px-4 py-2">Submit</button>
+						</div>
+					</div>
+				</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- End Here -->
+
+
+<section>
+  <!-- Lease Update Modal-->
+    <div class="modal fade" id="LeaseUpdateModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Ready to Update Lease?</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+            </div>
+        
+            <div class="card-body px-0">
+                <div class="row mx-0">
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group mt-5">
+                            <p class="m-0 font-weight-bold">Renew Lease Date</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group mb-4">
+                            <label for="renew_lease_from_date">From*</label>
+                            <input type="date" name="renew_lease_from_date" id="renew_lease_from_date" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group mb-4">
+                            <label for="renew_lease_to_date">To*</label>
+                            <input type="date" name="renew_lease_to_date" id="renew_lease_to_date" class="form-control" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mx-0">
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group mt-5">
+                            <p class="m-0 font-weight-bold">Document*</p>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group mb-2">
+                            <div class="fileUpload btn bg-white text-black border-black rounded-1 px-4 py-2 rounded-1 mt-35">
+                                <span>Upload Lease File</span>
+                                <input type="hidden" id="uploadFile" class="form-control bg-white rounded-1" placeholder="Choose File" disabled="disabled" />
+                                <input type="file" class="upload" id="lease_file" name="lease_file" />
+                            </div>
+                        </div>
+                    </div>	
+                </div>
+                <input type="hidden" value="lease" name="type1" id="renew_lease_type1"/>
+            </div>	
+            <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+            <button class="btn btn-primary" data-dismiss="modal" onclick="LeaseDate()">OK</button>
+            </div>
+                <div class="row mx-0">
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <p class="m-0 font-weight-bold text-dark">History</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row mx-0">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <table class="table table-border">
+                            <thead class="text-center">
+                                <tr>
+                                    <th>From</th>
+                                    <th>To</th>
+                                    <th>Document</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-center">
+                                {% for data in permission %}
+                                {% if data.lease_type == 'lease' %}    
+                                <tr>
+                                    <td>{{data.from_date}}</td>
+                                    <td>{{data.to_date}}</td>
+                                    <td>{% if data.document %}{{data.document}}{% else %}--{%endif%}</td>
+                                <td>{% if data.document %}<a href="{{data.document.url}}"><i class="fas fa-download"></i></a>{% else %}--{%endif%}</td>
+                                </tr>
+                                {% endif %}
+                                {% endfor %}
+                            </tbody>
+                        </table>            
+                    </div>
+                <div>    
+        </div>
+        </div>
+  </div>
+</section>
+
+<section>
+  <!-- Pollution Update Modal-->
+  <div class="modal fade" id="PollutionUpdateModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Ready to Update Pollution?</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+
+		<div class="card-body px-0">
+		 	<div class="row mx-0">
+				<div class="col-lg-4 col-md-4 col-sm-12">
+					<div class="form-group mt-5">
+						<p class="m-0 font-weight-bold">Renew Pollution Date</p>
+					</div>
+				</div>
+				<div class="col-lg-4 col-md-4 col-sm-12">
+					<div class="form-group mb-4">
+						<label for="renew_pollution_from_date">From*</label>
+						<input type="date" name="renew_pollution_from_date" id="renew_pollution_from_date" class="form-control" required>
+					</div>
+				</div>
+				<div class="col-lg-4 col-md-4 col-sm-12">
+					<div class="form-group mb-4">
+						<label for="renew_pollution_to_date">To*</label>
+						<input type="date" name="renew_pollution_to_date" id="renew_pollution_to_date" class="form-control" required>
+					</div>
+				</div>
+            </div>
+			<div class="row mx-0">
+				<div class="col-lg-4 col-md-4 col-sm-12">
+					<div class="form-group mt-5">
+						<p class="m-0 font-weight-bold">Document*</p>
+					</div>
+				</div>
+				
+				<div class="col-lg-4 col-md-4 col-sm-12">
+					<div class="form-group mb-2">
+						<div class="fileUpload btn bg-white text-black border-black rounded-1 px-4 py-2 rounded-1 mt-35">
+							<span>Upload Lease File</span>
+							<input type="hidden" id="uploadFile" class="form-control bg-white rounded-1" placeholder="Choose File" disabled="disabled" />
+							<input type="file" class="upload" id="pollution_file" name="pollution_file" />
+						</div>
+					</div>
+				</div>	
+            </div>
+            <input type="hidden" value="pollution" name="type2" id="renew_pollution_type2"/>
+		</div>	
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+          <button class="btn btn-primary" data-dismiss="modal" onclick="PollutionDate()">OK</button>
+        </div>
+            <div class="row mx-0">
+				<div class="col-lg-4 col-md-4 col-sm-12">
+                    <div class="form-group">
+						<p class="m-0 font-weight-bold text-dark">History</p>
+					</div>
+                </div>
+            </div>
+            
+            <div class="row mx-0">
+				<div class="col-lg-12 col-md-12 col-sm-12">
+                    <table class="table table-border">
+                        <thead class="text-center">
+                            <tr>
+                                <th>From</th>
+                                <th>To</th>
+                                <th>Document</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-center">
+                            {% for data in permission %}
+                            {% if data.lease_type == 'pollution' %}    
+                            <tr>
+                                <td>{{data.from_date}}</td>
+                                <td>{{data.to_date}}</td>
+                                <td>{% if data.document %}{{data.document}}{% else %}--{%endif%}</td>
+                                <td>{% if data.document %}<a href="{{data.document.url}}"><i class="fas fa-download"></i></a>{% else %}--{%endif%}</td>
+                            </tr>
+                            {% endif %}
+                            {% endfor %}
+                        </tbody>
+                    </table>            
+                </div>
+            <div>    
+      </div>
+    </div>
+  </div>
+</section>     
+
+<section>
+  <div class="modal fade" id="EcUpdateModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Ready to Update EC?</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+
+		<div class="card-body px-0">
+		 	<div class="row mx-0">
+				<div class="col-lg-4 col-md-4 col-sm-12">
+					<div class="form-group mt-5">
+						<p class="m-0 font-weight-bold">Renew EC Date</p>
+					</div>
+				</div>
+				<div class="col-lg-4 col-md-4 col-sm-12">
+					<div class="form-group mb-4">
+						<label for="renew_ec_from_date">From*</label>
+						<input type="date" name="renew_ec_from_date" id="renew_ec_from_date" class="form-control" required>
+					</div>
+				</div>
+				<div class="col-lg-4 col-md-4 col-sm-12">
+					<div class="form-group mb-4">
+						<label for="renew_ec_to_date">To*</label>
+						<input type="date" name="renew_ec_to_date" id="renew_ec_to_date" class="form-control" required>
+					</div>
+				</div>
+            </div>
+			<div class="row mx-0">
+				<div class="col-lg-4 col-md-4 col-sm-12">
+					<div class="form-group mt-5">
+						<p class="m-0 font-weight-bold">Document*</p>
+					</div>
+				</div>
+				
+				<div class="col-lg-4 col-md-4 col-sm-12">
+					<div class="form-group mb-2">
+						<div class="fileUpload btn bg-white text-black border-black rounded-1 px-4 py-2 rounded-1 mt-35">
+							<span>Upload Lease File</span>
+							<input type="hidden" id="uploadFile" class="form-control bg-white rounded-1" placeholder="Choose File" disabled="disabled" />
+							<input type="file" class="upload" id="ec_file" name="ec_file" />
+						</div>
+					</div>
+				</div>	
+            </div>
+            <input type="hidden" value="ec" name="type3" id="renew_ec_type3"/>
+		</div>	
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+          <button class="btn btn-primary" data-dismiss="modal" onclick="EcDate()">OK</button>
+        </div>
+            <div class="row mx-0">
+				<div class="col-lg-4 col-md-4 col-sm-12">
+                    <div class="form-group">
+						<p class="m-0 font-weight-bold text-dark">History</p>
+					</div>
+                </div>
+            </div>
+            
+            <div class="row mx-0">
+				<div class="col-lg-12 col-md-12 col-sm-12">
+                    <table class="table table-border">
+                        <thead class="text-center">
+                            <tr>
+                                <th>From</th>
+                                <th>To</th>
+                                <th>Document</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-center">
+                            {% for data in permission %}
+                            {% if data.lease_type == 'ec' %}    
+                            <tr>
+                                <td>{{data.from_date}}</td>
+                                <td>{{data.to_date}}</td>
+                                <td>{% if data.document %}{{data.document}}{% else %}--{%endif%}</td>
+                                <td>{% if data.document %}<a href="{{data.document.url}}"><i class="fas fa-download"></i></a>{% else %}--{%endif%}</td>
+                            </tr>
+                            {% endif %}
+                            {% endfor %}
+                        </tbody>
+                    </table>            
+                </div>
+            <div>    
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="{{static ('vendor/jquery/jquery.min.js')}}"></script>
+
+<script>
+    $(document).ready(function() {
+        $('.select2_dropdown').select2();
+        });
+</script>
+
+<script>
+	var newrow=1;
+	function removeRowOwner(e){
+		//console.log($(this).parent("div"))
+		if(newrow>1) {
+			$(e).parent("div").parent("div").remove();
+			newrow--;
+		}
+		else{
+			show_message('One Owner Required.')
+		}
+	}
+	function addnewowner(){
+
+		html = `<div id="add-new-owner-form border-1">
+						<div class="row mx-0 align-items-center">
+							<div class="col-sm-12 px-0">
+								<div class="mx-0 row address-form">
+									<div class="col-md-4 col-sm-12">
+										<div class="form-group mb-4">
+											<label for="crusher-owner">Lease Owner*</label>
+                                            <input type="text" class="form-control form-control-user rounded-1" id="lease_owner" name="lease_owner" placeholder="">
+										</div>
+									</div>
+									<div class="col-md-4 col-sm-12">
+										<div class="form-group mb-2">
+											<label for="owner-percentage">Percentage*</label>
+												<input type="number" class="form-control rounded-1" id="percentage" name="percentage" placeholder="">
+										</div>
+									</div>
+                                    <div class="col-md-2 col-12 mt-4">
+                                        <a href="javascript:void(0);" class="border-primary btn" onclick="addnewowner()"><i class="fas fa-plus fz-20 delete-row mt-1"></i></a>
+                                        <a type="button" class="delete-row delete-row btn border-danger text-danger mx-3" onclick="removeRowOwner(this)"><i class="fas fa-trash-alt fz-20 delete-row mt-1"></i></a>
+                                    </div>
+								</div>
+							</div>
+							
+						</div>
+					</div>`;
+		$("#add-new-owner-form").append(html);
+		newrow++;
+		getNewAddedStates();
+  	return false;
+	}
+</script>
+
+
+
+<script>
+	$('#lease_id').keyup(function)(e) {
+		if (this.value.length < 3) {
+			this.value = 'ML-';
+		}else if (this.value.indexOf('ML-') ! == 0) {
+			this.value = 'ML-' StringfromCharCode(e.which);
+			}
+	});
+</script>
+
+<script>
+	$(document).ready(function() {
+        $('.coordinates').keypress(function(e){
+            var maxLengthNumber = parseInt($('.coordinates').attr('maxlength'));
+            var inputvalueLength = $('.coordinates').val().length + 1;
+
+            if (e.which !=8 && e.which !=0 && (e.which < 48 || e.which > 57))
+            {
+                return false;
+            }
+            if (maxLengthNumber < inputvalueLength){
+                return false;
+            }
+        });
+    });    
+
+{# copy Lease Popup value to form #} 
+<script>
+    function LeaseDate(){
+        var from_lease = document.getElementById('renew_lease_from_date').value;
+        var to_lease = document.getElementById('renew_lease_to_date').value;
+        var hidden_lease_type = document.getElementById('renew_lease_type1').value;
+            
+        document.getElementById('from_date_lease').value = from_lease;
+        document.getElementById('to_date_lease').value = to_lease;
+        document.getElementById('type_of_lease').value = hidden_lease_type;   
+    }
+</script>
+
+{# copy Pollution Popup value to form #}
+<script>
+    function PollutionDate(){
+        var from_pollution = document.getElementById('renew_pollution_from_date').value;
+        var to_pollution = document.getElementById('renew_pollution_to_date').value;
+        var hidden_pollution_type = document.getElementById('renew_pollution_type2').value;
+            
+        document.getElementById('from_date_pollution').value = from_pollution;
+        document.getElementById('to_date_pollution').value = to_pollution;
+        document.getElementById('type_of_pollution').value = hidden_pollution_type;   
+    }
+</script>
+
+{# copy EC Popup value to form #}
+<script>
+    function EcDate(){
+        alert("hello");
+        var from_ec = document.getElementById('renew_ec_from_date').value;
+        var to_ec = document.getElementById('renew_ec_to_date').value;
+        var hidden_ec_type = document.getElementById('renew_ec_type3').value;
+
+        alert(from_date" + "to_date" + "hidden_ec_type);   
+        document.getElementById('from_date_ec').value = from_ec;
+        document.getElementById('to_date_ec').value = to_ec;
+        document.getElementById('type_of_ec').value = hidden_ec_type;
+        alert("finished");   
+    }
+</script>
+
+{% endblock %}

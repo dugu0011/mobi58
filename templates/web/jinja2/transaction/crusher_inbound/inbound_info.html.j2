@@ -1,0 +1,322 @@
+{% extends "web/jinja2/base.html.j2" %}
+{% block content %}
+<!-- Begin Page Content -->
+<section class="py-md-5">
+	<div class="container-fluid">
+		<div class="col-12">
+			<div class="card mb-4 border-1">
+				<div class="card-header py-3 px-0 align-items-center bg-white border-0">
+					<div class="row">
+						<div class="col-12">
+							<h3 class="m-0 px-3 font-weight-bold text-dark">Info Entry List</h3>
+						</div>
+					</div>
+				</div>
+                
+                    <div class="row mx-0">
+                        <div class="col-sm-12 col-md-6 col-lg-12">
+                            <table id="mineInfo" class="table table-border">
+                                <thead class="text-center">
+                                    <tr>
+                                        <th>Vehicle No.</th>
+                                        <th>Driver Name</th>
+                                        <th>Mobile </th>
+                                        <th>Date</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-center">    
+                                    {% for data in info_crusherinbound_transaction %}  
+                                    <tr>
+                                        <td>{{data.vehicle_no}}</td>
+                                        <td>{{data.driver_name}}</td>
+                                        <td>{{data.mobile}}</td>
+                                        {#<td>{{data.mine_id}}</td>#}
+                                        <td>{{data.out_date}}</td>
+                                        <td>{{data.status}}</td>
+                                        <td>
+                                            <div class="dropdown show">
+                                                <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <i class="fas fa-ellipsis-v"></i>
+                                                </a>													
+                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                <a href="/crusher/purchase/edit/{{data.id}}/{{company_id}}"  class="dropdown-item" title="Update">Edit</a>
+                                                    <a href="#" data-toggle="modal" data-target="#DetailViewList{{data.id}}"  class="dropdown-item" title="View">View</a>
+                                                    {#<a href="/crusher-token/?id={{data.id}} class="dropdown-item" title="Token"> Token</a>#}
+                                                    {#<a href="/transaction/crusher/info/delete/{{data.id}}/{{company_id}}/" class="dropdown-item" title="Delete" style="color:magenta;"> Cancel</a>#}																
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>            
+                        </div>
+					</div>
+				
+			</div>
+		</div>
+	</div>
+</section>
+<!-- End Here -->
+
+{% for data in info_crusherinbound_transaction %}
+<section>
+  <!-- Crusher Purchase List Detail -->
+  
+    <div class="modal fade" id="DetailViewList{{data.id}}" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">{{data.vehicle_no}}</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+				<div class="card-body px-0">
+					<div class="row mx-0">
+						<div class="col-lg-12 col-md-12 col-sm-12 bg-primary">
+                            <h5 style="color:white;"> In Detail View </h5>
+                        </div> 
+						<div class="col-lg-3 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="company_name">Company</label>
+								<input type="text" name="company_name" value="" placeholder="{{data.company_name}}" class="form-control" readonly>
+							</div>
+						</div>
+						<div class="col-lg-3 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="customer_name">Customer</label>
+								<input type="text" name="customer_name" value="{% if data.customer_name%}{{data.customer_name}} {%else%}--{%endif%}" class="form-control" readonly>
+							</div>
+						</div>
+						<div class="col-lg-3 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="in_date">In Date</label>
+								<input type="text" name="in_date" value="{{data.in_date}}" class="form-control" readonly>
+							</div>
+						</div>
+						<div class="col-lg-3 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="in_time">In Time</label>
+								<input type="text" name="in_time" value="{{data.in_time}}" class="form-control" readonly>
+							</div>
+						</div>
+						<div class="col-lg-3 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="vehicle_no">Vehicle No.</label>
+								<input type="text" name="vehicle_no" value="{{data.vehicle_no}}" class="form-control" readonly>
+							</div>
+						</div>
+						<div class="col-lg-2 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="driver_name">Driver</label>
+								<input type="text" name="driver_name" value="{{data.driver_name}}" class="form-control" readonly>
+							</div>
+						</div>
+						<div class="col-lg-3 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="mobile">Mobile</label>
+								<input type="text" name="mobile" value="{{data.mobile}}" class="form-control" readonly>
+							</div>
+						</div>
+						<div class="col-lg-2 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="kaata">Kaata No.</label>
+								<input type="text" name="kaata" value="{{data.mine_kaata_no}}" class="form-control" readonly>
+							</div>
+						</div>
+
+						<div class="col-lg-2 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="in_weight">In Weight</label>
+								<input type="text" name="in_weight" value="{{data.in_weight}}" class="form-control" readonly>
+							</div>
+						</div>
+						<div class="col-lg-2 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="advance">Advance</label>
+								<input type="text" name="advance" value="{{data.advance}}" class="form-control" readonly>
+							</div>
+						</div>
+					</div>
+                    <div class="row mx-0">
+                        <div class="col-lg-12 col-md-12 col-sm-12 bg-primary">
+                            <h5 style="color:white;"> Out Detail View </h5>
+                        </div>    
+                    </div>
+                    <div class="row mx-0">
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="out_date">Out Date</label>
+                                <input type="text" value="{{data.out_date}}" name="out_date" id="out_date" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="out_time">Out Time</label>
+                                <input type="text" value="{{data.out_time}}" name="out_time" id="out_time" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="empty_weight">Empty Load</label>
+                                <input type="text" value="{{data.out_empty_load}}" name="empty_weight" id="empty_weight" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="out_net_weight">Out Net Load</label>
+                                <input type="text" value="{{data.out_net_load}}" name="out_net_weight" id="out_net_weight" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="net_diff_weight">Difference Load</label>
+                                <input type="text" value="{{data.net_load_diff}}" name="net_diff_weight" id="net_diff_weight" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="master_product">Product Name</label>
+                                <input type="text" name="master_product" id="master_product" placeholder="{{data.master_product.item_name}}" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="price">Price</label>
+                                <input type="text" name="price" id="price" placeholder="{{data.price}}" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="out_kaata_no">Out Kaata No</label>
+                                <input type="text" name="out_kaata_no" id="out_kaata_no" placeholder="{{data.in_kaata.kaata_no}}" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="out_weight">Full Load</label>
+                                <input type="text" name="out_net_load" id="out_net_load" placeholder="{{data.out_net_load}}" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="net_weight">Net Load</label>
+                                <input type="text" name="net_weight" id="net_weight" placeholder="{{data.net_weight}}" class="form-control" readonly>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-22 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="amount">Amount*</label>
+                                <input type="text" name="amount" id="amount" placeholder="{{data.amount}}" class="form-control" readonly>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-2 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="ravana_no">Ravana No.*</label>
+                                <input type="text" name="ravana_no" id="ravana_no" placeholder="{{data.ravana_no}}" class="form-control" readonly>
+                            </div>
+                        </div>
+                              
+                    </div>
+					<div class="row mx-0">
+                        <div class="col-lg-12 col-md-12 col-sm-12 bg-primary">
+                            <h5 style="color:white;"> Bill Detail View </h5>
+                        </div>    
+                    </div>
+					<div class="row mx-0">
+                        {% for i in data.crusher_materialout.all() %}
+                        {% if i.bill_type == 'purchase' %}
+						<div class="col-lg-3 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="item_name">Item Name</label>
+								<input type="text" value="{{i.item_name}}" class="form-control" readonly>    
+							</div>
+						</div>
+                        <div class="col-lg-2 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="quanity">Quantity</label>
+								<input type="text" value="{{i.quantity}}" class="form-control" readonly>    
+							</div>
+						</div>
+						<div class="col-lg-2 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="item_name">Price</label>
+								<input type="text" value="{{i.billing_price}}" class="form-control" readonly>    
+							</div>
+						</div>
+						
+						<div class="col-lg-2 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="item_name">Gst Amount</label>
+								<input type="text" value="{{i.gst_amount}}" class="form-control" readonly>    
+							</div>
+						</div>
+						
+						<div class="col-lg-2 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="item_name">Billing Amount</label>
+								<input type="text" value="{{i.billing_amount}}" class="form-control" readonly>    
+							</div>
+						</div>
+                        <div class="col-lg-2 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="item_name">Total</label>
+								<input type="text" value="{{i.total_amount}}" class="form-control" readonly>    
+							</div>
+						</div>
+					    {%endif%}
+                        {%endfor%}							
+					</div>
+                    <hr>
+                    <div class="row mx-0">
+                        <div class="col-lg-12 col-md-12 col-sm-12 bg-primary">
+                            <h5 style="color:white;"> For office use View </h5>
+                        </div>    
+                    </div>
+					<div class="row mx-0">
+                        <div class="col-lg-2 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="commission">Commission</label>
+								<input type="text" value="{{data.commission}}" class="form-control" readonly>    
+							</div>
+						</div>
+                        <div class="col-lg-2 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="transport_charges">Transport Charges</label>
+								<input type="text" value="{{data.other_charges}}" class="form-control" readonly>    
+							</div>
+						</div>
+                        <div class="col-lg-2 col-md-3 col-sm-12">
+							<div class="form-group mb-4">
+								<label for="grand_total">Grand Total</label>
+								<input type="text" value="{{data.grand_total}}" class="form-control" readonly>    
+							</div>
+						</div>
+                    </div>
+                    <hr>
+				</div>			
+            </div>
+        </div>
+    </div>
+
+</section>
+{% endfor %}
+
+<script src="{{static ('vendor/jquery/jquery.min.js')}}"></script>
+
+<script>
+    $(document).ready(function(){
+        $('#mineInfo').DataTable({
+        "pagingType": "full_numbers"
+        });
+        $('dataTables_length').addClass('bs-select');
+    });
+</script>
+
+{% endblock %}

@@ -1,0 +1,211 @@
+{% extends "web/jinja2/base.html.j2" %}
+{% block content %}
+<!-- Begin Page Content -->
+<section class="py-md-5">
+	<div class="container-fluid">
+		<div class="col-12">
+			<div class="card mb-4 border-1">
+				<div class="card-header py-3 px-0 align-items-center bg-warning border-0">
+					<div class="row">
+						<div class="col-12">
+							<h3 class="m-0 px-3 font-weight-bold text-dark">Add Vehicle</h3>
+						</div>
+					</div>
+				</div>
+				<form method="post" enctype="multipart/form-data">
+				{{csrf_input}}
+				<div class="card-body px-0">
+                    <div class="row mx-0">
+                        <input type="hidden" value="{{request.GET.company}}" name="company_id">
+                        <div class="col-lg-3 col-md-4 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="vehicle_no">Vehicle No.*</label>
+                                <input type="text" name="vehicle_no" id="vehicle_no" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="driver_name">Driver Name*</label>
+                                {#<input type="text" name="driver_name" class="form-control" required>#}
+                                <select class="custom-select form-control form-control-user rounded-1 select2_dropdown driver_name" multiple="multiple" name="driver_name" id="driver_name">
+                                        {#<option value="" selected>Select</option>#}
+                                        {% for data in drivers %}
+                                        <option value="{{data.id}}">{{data.driver_name}}</option>
+                                        {% endfor %}
+                                         
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-3 col-md-4 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="vehicle_type">Vehicle Type*</label>
+                                <select class="custom-select form-control form-control-user rounded-1 vehicle_type select2_dropdown" id="" name="vehicle_type" required>
+									<option value="" selected>Select</option>
+                                    {% for v in type_vehicle %}
+                                    <option value="{{v.0}}">{{v.1}}</option>
+                                    {% endfor %}
+                                </select>    
+                            </div>
+                        </div>
+                        {#<div class="col-lg-3 col-md-4 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="mobile">Mobile*</label>
+                                <input type="number" name="mobile" class="form-control" required>
+                            </div>
+                        </div>#} 
+                        <div class="col-lg-3 col-md-4 col-sm-12">
+                            <div class="form-group mb-4">   
+                                <label for="Chassis No">Chassis No.</label>
+                                <input type="text" name="chassis_no" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-4 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="Engine No">Engine No.</label>
+                                <input type="text" name="engine_no" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="Fuel Type">Fuel Type</label>
+                                <select class="custom-select form-control form-control-user rounded-1 fuel_type" id="" name="fuel_type">
+									<option value="" selected>Select</option>
+                                    {% for f in fuels %}
+                                    <option value="{{f.0}}">{{f.1}}</option>
+                                    {% endfor %}
+                                </select>    
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-3 col-md-4 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="Purchase Date">Purchase Date</label>
+                                <input type="date" name="purchase_date" class="form-control">
+                            </div>
+                        </div>
+                        <hr>    
+                        <div class="col-lg-3 col-md-4 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="rc_no">Registraion No.</label>
+                                <input type="text" name="rc_no" id="registration_no" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-12">
+                            <div class="form-group mb-2">
+								<div class="fileUpload btn bg-white text-black border-black rounded-1 px-4 py-2 rounded-1 mt-35">
+									<span>Upload Registraion File</span>
+									<input type="hidden" id="uploadFile" class="form-control bg-white rounded-1" placeholder="Choose File" disabled="disabled" />
+									<input type="file" class="upload" id="rc_file" name="rc_file" />
+								</div>
+							</div>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="Insurance Validity">Insurance Validity</label>
+                                <input type="date" name="insurance" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-4  col-sm-12">
+                            <div class="form-group mb-2">
+								<div class="fileUpload btn bg-white text-black border-black rounded-1 px-4 py-2 rounded-1 mt-35">
+									<span>Upload Insurance File</span>
+									<input type="hidden" id="uploadFile" class="form-control bg-white rounded-1" placeholder="Choose File" disabled="disabled" />
+									<input type="file" class="upload" id="insurance_file" name="insurance_file" />
+								</div>
+							</div>
+                        </div>
+                        
+                        
+                        <div class="col-lg-2 col-md-4 col-sm-12 mt-5">
+                            <div class="form-group mb-4">
+                                <label for="self_owner">Self/Own</label>
+                                <input type="checkbox" name="self_owner" id="self_owner" class="self_owner">
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-4 col-sm-12 customer_hideshow">
+                            <div class="form-group mb-4">
+                                <label for="vehicle-customer">Customer*</label>
+                                <select class="custom-select form-control form-control-user rounded-1 select2_dropdown" id="vehicle-customer" name="vehicle-customer">
+                                    <option value="" selected>Select</option>
+                                    {% for data in customers %}
+									<option value="{{data.id}}">{{data.customer_name}}</option>
+									{%endfor%}
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-2 col-md-4 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="Location">Location</label>
+                                <input type="text" name="location" class="form-control">
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-3 col-md-4 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="Pollution Validity">Pollution Validity</label>
+                                <input type="date" name="pollution" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-2">
+								<div class="fileUpload btn bg-white text-black border-black rounded-1 px-4 py-2 rounded-1 mt-35">
+									<span>Upload Pollution File</span>
+									<input type="hidden" id="uploadFile" class="form-control bg-white rounded-1" placeholder="Choose File" disabled="disabled" />
+									<input type="file" class="upload" id="pollution_file" name="pollution_file">
+								</div>
+							</div>
+                        </div>                  
+                    </div>
+                    <hr>
+					
+					<div class="row mx-0 position-relative">
+                        {#validateMasterProductForm()#}
+						<div class=" col-12 pt-4 text-center">
+                            <button type="submit"  class="btn btn-primary">Submit</button>
+							<button type="reset" class="btn btn-danger">Reset</button>
+						</div>
+					</div>
+				</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- End Here -->
+<script src="{{static ('vendor/jquery/jquery.min.js')}}"></script>
+<script>
+    $(document).ready(function() {
+        $('.select2_dropdown').select2();
+        });
+</script>
+
+<script>
+    $('#vehicle_no').keyup(function(){
+      $('#registration_no').val($('#vehicle_no').val());
+      });  
+</script>
+
+<script>
+    $(document).ready(function() {
+        $('.self_owner').on('change', function(){
+            if ($('.self_owner').is(':checked'))
+                $('.customer_hideshow').hide();
+                else
+                {
+                $('.customer_hideshow').show(); 
+                 }  
+        })
+    });
+             //   if ($('.self_owner').is(':checked')); 
+           //     $('.customer_hideshow').hide();
+            //else:
+              //  $('.customer_hideshow').show();
+</script>
+
+
+
+
+{% endblock %}

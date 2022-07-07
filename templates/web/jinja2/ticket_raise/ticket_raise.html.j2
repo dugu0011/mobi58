@@ -1,0 +1,180 @@
+{% extends "web/jinja2/base.html.j2" %}
+{% block title %} Raise Ticket {% endblock %}
+{% block title_header %}Raise Ticket{% endblock %}
+{% block content %}
+
+<style>
+    input[type=text],
+    input[type=email],
+    input[type=file],
+    select,
+    textarea {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ccc;
+        margin-top: 6px;
+        margin-bottom: 16px;
+        resize: vertical;
+    }
+    input[type=submit] {
+        background-color: #4e73df;
+        color: white;
+        padding: 12px 20px;
+        border: none;
+        cursor: pointer;
+    }
+
+    input[type=submit]:hover {
+        background-color: #4e73df;
+    }
+    .form-check-inline:first-of-type{
+      display: none;
+    }
+    /* Create two columns that float next to eachother */
+
+    .column {
+        float: left;
+        width: 50%;
+        margin-top: 6px;
+        padding: 20px;
+    }
+
+    /* Clear floats after the columns */
+
+    .row:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+
+    /* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+
+    @media screen and (max-width: 600px) {
+
+        .column,
+        input[type=submit] {
+            width: 100%;
+            margin-top: 0;
+        }
+    }
+
+    td {
+        text-align: left;
+    }
+</style>
+{% block js %}
+{% if msg %}
+<script>
+    alert("{{msg}}");
+</script>
+{% endif %}
+<script>
+
+
+    fullname = document.getElementById("id_fulllname")
+    fullname.value = "{{user.full_name}}";
+    if (fullname.value != "") { fullname.readOnly = true; }
+    email = document.getElementById("id_email")
+    email.value = "{{user.email}}";
+    if (email.value != "") { email.readOnly = true; }
+</script>
+{% endblock js %}
+
+<section class="py-md-5">
+    <div class="container-fluid">
+      <div class="col-12">
+        <div class="card shadow mb-4 border-1">
+            <div class="card-header py-3 px-0 align-items-center bg-warning border-0" style="background-image: linear-gradient(315deg, #ff4e00 0%, #ec9f05 74%);">
+                <div class="row">
+                  <div class="col-12">
+                    <h3 class="m-0 px-3 font-weight-bold text-dark" style="text-align: center; color:black">Raise a ticket</h3>
+                  </div>
+                </div>
+              </div>
+              <form class="" method="post" enctype="multipart/form-data" name="assignForm" style="width: 100%;"  onSubmit="clearField();">
+                {{csrf_input}}
+              <div class="row" >
+                <div class="col-md-12" style="    text-align: center; padding-top: 25px;">
+                
+                  {% for radio in ticket.Type %}
+                  <div class="form-check form-check-inline">
+                      {{ radio }}
+                  </div>
+                  {% endfor %}
+                
+              </div>
+              </div>
+            
+                <div class="card-body px-0 text-dark font-weight-bold">
+                  <hr>
+                  <div class="row mx-0">
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="form-group mb-4">
+                  <label for="exampleFormControlSelect1" style="color:black">Category</label>
+                  {{ticket.category}}
+                </div>
+              </div>
+              <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="form-group mb-4">
+                  <label for="exampleFormControlSelect1" style="color:black">Sub-Category</label>
+                  {{ticket.subcategory}}
+                </div>
+              </div>
+              <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="form-group mb-4">
+                    <label for="subject" style="color:black">Subject*</label>
+                    {{ticket.subject}}
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-12">
+                <div class="form-group mb-4">
+                    <label for="res" style="color:black">Screenshot</label>
+                    {{ticket.img}}
+                  
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-12">
+                <div class="form-group mb-4">
+                    <label for="res" style="color:black">Priority</label>
+                    <!-- <select class="form-control" id="exampleFormControlSelect1">
+                      <option value="" selected>Please Select</option>
+                        <option>Low</option>
+                        <option>Medium</option>
+                        <option>High</option>
+                        
+                      </select> -->
+                      {{ticket.priority}}
+                  
+                </div>
+              </div>
+              <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="form-group mb-4" style="text-align: center;">
+                    <label for="subject" >Message*</label>
+                        {{ticket.msg}}
+                  
+                </div>
+              </div>
+              <div class="col-lg-12 col-md-12 col-sm-12" style="text-align: center;">
+                <div class="form-group mb-4">
+                    <input type="submit" value="Submit" style="border-radius: 18px;">
+                  
+                </div>
+              </div>
+              
+              
+              
+
+
+
+        
+                  </div>
+                  </div>  
+                </form>
+        </div>
+        </div>
+        </div>
+</section>
+
+
+
+{% endblock %}

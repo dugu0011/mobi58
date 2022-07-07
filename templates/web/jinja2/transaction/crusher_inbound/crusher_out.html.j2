@@ -1,0 +1,614 @@
+ {% extends "web/jinja2/base.html.j2" %}
+{% block content %}
+<!-- Begin Page Content -->
+<section class="py-md-5">
+	<div class="container-fluid">
+		<div class="col-12">
+			<div class="card mb-4 border-1">
+				<div class="card-header py-3 px-0 align-items-center bg-white border-0">
+					<div class="row">
+						<div class="col-12">
+                            {% for d in user_data %}
+                            {% if d.is_new == False %}
+							<h3 class="m-0 px-3 font-weight-bold text-dark">Crusher Inbound Exit</h3>
+                            {%else%}
+                            <h3 class="m-0 px-3 font-weight-bold text-dark">Crusher NEW Exit</h3>
+                            {% endif%}
+                            {%endfor%}
+						</div>        
+					</div>
+				</div>
+                <form method="post" enctype="multipart/form-data">
+				{{csrf_input}}
+				<div class="card-body px-0 text-dark font-weight-bold">
+                <input type="hidden" value="{{request.GET.company}}" name="company_id">
+                    <div class="row mx-0">
+                        <div class="col-lg-12 col-md-12 col-sm-12 bg-primary">
+                            <h5 style="color:white;"> In Detail </h5>
+                        </div>    
+                    </div>
+                    {% for u in user_data %}
+
+                    
+                    <div class="row mx-0">
+                        {% if u.is_new == False %}
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="mine_id">Mine Name*</label>
+                                <input type="hidden" value="{{u.mine_id.id}}" name="mine_id" id="mine_id">
+                                <input type="text" placeholder="{{u.mine_id}}"  class="form-control" readonly>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="crusher_id">Crusher Name*</label>
+                                <input type="hidden" value="{{u.crusher_id.id}}" name="crusher_id" id="crusher_id">
+                                <input type="text" placeholder="{{u.crusher_id}}"  class="form-control" readonly>
+                            </div>
+                        </div>
+                        {% else %}
+                        
+
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="vendor_name">Customer*</label>
+                                <input type="hidden" value="{{u.customer_name.id}}" name="customer_name" id="customer_name">
+                                <input type="text" value="{{u.customer_name}}"  class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="mine_id">Mine Name*</label>
+                                <input type="hidden" value="{{u.customer_mine.id}}" name="customer_mine" id="customer_mine">
+                                <input type="text" value="{{u.customer_mine}}"  class="form-control" readonly>
+                            </div>
+                        </div>
+                    {% endif %}    
+
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="in_date">In Date*</label>
+                                <input type="text" name="in_date" value="{{current_date}}" id="in_date" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="in_time">In Time*</label>
+                                <input type="text" step="1" name="in_time" value="{{current_time}}" id="in_time" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="vehicle_no">Vehicle No*</label>
+                                <input type="hidden" value="{{u.vehicle_no.id}}" name="vehicle_no" id="vehicle_no">
+                                <input type="text" placeholder="{{u.vehicle_no}}" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="driver_name">Driver Name*</label>
+                                <input type="text" name="driver_name" value="{{u.driver_name}}" id="driver_name" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="mobile">Mobile*</label>
+                                <input type="text" name="mobile" id="mobile" value="{{u.mobile}}"  class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="product">Product Type*</label>
+                                <input type="hidden" name="product" id="product" value="{{u.master_product.id}}">
+                                <input type="text" placeholder="{{u.master_product}}" class="form-control" readonly>
+                            </div>
+                        </div>
+
+                        {% if u.is_new == False %}
+                        
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="mine_weight">Mine Weight <small>(Ton)</small>*</label>
+                                <input type="text" name="mine_weight" id="mine_weight" value="{{u.mine_weight}}" placeholder="0.00" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="net_weight">Net Load <small>(Ton)</small>*</label>
+                                <input type="text" name="net_weight" id="net_weight" value="{{u.net_weight}}" placeholder="0.00" class="form-control" readonly>
+                            </div>
+                        </div>
+                        {#
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="received_advance">Advance Payment*</label>
+                                <input type="number" name="received_advance" id="received_advance" value="{{u.received_advance}}" placeholder="0.00" class="form-control" readonly>
+                            </div>
+                        </div>#}
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="amount">Amount*</label>
+                                <input type="text" name="amount" id="amount" value="{{u.amount}}" placeholder="0.00" class="form-control" readonly>
+                            </div>
+                        </div>
+                        {% endif %}
+
+
+                        
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="kaata_no">WB58 Name*</label>
+                                <input type="text" name="kaata_no" id="Kaata_no" value="{{u.in_kaata.kaata_no}}" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="in_weight">Full Load <small>(Ton)</small>*</label>
+                                <input type="text" name="in_weight" id="full_load" value="{{u.in_weight}}" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="price">Price*</label>
+                                <input type="text" name="price" id="price" value="{{u.price}}" placeholder="0.00" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="ravana_no">Ravana No.*</label>
+                                <input type="text" name="ravana_no" id="ravana_no" value="{{u.ravana_no}}" placeholder="0.00" class="form-control" readonly>
+                            </div>
+                        </div>
+
+                
+                        
+                        {#
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="billing_amt">Billing Amount*</label>
+                                <input type="text" name="billing_amt" id="billing_amt" value="{{u.billing_amt}}" placeholder="0.00" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="pending_amt">Pending Amount*</label>
+                                <input type="text" name="pending_amt" id="pending_amt" value="{{u.pending_amt}}" placeholder="0.00" class="form-control" readonly>
+                            </div>
+                        </div>
+                        #}
+                    </div>
+                    <hr>
+
+                    <div class="row mx-0">
+                        <div class="col-lg-12 col-md-12 col-sm-12 bg-primary">
+                            <h5 style="color:white;"> Out Detail </h5>
+                        </div>    
+                    </div>
+                    <div class="row mx-0">
+                        <div class="col-lg-2 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="out_date">Out Date*</label>
+                                <input type="text" name="out_date" id="out_date" value="{{current_date}}" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="out_time">Out Time*</label>
+                                <input type="text" step="1" name="out_time" value="{{current_time}}" id="out_time" class="form-control">
+                            </div>
+                        </div>
+                        {#
+                        <div class="col-lg-2 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="new_out_kaata_no">WB58 Name*</label>
+                                <select class="custom-select form-control form-control-user rounded-1 select2_dropdown" name="new_out_kaata_no" id="new_out_kaata_no">
+                                    <option value="" selected>Select</option>
+                                    {% for data in kaata_number %}
+                                    <option value="{{data.id}}">{{data.kaata_no}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>#}
+                        {% for d in user_data %}
+                        {% if d.is_new == True %}
+                        <div class="col-lg-2 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="new_empty_weight">Empty Load <small>(Ton)</small>*</label>
+                                <input type="number" name="out_empty_load" id="new_empty_weight" step=".0001" placeholder="0.00" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="new_net_load">Net Load <small>(Ton)</small>*</label>
+                                <input type="number" name="out_net_load" id="new_net_load" step=".0001" placeholder="0.00" class="form-control">
+                            </div>
+                        </div>
+                        {%else%}
+                        <div class="col-lg-2 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="empty_weight">Empty Load <small>(Ton)</small>*</label>
+                                <input type="number" name="out_empty_load" id="empty_weight" step=".0001" placeholder="0.00" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="net_load">Net Load <small>(Ton)</small>*</label>
+                                <input type="number" name="out_net_load" id="net_load" step=".0001" placeholder="0.00" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="net_diff_weight">Net Load Difference <small>(Ton)</small>*</label>
+                                <input type="number" name="net_weight_diff" id="net_diff_weight" placeholder="0.00" step=".0001" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="reason">Reason for weight Difference <small>(Ton)</small>*</label>
+                                <select class="custom-select form-control form-control-user rounded-1" name="resion" id="resion" required>
+                                    <option class="form-control" value="" selected>Select</option>
+                                    <option class="form-control">reason1</option>
+                                    <option class="form-control">reason2</option>
+                                </select>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {%endfor%}
+                        
+                    </div>
+                    <hr>
+
+        
+
+                    <div class="row mx-0">
+                        <div class="col-lg-12 col-md-12 col-sm-12 bg-primary">
+                            <h5 style="color:white;"> Billing Detail </h5>
+                        </div>    
+                    </div>
+                    {% if u.is_new == False %}
+                    <div class="row mx-0">
+                        <div class="col-md-2 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="b_item_name">Item Name*</label>
+                                <input type="text" name="b_item_name" id="b_item_name" value="{{price_gst.item_name}}" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-1 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="qty">Qty*</label>
+                                <input type="text" name="qty" id="qty" step=".01" placeholder="0.00" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="b_price">Price*</label>
+                                <input type="text" name="b_price" id="b_price" step=".01" value="{{price_gst.bill_rate}}" placeholder="0.00" class="form-control" readonly>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-2 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="billing_amount">Total*</label>
+                                <input type="number" name="billing_amount" id="billing_amount" step=".01" placeholder="0.00" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-1 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="gst_per">%GST*</label>
+                                <input type="number" name="gst_per" id="gst_per" step=".01" value="0" placeholder="0.00" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="gst_amt">GST Amount*</label>
+                                <input type="number" name="gst_amt" id="gst_amt" step=".01" placeholder="0.00" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="grand_total">Grand Total*</label>
+                                <input type="text" name="grand_total" id="grand_total" step=".01" placeholder="0.00" class="form-control" readonly>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="row mx-0">
+                        <div class="col-lg-12 col-md-12 col-sm-12 bg-primary">
+                            <h5 style="color:white;">For Office Use</h5>
+                        </div>    
+                    </div>
+                    <div class="row mx-0">
+                        <div class="col-lg-2 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="commission">Commission*</label>
+                                <input type="text" name="commission" id="commission" step=".01"  placeholder="0.00" class="form-control">
+                            </div>
+                        </div>
+                        {#<div class="col-lg-2 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="advance">Advance Payment</label>
+                                <input type="text" name="advance" id="advance" step=".01" value="{% if u.received_advance %}{{u.received_advance}}{%else%}0.00{%endif%}" placeholder="0.00" class="form-control" readonly>
+                            </div>
+                        </div>#}
+                        <div class="col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="other_charges">Transporter Charges*</label>
+                                <input type="number" name="other_charges" id="transporter_charges" step=".0001" placeholder="0.00" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="balance">Grand Total*</label>
+                                <input type="text" name="balance" id="balance" step=".01" value="0"  placeholder="0.00" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="pay_received">Payment Received*</label>
+                                <input type="number" name="pay_received" id="pay_received" step=".01" placeholder="0.00" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="p_amt">Pending Amount*</label>
+                                <input type="number" name="p_amt" id="p_amt" step=".01"  placeholder="0.00" class="form-control" readonly>
+                            </div>
+                        </div>
+                        
+                        
+                    </div>
+
+
+                    {% else %}
+
+
+                    {% for newdata in user_data%}
+                    <div class="row mx-0">
+                        <div class="col-md-2 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="b_item_name">Item Name*</label>
+                                <input type="text" name="b_item_name" id="b_item_name" step=".01" value="{{newdata.master_product}}" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-1 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="qty">Qty*</label>
+                                <input type="text" name="qty" id="new_qty" step=".01" placeholder="0.00" class="form-control" >
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="b_price">Price*</label>
+                                <input type="text" name="b_price" id="new_b_price" step=".01" value="{{price_gst.bill_rate}}" placeholder="0.00" class="form-control" >
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-2 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="billing_amount">Total</label>
+                                <input type="number" name="billing_amount" step=".01" id="new_billing_amount" placeholder="0.00" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-1 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="gst_per">%GST*</label>
+                                <input type="number" name="gst_per" id="new_gst_per" step=".01" value="{{price_gst.gst_percent}}"  placeholder="0.00" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="gst_amt">GST Amount*</label>
+                                <input type="number" name="gst_amt" id="new_gst_amt" step=".01"  placeholder="0.00" class="form-control" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="grand_total">Grand Total*</label>
+                                <input type="text" name="grand_total" step=".01" id="new_grand_total" placeholder="0.00" class="form-control" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mx-0">
+                        <div class="col-lg-12 col-md-12 col-sm-12 bg-primary">
+                            <h5 style="color:white;">For Office Use </h5>
+                        </div>    
+                    </div>
+                    <div class="row mx-0">
+                        <div class="col-lg-2 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="commission">Commission*</label>
+                                <input type="text" name="commission" id="new_commission" step=".01"   placeholder="0.00" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="other_charges">Royalty Charges*</label>
+                                <input type="text" name="other_charges" id="royalty_charges" step=".01" placeholder="0.00" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="balance">Grand Total*</label>
+                                <input type="text" name="balance" id="new_balance" step=".01" placeholder="0.00" class="form-control" readonly>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-2 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="pay_received">Payment Done*</label>
+                                <input type="number" name="pay_received" step=".01" id="new_pay_received" placeholder="0.00" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-3 col-sm-12">
+                            <div class="form-group mb-4">
+                                <label for="p_amt">Pending Amount*</label>
+                                <input type="number" name="p_amt" id="new_p_amt" step=".01" placeholder="0.00" class="form-control" readonly>
+                            </div>
+                        </div>
+                        
+                        
+                    </div>
+                    {%endfor%}
+                    {%endif %}
+                    {% endfor %}
+                            
+                    
+                    
+                    
+
+
+                    <hr>	
+					<div class="row mx-0 position-relative">
+        
+						<div class=" col-12 pt-4 text-center">
+							<button type="reset" class="btn btn-white text-dark border rounded-1 bg-white f-s-18 px-4 py-2 mr-3">Reset</button>
+							<button type="submit"  class="btn bg-gradient-primary text-white rounded-1 f-s-18 px-4 py-2">Submit</button>
+						</div>
+					</div>
+				</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- End Here -->
+
+<script src="{{static ('vendor/jquery/jquery.min.js')}}"></script>
+
+
+<script>
+    
+    $('#new_empty_weight').keyup(function(){
+        var new_EMPTY = $('#new_empty_weight').val();
+        var new_NET = $('#full_load').val();
+        var new_total_Net = new_NET - new_EMPTY;
+        $('#new_net_load').val(new_total_Net.toFixed(2));
+   
+        $('#new_qty').val($('#new_net_load').val());
+        var new_Bal = $('#new_qty').val() * $('#new_b_price').val();
+        $('#new_billing_amount').val(new_Bal.toFixed(2));
+        
+        $('#new_amount').val($('#price').val() * $('#new_net_load').val());
+
+
+        var dsd = parseFloat($('#new_gst_per').val());
+ 
+        var amm = parseFloat($('#new_billing_amount').val());
+ 
+        var total_gst = amm*dsd/100;
+        $('#new_gst_amt').val(total_gst.toFixed(2));
+
+        var GST = $('#new_gst_amt').val();
+        
+        var bill = $('#new_billing_amount').val();
+       
+        var b_NewBal = parseFloat(GST) + parseFloat(bill);
+        $('#new_balance').val(b_NewBal.toFixed(2));
+        var New_GT = parseFloat(GST) + parseFloat(bill);
+        $('#new_grand_total').val(New_GT.toFixed(2)); // Gst Amount + Billing Amount = Grand Total
+          
+      
+    });
+    
+</script>
+
+
+<script>
+    
+    $('#empty_weight').keyup(function(){
+        var empty = $('#empty_weight').val();
+        //console.log(empty);
+        var in_net = $('#full_load').val();
+        //console.log(in_net);
+        var total_Net = in_net - empty;
+        $('#net_load').val(total_Net.toFixed(2));
+            // Difference Of NET LOADS
+        var indetail_netLoad = $('#net_weight').val();
+        var outdetail_netLoad = $('#net_load').val();
+        var difference_of_net_load = parseFloat(indetail_netLoad) - parseFloat(outdetail_netLoad);
+        $('#net_diff_weight').val(difference_of_net_load.toFixed(2));
+        
+        $('#qty').val($('#net_load').val());
+        
+        var in_Bal = $('#qty').val() * $('#b_price').val();
+        $('#billing_amount').val(in_Bal.toFixed(2));
+        
+        //$('#amount').val($('#price').val() * $('#net_load').val());
+
+
+        var dsd = parseFloat($('#gst_per').val());
+        var amm = parseFloat($('#billing_amount').val());
+        var total_gst = amm*dsd/100;
+        $('#gst_amt').val(total_gst.toFixed(2));
+
+        var GST = $('#gst_amt').val();
+        var bill = $('#billing_amount').val();
+        var b_NewBal = parseFloat(GST) + parseFloat(bill);
+        $('#balance').val(b_NewBal.toFixed(2));
+        var New_GT = parseFloat(GST) + parseFloat(bill);
+        $('#grand_total').val(New_GT.toFixed(2)); // Gst Amount + Billing Amount = Grand Total
+    });
+    
+</script>
+
+<script>
+    // For in Crusher Entry commission added in balance
+    $('#transporter_charges').keyup(function(){
+        var in_gr = $('#grand_total').val();
+        var com = $('#transporter_charges').val();
+        var added_transporter_charges = parseFloat(in_gr)+parseFloat(com); 
+        $('#balance').val(added_transporter_charges.toFixed(2));
+        
+      });  
+</script>
+<script>
+    // for in crusher entry received_payment
+    $('#pay_received').keyup(function(){     
+        $('#p_amt').val($('#balance').val()-$('#pay_received').val());
+        });   
+</script>
+
+
+
+<script>
+    // For New Crusher Entry royalty_charges added in balance
+    $('#royalty_charges').keyup(function(){
+        var gr = parseFloat($('#new_grand_total').val());
+        var com = parseFloat($('#royalty_charges').val());
+        $('#new_balance').val(gr+com);
+      });  
+</script>
+
+
+
+
+<script>
+    $('#new_pay_received').keyup(function(){ 
+          
+        $('#new_p_amt').val($('#new_balance').val()-$('#new_pay_received').val());
+        });   
+</script>
+
+<script>
+    $('#new_qty,#new_b_price').keyup(function(){ 
+          
+        $('#new_billing_amount').val(parseFloat($('#new_b_price').val())*parseFloat($('#new_qty').val()));
+        
+        });   
+</script>
+
+
+<script>
+    $('#new_gst_per,#new_billing_amount').keyup(function(){ 
+
+          var b_input = $('#new_billing_amount').val();
+          var g_input = $('#new_gst_per').val();
+
+            var total_gst = b_input*g_input/100;
+            
+            $('#new_gst_amt').val(total_gst.toFixed(2));
+        });   
+</script>
+
+{% endblock %}

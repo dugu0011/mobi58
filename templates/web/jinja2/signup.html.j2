@@ -1,0 +1,113 @@
+
+{% extends "web/jinja2/base.html.j2" %}
+{% block content %}
+<!-- Begin Page Content -->
+<section class="bg-white">
+	<div class="container">
+		<!-- Outer Row -->
+		<div class="row justify-content-center">
+			<div class="col-xl-10 col-lg-9 col-md-10 col-12">
+				<div class="card o-hidden border-0 my-5">
+					<div class="card-body p-0">
+						<!-- Nested Row within Card Body -->
+						<div class="row">
+							<div class="col-lg-12">
+								<div class="p-5 border">
+									<div class="text-center">
+										<h1 class="h4 text-black mb-4 font-weight-bold text-dark">Register</h1>
+									</div>
+									<hr>
+									<form id="register-form" action="{{url('signup')}}" method="post" enctype="multipart/form-data">
+									{{csrf_input}}
+									<div class="card-body px-0">
+										<div class="row mx-0">
+											<div class="col-lg-6 col-md-4 col-sm-12">
+												<div class="form-group mb-4">
+													<label for="name">Username*</label>
+													<input type="text" required class="form-control rounded-1" id="username" name="username" onchange="validate_company_name(this)" placeholder="">
+												</div>
+											</div>
+											<div class="col-md-6 col-sm-12 ">
+												<div class="form-group mb-2">
+													<label for="customer-email">Email address*</label>
+													<input type="email" class="form-control rounded-1" id="customer-email" name="customer-email" placeholder="Email">
+												</div>
+											</div>						
+										</div>
+										<div class="row mx-0">
+											<div class="col-lg-3 col-md-2 col-sm-12">
+												<div class="form-group mb-2">
+													<label for="name"> Name*</label>
+													<input type="text" class="form-control rounded-1" id="name" name="name" placeholder="">
+												</div>
+											</div>
+											<div class="col-lg-3 col-md-2 col-sm-12">
+												<div class="form-group mb-2">
+													<label for="birth_day">Birth Day*</label>
+													<input type="date" class="form-control rounded-1" id="birth_day" name="birth_day" placeholder="">
+												</div>
+											</div>
+											<div class="col-lg-3 col-md-2 col-sm-12">
+												<div class="form-group mb-2">
+													<label for="gender">Gender*</label>
+													<input type="text" class="form-control rounded-1" id="gender" name="gender" placeholder="">
+												</div>
+											</div>
+											<div class="col-lg-3 col-md-2 col-sm-12">
+												<div class="form-group mb-2">
+													<label for="father">Father Name*</label>
+													<input type="text" class="form-control rounded-1" id="father" name="father" placeholder="">
+												</div>
+											</div>
+										</div>
+										<div class="row mx-0">
+											<div class="col-md-6 col-sm-12">
+												<div class="form-group mb-2">
+													<label for="customer-mobile">Mobile No*</label>
+													<input type="number" class="form-control rounded-1 mobile-num" id="customer-mobile" name="customer-mobile" onchange="validate_mobile(this , 'mobile')" placeholder="">
+												</div>
+											</div>
+											<div class="col-lg-6 col-md-2 col-sm-12">
+												<div class="form-group mb-2">
+													<label for="password">Password*</label>
+													<input type="password" class="form-control rounded-1" id="password" name="password" placeholder="">
+												</div>
+											</div>
+
+											<div class="col-lg-6 col-md-2 col-sm-12">
+												<div class="form-group mb-2">
+													<button type="submit" id="submit-btn" class="btn bg-gradient-primary btn-user btn-block border text-white f-s-18 text-uppercase">
+													Register
+												</button>
+												</div>
+											</div>
+											<div class="col-lg-6 col-md-2 col-sm-12">
+												<div class="form-group mb-2">
+													<div class="text-right">
+													<p>Already have a account?<a class="" href="{{url('login')}}"> Signin</a></p>
+													<a class="" href="{{url('forgot-password')}}">Forgot Password?</a>
+												</div>
+												</div>
+											</div>
+										<div>
+										
+										<hr>
+											
+									</div>
+											
+									</form>
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>    
+	</div>
+</section>
+
+<script src="{{static ('vendor/jquery/jquery.min.js')}}"></script>
+{% endblock %}
+
+
